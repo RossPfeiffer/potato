@@ -1,0 +1,23 @@
+{
+  "name": "potato",
+  "version": "1.0.0",
+  "description": "",
+  "main": "generator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Econymous/potato.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Econymous/potato/issues"
+  },
+  "homepage": "https://github.com/Econymous/potato#readme",
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "simple-excel-to-json": "^2.3.0"
+  }
+}
