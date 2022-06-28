@@ -5,8 +5,8 @@ var parser = require('simple-excel-to-json')
 var doc = (parser.parseXls2Json('./parts-list.xlsx'))[0];
 
 
-let potatoCount = 1000
-
+let potatoCount = 8888888
+let batchSize = 1000;
 var weightedBuckets = [];
 
 for(let i=0;i<9;i+=1){
@@ -31,31 +31,46 @@ for(let i=0;i<9;i+=1){
 
 
 function generatePotato(){
-	let DNA = mutate();
-	if(potatoCount>0){
-		for(let i=0;i<9;i++){
-			if(DNA[i]===undefined){
+	let DNA = [];
+	
+	for(let i=0; i<batchSize && potatoCount>0; i+=1){
+		DNA.push( mutate() )
+		potatoCount -= 1
+
+		for(let j=0;j<9;j++){
+			if( DNA[i][j] === undefined){
+				console.log("weighted roll returned something that was undefined");
 				generatePotato();
 				return;
 			}
 		}
-		//client.query("SELECT * FROM potatoes WHERE (nose = "+DNA[0]+" AND mouth = "+DNA[1]+" AND hat = "+DNA[2]+" AND eyes = "+DNA[3]+" AND ears = "+DNA[4]+" AND shoes = "+DNA[5]+" AND background = "+DNA[6]+" AND leftarm = "+DNA[7]+" AND  rightarm = "+DNA[8]+")", function(err,res,fields){
-			
-			//if(err) throw err;
-			//console.log(res,fields);
-
-			//if(res.length){
-			//	generatePotato()
-			//}else{
-				client.query("INSERT into potatoes (nose,mouth,hat,eyes,ears,shoes,background,leftarm,rightarm) VALUES ("+DNA[0]+","+DNA[1]+","+DNA[2]+","+DNA[3]+","+DNA[4]+","+DNA[5]+","+DNA[6]+","+DNA[7]+","+DNA[8]+")", function(err,res){
-					if(DNA[8]===727)
-						console.log("Generated ",DNA);
-					generatePotato()
-				})
-				client.query("UPDATE part_usage SET used=used+1 WHERE( ID="+(DNA[0]+1)+" OR ID="+(DNA[1]+1)+" OR ID="+(DNA[2]+1)+" OR ID="+(DNA[3]+1)+" OR ID="+(DNA[4]+1)+" OR ID="+(DNA[5]+1)+" OR ID="+(DNA[6]+1)+" OR ID="+(DNA[7]+1)+" OR ID="+(DNA[8]+1)+")")
-			//}
-		//})
 	}
+
+	let tSQL = "INSERT into potatoes (nose,mouth,hat,eyes,ears,shoes,background,leftarm,rightarm) VALUES ";
+	let mSQL = '';
+	for(let i=0; DNA.length; i+=1){
+		mSQL += "("+DNA[i][0]+","+DNA[i][1]+","+DNA[i][2]+","+DNA[i][3]+","+DNA[i][4]+","+DNA[i][5]+","+DNA[i][6]+","+DNA[i][7]+","+DNA[i][8]+")"
+		if(i !== DNA.length-1){
+			mSQL += ','
+		}
+	}
+
+	client.query( tSQL+mSQL, function(err,res){
+		generatePotato()
+	})
+
+
+	mSQL = '';
+	for(let i=0; DNA.length; i+=1){
+		mSQL += "UPDATE part_usage SET used=used+1 WHERE( ID="+(DNA[i][0]+1)+" OR ID="+(DNA[i][1]+1)+" OR ID="+(DNA[i][2]+1)+" OR ID="+(DNA[i][3]+1)+" OR ID="+(DNA[i][4]+1)+" OR ID="+(DNA[i][5]+1)+" OR ID="+(DNA[i][6]+1)+" OR ID="+(DNA[i][7]+1)+" OR ID="+(DNA[i][8]+1)+")"
+		mSQL += ';'
+	}
+	client.query(mSQL)
+
+}
+
+function checkForDuplicates(){
+	//
 }
 
 client.connect(function(err){
