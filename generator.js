@@ -38,17 +38,19 @@ function generatePotato(){
 		potatoCount -= 1
 
 		for(let j=0;j<9;j++){
+			//console.log(DNA[i]);
 			if( DNA[i][j] === undefined){
 				console.log("weighted roll returned something that was undefined");
 				generatePotato();
 				return;
 			}
+			//console.log(DNA[i]);
 		}
 	}
 
 	let tSQL = "INSERT into potatoes (nose,mouth,hat,eyes,ears,shoes,background,leftarm,rightarm) VALUES ";
 	let mSQL = '';
-	for(let i=0; DNA.length; i+=1){
+	for(let i=0; i<DNA.length; i+=1){
 		mSQL += "("+DNA[i][0]+","+DNA[i][1]+","+DNA[i][2]+","+DNA[i][3]+","+DNA[i][4]+","+DNA[i][5]+","+DNA[i][6]+","+DNA[i][7]+","+DNA[i][8]+")"
 		if(i !== DNA.length-1){
 			mSQL += ','
@@ -56,14 +58,15 @@ function generatePotato(){
 	}
 
 	client.query( tSQL+mSQL, function(err,res){
+		if(err) throw err;
 		generatePotato()
 	})
 
 
 	mSQL = '';
-	for(let i=0; DNA.length; i+=1){
-		mSQL += "UPDATE part_usage SET used=used+1 WHERE( ID="+(DNA[i][0]+1)+" OR ID="+(DNA[i][1]+1)+" OR ID="+(DNA[i][2]+1)+" OR ID="+(DNA[i][3]+1)+" OR ID="+(DNA[i][4]+1)+" OR ID="+(DNA[i][5]+1)+" OR ID="+(DNA[i][6]+1)+" OR ID="+(DNA[i][7]+1)+" OR ID="+(DNA[i][8]+1)+")"
-		mSQL += ';'
+	for(let i=0; i<DNA.length; i+=1){
+		mSQL += " UPDATE part_usage SET used=used+1 WHERE( ID="+(DNA[i][0]+1)+" OR ID="+(DNA[i][1]+1)+" OR ID="+(DNA[i][2]+1)+" OR ID="+(DNA[i][3]+1)+" OR ID="+(DNA[i][4]+1)+" OR ID="+(DNA[i][5]+1)+" OR ID="+(DNA[i][6]+1)+" OR ID="+(DNA[i][7]+1)+" OR ID="+(DNA[i][8]+1)+");"
+		
 	}
 	client.query(mSQL)
 
@@ -86,15 +89,19 @@ function mutate(){
 	let weightedRoll;
 	for(let i=0;i<9;i+=1){
 		weightedRoll = Math.floor( bucketSizes[i] * Math.random() )
+		wr = weightedRoll;
 		let chosen;
 
-		for(let j=0; j<weightedBuckets[i].length && weightedRoll>0; j+=1){
+		for(let j=0; j<weightedBuckets[i].length; j+=1){
 			let part = weightedBuckets[i][j];
 			weightedRoll -= part.weight
 			if(weightedRoll <= 0){
 				chosen = part.ID;
 				break;
 			}
+		}
+		if(chosen === undefined){
+			console.log(wr,"Undefined Weight position")
 		}
 
 		DNA[i] = chosen;
