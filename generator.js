@@ -116,11 +116,14 @@ function checkForDuplicates(){
 function popDoops(){
 	if(doops.length>0){
 		let DNA = mutate(true);
+		console.log("Checking", DNA)
 		client.query("SELECT * FROM potatoes WHERE ( nose="+DNA[0]+" AND mouth="+DNA[1]+" AND hat="+DNA[2]+" AND eyes="+DNA[3]+" AND ears="+DNA[4]+" AND shoes="+DNA[5]+" AND background="+DNA[6]+" AND leftarm="+DNA[7]+" AND rightarm="+DNA[8]+")",(err,res,fields)=>{
 			if (err) throw err;
 			if(res.length>0){
+				console.log("No Good, Re-Roll")
 				popDoops()
 			}else{
+				console.log("Unique-ified")
 				let doop = doops[doops.length-1];
 				runningScores[doop.nose] -= 1
 				runningScores[doop.mouth] -= 1
@@ -137,19 +140,21 @@ function popDoops(){
 				doops.pop()
 				client.query("UPDATE potatoes SET nose="+DNA[0]+",mouth="+DNA[1]+",hat="+DNA[2]+",eyes="+DNA[3]+",ears="+DNA[4]+",shoes="+DNA[5]+",background="+DNA[6]+",leftarm="+DNA[7]+",rightarm="+DNA[8]+" WHERE ID="+doop.ID, (err,res,fields)=>{
 					if(err) throw err;
+					console.log("Updated to be unique")
 					popDoops();
 				})
 			}
 			
 		})
 	}else{
+		console.log("Record Rarity Scores")
 		storeRarityCounts();
 	}
 }
 
 function storeRarityCounts(){
 	if(runningScores.length>1){
-		query.client("UPDATE part_usage SET used="+runningScores[runningScores.length-1]+" WHERE (ID = "+(runningScores.length-1)+")",function(err,res,fields){
+		client.query("UPDATE part_usage SET used="+runningScores[runningScores.length-1]+" WHERE (ID = "+(runningScores.length-1)+")",function(err,res,fields){
 			if (err) throw err;
 			runningScores.pop()
 			storeRarityCounts();
