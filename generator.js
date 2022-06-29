@@ -9,6 +9,7 @@ let potatoCount = 8888888
 let batchSize = 10000;
 var weightedBuckets = [];
 let runningScores = [];
+runningScores.push(0)
 
 for(let i=0;i<9;i+=1){
 	weightedBuckets[i] = new Array();
@@ -17,6 +18,7 @@ for(let i=0;i<9;i+=1){
 doc.forEach( function(part,i){
 	//console.log(weightedBuckets)
 	if(part.PartType !== ''){
+		runningScores.push(0)
 		weightedBuckets[parseInt(part.PartType)].push( { ID:i, weight:part.RARITY } )
 	}
 })
@@ -39,7 +41,7 @@ function generatePotato(){
 			potatoCount -= 1
 		}
 
-		let tSQL = "INSERT into potatoes (nose,mouth,hat,eyes,ears,shoes,background,leftarm,rightarm) VALUES ";
+		let tSQL = "INSERT INTO potatoes (nose,mouth,hat,eyes,ears,shoes,background,leftarm,rightarm) VALUES ";
 		let mSQL = '';
 		for(let i=0; i<DNA.length; i+=1){
 			mSQL += "("+DNA[i][0]+","+DNA[i][1]+","+DNA[i][2]+","+DNA[i][3]+","+DNA[i][4]+","+DNA[i][5]+","+DNA[i][6]+","+DNA[i][7]+","+	DNA[i][8]+")"
@@ -67,6 +69,7 @@ function generatePotato(){
 
 }
 
+let doops; 
 function checkForDuplicates(){
 	//when this is done, then add up scores.
 	console.log('Checking for duplicates')
@@ -105,11 +108,57 @@ function checkForDuplicates(){
 	    AND COUNT(leftarm) > 1
 	    AND COUNT(rightarm) > 1;
 	`,function(err,res,fields){
-		//
-		res.forEach(console.log)
+		doops = res;
+		popDoops();
 	})
-
 }
+
+function popDoops(){
+	if(doops.length>0){
+		let DNA = mutate(true);
+		client.query("SELECT * FROM potatoes WHERE ( nose="+DNA[0]+" AND mouth="+DNA[1]+" AND hat="+DNA[2]+" AND eyes="+DNA[3]+" AND ears="+DNA[4]+" AND shoes="+DNA[5]+" AND background="+DNA[6]+" AND leftarm="+DNA[7]+" AND rightarm="+DNA[8]+")",(err,res,fields)=>{
+			if (err) throw err;
+			if(res.length>0){
+				popDoops()
+			}else{
+				let doop = doops[doops.length-1];
+				runningScores[doop.nose] -= 1
+				runningScores[doop.mouth] -= 1
+				runningScores[doop.hat] -= 1
+				runningScores[doop.eyes] -= 1
+				runningScores[doop.ears] -= 1
+				runningScores[doop.shoes] -= 1
+				runningScores[doop.background] -= 1
+				runningScores[doop.leftarm] -= 1
+				runningScores[doop.rightarm] -= 1
+				DNA.forEach((attr)=>{
+					runningScores[attr] += 1;	
+				})
+				doops.pop()
+				client.query("UPDATE potatoes SET nose="+DNA[0]+",mouth="+DNA[1]+",hat="+DNA[2]+",eyes="+DNA[3]+",ears="+DNA[4]+",shoes="+DNA[5]+",background="+DNA[6]+",leftarm="+DNA[7]+",rightarm="+DNA[8]+" WHERE ID="+doop.ID, (err,res,fields)=>{
+					if(err) throw err;
+					popDoops();
+				})
+			}
+			
+		})
+	}else{
+		storeRarityCounts();
+	}
+}
+
+function storeRarityCounts(){
+	if(runningScores.length>1){
+		query.client("UPDATE part_usage SET used="+runningScores[runningScores.length-1]+" WHERE (ID = "+(runningScores.length-1)+")",function(err,res,fields){
+			if (err) throw err;
+			runningScores.pop()
+			storeRarityCounts();
+		});
+	}else{
+		console.log("Should be done generating "+potatoCount+" unique potatoes and storing rarity scores for parts... ")
+	}
+}
+
 
 client.connect(function(err){
 	if (err) throw err;
@@ -119,7 +168,7 @@ client.connect(function(err){
 	generatePotato()
 })
 
-function mutate(){
+function mutate(X){
 	let DNA = [];
 	let weightedRoll;
 	for(let i=0;i<9;i+=1){
@@ -135,7 +184,9 @@ function mutate(){
 				break;
 			}
 		}
-		runningScores[chosen] += 1;
+
+		if(!X){runningScores[chosen+1] += 1;}
+
 		DNA[i] = chosen;
 	}
 	return DNA;
