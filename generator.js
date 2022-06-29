@@ -50,7 +50,7 @@ function generatePotato(){
 
 		client.query( tSQL+mSQL, function(err,res){
 			if(err) throw err;
-			console.log(potatoCount)
+			console.log("_P "+potatoCount)
 			generatePotato()
 		})
 	}else{
@@ -69,6 +69,46 @@ function generatePotato(){
 
 function checkForDuplicates(){
 	//when this is done, then add up scores.
+	console.log('Checking for duplicates')
+	client.query(`
+	SELECT 
+	    ID,
+	    nose, COUNT(nose),
+	    mouth,  COUNT(mouth),
+	    hat, COUNT(hat),
+	    eyes, COUNT(eyes),
+	    ears, COUNT(ears),
+	    shoes, COUNT(shoes),
+	    background, COUNT(background),
+	    leftarm, COUNT(leftarm),
+	    rightarm, COUNT(rightarm)
+	FROM
+	    potatoes
+	GROUP BY 
+	    nose , 
+	    mouth , 
+	    hat,
+	    eyes,
+	    ears,
+	    shoes,
+	    background,
+	    leftarm,
+	    rightarm
+	HAVING 
+	    COUNT(nose) > 1
+	    AND COUNT(mouth) > 1
+	    AND COUNT(hat) > 1
+	    AND COUNT(eyes) > 1
+	    AND COUNT(ears) > 1
+	    AND COUNT(shoes) > 1
+	    AND COUNT(background) > 1
+	    AND COUNT(leftarm) > 1
+	    AND COUNT(rightarm) > 1;
+	`,function(err,res,fields){
+		//
+		res.forEach(console.log)
+	})
+
 }
 
 client.connect(function(err){
