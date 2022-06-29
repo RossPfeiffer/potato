@@ -13,10 +13,14 @@ doc.forEach( (x,i) => {
 client.connect( function(err){
 	if(err) throw err;
 	//client.query(sql);
+	let q = '';
 	doc.forEach((x) => {
 		if(x.PartType!==''){
-
-			client.query('INSERT INTO part_usage () VALUES ()');
+			q += 'INSERT INTO part_usage () VALUES (); '
 		}
 	})
+	client.query(q,function(err,res,fields){
+		console.log("Rarity Table Initialized")
+		client.end();
+	});
 })

@@ -8,6 +8,7 @@ var doc = (parser.parseXls2Json('./parts-list.xlsx'))[0];
 let potatoCount = 8888888
 let batchSize = 1000;
 var weightedBuckets = [];
+let runningScores = [];
 
 for(let i=0;i<9;i+=1){
 	weightedBuckets[i] = new Array();
@@ -32,48 +33,41 @@ for(let i=0;i<9;i+=1){
 
 function generatePotato(){
 	let DNA = [];
-	
-	for(let i=0; i<batchSize && potatoCount>0; i+=1){
-		DNA.push( mutate() )
-		potatoCount -= 1
+	if(potatoCount>0){
+		for(let i=0; i<batchSize && potatoCount>0; i+=1){
+			DNA.push( mutate() )
+			potatoCount -= 1
+		}
 
-		for(let j=0;j<9;j++){
-			//console.log(DNA[i]);
-			if( DNA[i][j] === undefined){
-				console.log("weighted roll returned something that was undefined");
-				generatePotato();
-				return;
+		let tSQL = "INSERT into potatoes (nose,mouth,hat,eyes,ears,shoes,background,leftarm,rightarm) VALUES ";
+		let mSQL = '';
+		for(let i=0; i<DNA.length; i+=1){
+			mSQL += "("+DNA[i][0]+","+DNA[i][1]+","+DNA[i][2]+","+DNA[i][3]+","+DNA[i][4]+","+DNA[i][5]+","+DNA[i][6]+","+DNA[i][7]+","+	DNA[i][8]+")"
+			if(i !== DNA.length-1){
+				mSQL += ','
 			}
-			//console.log(DNA[i]);
 		}
+
+		client.query( tSQL+mSQL, function(err,res){
+			if(err) throw err;
+			generatePotato()
+		})
+	}else{
+		checkForDuplicates()
 	}
 
-	let tSQL = "INSERT into potatoes (nose,mouth,hat,eyes,ears,shoes,background,leftarm,rightarm) VALUES ";
-	let mSQL = '';
-	for(let i=0; i<DNA.length; i+=1){
-		mSQL += "("+DNA[i][0]+","+DNA[i][1]+","+DNA[i][2]+","+DNA[i][3]+","+DNA[i][4]+","+DNA[i][5]+","+DNA[i][6]+","+DNA[i][7]+","+DNA[i][8]+")"
-		if(i !== DNA.length-1){
-			mSQL += ','
-		}
-	}
 
-	client.query( tSQL+mSQL, function(err,res){
-		if(err) throw err;
-		generatePotato()
-	})
-
-
-	mSQL = '';
+	/*mSQL = '';
 	for(let i=0; i<DNA.length; i+=1){
 		mSQL += " UPDATE part_usage SET used=used+1 WHERE( ID="+(DNA[i][0]+1)+" OR ID="+(DNA[i][1]+1)+" OR ID="+(DNA[i][2]+1)+" OR ID="+(DNA[i][3]+1)+" OR ID="+(DNA[i][4]+1)+" OR ID="+(DNA[i][5]+1)+" OR ID="+(DNA[i][6]+1)+" OR ID="+(DNA[i][7]+1)+" OR ID="+(DNA[i][8]+1)+");"
 		
 	}
-	client.query(mSQL)
+	client.query(mSQL)*/
 
 }
 
 function checkForDuplicates(){
-	//
+	//when this is done, then add up scores.
 }
 
 client.connect(function(err){
@@ -100,10 +94,7 @@ function mutate(){
 				break;
 			}
 		}
-		if(chosen === undefined){
-			console.log(wr,"Undefined Weight position")
-		}
-
+		runningScores[chosen] += 1;
 		DNA[i] = chosen;
 	}
 	return DNA;
