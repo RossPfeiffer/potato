@@ -154,8 +154,11 @@ function popDoops(){
 
 function storeRarityCounts(){
 	if(runningScores.length>1){
-		client.query("UPDATE part_usage SET used="+runningScores[runningScores.length-1]+" WHERE (ID = "+(runningScores.length-1)+")",function(err,res,fields){
+		let uses = runningScores[runningScores.length-1]
+		let used = runningScores.length-1
+		client.query("UPDATE part_usage SET used="+uses+" WHERE (ID = "+(used)+")",function(err,res,fields){
 			if (err) throw err;
+			console.log("updated PartID:"+used+" uses to "+ uses)
 			runningScores.pop()
 			storeRarityCounts();
 		});
