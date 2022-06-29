@@ -161,6 +161,7 @@ function storeRarityCounts(){
 		});
 	}else{
 		console.log("Should be done generating "+potatoCount+" unique potatoes and storing rarity scores for parts... ")
+		client.end();
 	}
 }
 
