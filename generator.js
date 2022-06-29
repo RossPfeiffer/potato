@@ -6,7 +6,7 @@ var doc = (parser.parseXls2Json('./parts-list.xlsx'))[0];
 
 
 let potatoCount = 8888888
-let batchSize = 1000;
+let batchSize = 10000;
 var weightedBuckets = [];
 let runningScores = [];
 
@@ -50,6 +50,7 @@ function generatePotato(){
 
 		client.query( tSQL+mSQL, function(err,res){
 			if(err) throw err;
+			console.log(potatoCount)
 			generatePotato()
 		})
 	}else{
