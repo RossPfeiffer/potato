@@ -1,0 +1,34 @@
+SELECT 
+    ID,
+    nose, COUNT(nose),
+    mouth,  COUNT(mouth),
+    hat, COUNT(hat),
+    eyes, COUNT(eyes),
+    ears, COUNT(ears),
+    shoes, COUNT(shoes),
+    background, COUNT(background),
+    leftarm, COUNT(leftarm),
+    rightarm, COUNT(rightarm)
+FROM
+    potatoes
+GROUP BY 
+    nose , 
+    mouth , 
+    hat,
+    eyes,
+    ears,
+    shoes,
+    background,
+    leftarm,
+    rightarm
+HAVING 
+    COUNT(nose) > 1
+    AND COUNT(mouth) > 1
+    AND COUNT(hat) > 1
+    AND COUNT(eyes) > 1
+    AND COUNT(ears) > 1
+    AND COUNT(shoes) > 1
+    AND COUNT(background) > 1
+    AND COUNT(leftarm) > 1
+    AND COUNT(rightarm) > 1;
+
