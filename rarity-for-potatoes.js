@@ -1,6 +1,6 @@
 const client = require('./connection.js');
 let batch = 0;
-let batchSize = 100;
+let batchSize = 10000;
 let p2p = [];
 client.connect((e)=>{
 	if(e) throw e;
@@ -30,7 +30,7 @@ function updateNextBatch(){
 			let score = p2p[p.nose] * p2p[p.mouth] * p2p[p.hat] * p2p[p.eyes] * p2p[p.ears] * p2p[p.shoes] * p2p[p.background] * p2p[p.leftarm] * p2p[p.rightarm];
 			SQL += ' WHEN '+p.ID+' THEN '+score
 		});
-		console.log(":::::"+ topSQL + SQL + bottomSQL + ':::::');
+		console.log("::::: Updating "+batch+':::::');
 		client.query( topSQL + SQL + bottomSQL , (err,res,fields)=>{
 			if(err) throw err;
 			console.log("Batch "+batch+" updated");

@@ -44,7 +44,7 @@ function generatePotato(){
 		let tSQL = "INSERT INTO potatoes (nose,mouth,hat,eyes,ears,shoes,background,leftarm,rightarm) VALUES ";
 		let mSQL = '';
 		for(let i=0; i<DNA.length; i+=1){
-			mSQL += "("+DNA[i][0]+","+DNA[i][1]+","+DNA[i][2]+","+DNA[i][3]+","+DNA[i][4]+","+DNA[i][5]+","+DNA[i][6]+","+DNA[i][7]+","+	DNA[i][8]+")"
+			mSQL += "("+DNA[i][0]+","+DNA[i][1]+","+DNA[i][2]+","+DNA[i][3]+","+DNA[i][4]+","+DNA[i][5]+","+DNA[i][6]+","+DNA[i][7]+","+DNA[i][8]+")"
 			if(i !== DNA.length-1){
 				mSQL += ','
 			}
@@ -163,7 +163,7 @@ function storeRarityCounts(){
 			storeRarityCounts();
 		});
 	}else{
-		console.log("Should be done generating "+potatoCount+" unique potatoes and storing rarity scores for parts... ")
+		console.log("Should be done generating  unique potatoes and storing rarity scores for parts... ")
 		client.end();
 	}
 }
@@ -196,7 +196,7 @@ function mutate(X){
 
 		if(!X){runningScores[chosen+1] += 1;}
 
-		DNA[i] = chosen;
+		DNA[i] = chosen+1;
 	}
 	return DNA;
 }

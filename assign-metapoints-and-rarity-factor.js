@@ -1,5 +1,5 @@
 const client = require("./connection.js")
-var collectionSize = 1000;
+var collectionSize = 8888888;
 client.connect((err)=>{
 	if(err) throw err;
 	console.log("connected for rarity and metapoints task")
