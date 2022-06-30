@@ -9,7 +9,7 @@ client.connect((e)=>{
 	client.query("SELECT * FROM part_usage",function(err,res,fields){
 		//
 		res.forEach(function(part,i){
-			p2p[i] = part.metapoints
+			p2p[i+1] = part.metapoints
 			//console.log(part.metapoints)
 		})
 		updateNextBatch();
@@ -27,8 +27,11 @@ function updateNextBatch(){
 		let SQL = '';
 		let bottomSQL = ' ELSE rarity END WHERE (ID>'+(batch*batchSize)+' AND ID<='+((batch+1)*batchSize)+')';
 		res.forEach((p)=>{
-			let score = p2p[p.nose] * p2p[p.mouth] * p2p[p.hat] * p2p[p.eyes] * p2p[p.ears] * p2p[p.shoes] * p2p[p.background] * p2p[p.leftarm] * p2p[p.rightarm];
+			let score = p2p[p.nose] * p2p[p.mouth] * p2p[p.hat] /100 * p2p[p.eyes] * p2p[p.ears] * p2p[p.shoes]/100 * p2p[p.background] * p2p[p.leftarm] * p2p[p.rightarm];
+			//console.log("============\n==========\n=========\n",p.nose,p.mouth,p.hat,p.eyes,p.ears,p.shoes,p.background,p.leftarm,p.rightarm)
+			//console.log("Score "+p.ID+":::: ", score)
 			SQL += ' WHEN '+p.ID+' THEN '+score
+			
 		});
 		console.log("::::: Updating "+batch+':::::');
 		client.query( topSQL + SQL + bottomSQL , (err,res,fields)=>{
