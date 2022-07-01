@@ -26,6 +26,11 @@ client.connect( function(err){
 			chunkResolutions.push(high/i)
 			collectedData[i].push([])
 		}
+		chunkResolutions.forEach( (chunkSize,i)=>{
+			for(let j=0;j<high/chunkSize;j+=1){
+				collectedData[i][j]=0;
+			}
+		})
 		collectData();
 	});
 })
