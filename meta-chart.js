@@ -6,19 +6,26 @@ const rezDepth = 90;
 var chunkResolutions = [];
 var collectedData = [];
 for(let i=0; i<=rezDepth+10 ;i+=1){ collectedData.push([]) }
-for(let i=10; i<=rezDepth+10 ;i+=10){
- chunkResolutions.push( high/i ) 
- collectedData[i].push([])
-}
+//for(let i=10; i<=rezDepth+10 ;i+=10){
+//	console.log('Resolution', high/i)
+//	chunkResolutions.push( high/i ) 
+//	collectedData[i].push([])
+//}
 var high;
-
+var batch = 0;
+var batchSize = 10000;
 client.connect( function(err){
 	if(err) throw err;
 	console.log("retrieving highest metascore value")
 	client.query("SELECT metascore FROM potatoes ORDER BY metascore DESC LIMIT 0,1",function(err,res,fields){
 		if(err) throw err;
 		high = res[0].metascore
-
+		console.log('Highest Metascore ',high);
+		for(let i=10;i<=rezDepth+10; i+=10){
+			console.log('Resolution Chunk Size: ', high/i)
+			chunkResolutions.push(high/i)
+			collectedData[i].push([])
+		}
 		collectData();
 	});
 })
@@ -28,12 +35,14 @@ function collectData(){
 		//
 		if(res.length>0){
 			res.forEach((potato)=>{
-				chunkResolutions.forEach((rez)=>{
-					let chunkSize = 8888888/rez;
+				chunkResolutions.forEach((chunkSize,i)=>{
+					//console.log('pMETA-',potato.metascore)
 					let chunk = Math.floor( potato.metascore/chunkSize );
-					collectedData[rez][chunk] += 1;
+					//console.log(chunkSize,chunk)
+					collectedData[i][chunk] += 1;
 				});
 			});
+			console.log("Batch "+batch+"'s Data Collected"); 
 			batch += 1;
 			collectData();
 		}else{
