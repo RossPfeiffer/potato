@@ -36,18 +36,24 @@ function collectData(){
 		if(res.length>0){
 			res.forEach((potato)=>{
 				chunkResolutions.forEach((chunkSize,i)=>{
-					//console.log('pMETA-',potato.metascore)
+					//console.log('pMETA - ',potato.metascore)
 					let chunk = Math.floor( potato.metascore/chunkSize );
-					//console.log(chunkSize,chunk)
-					collectedData[i][chunk] += 1;
+					//console.log('['+i+']','['+chunk+']','--->'+collectedData[i][chunk])
+					if(!collectedData[i][chunk]){
+						collectedData[i][chunk] = 1;
+					}else{
+						collectedData[i][chunk] += 1;
+					}
 				});
+				
 			});
+			//console.log(collectedData);
 			console.log("Batch "+batch+"'s Data Collected"); 
 			batch += 1;
 			collectData();
 		}else{
 			let csv = '';
-			collectedData.forEach( (resolution,i)=>{
+			collectedData.forEach( (resolution)=>{
 				csv += '\n'
 				
 				resolution.forEach( (chunk,i)=>{
