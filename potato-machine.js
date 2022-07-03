@@ -53,6 +53,7 @@ client.connect(function(err){
 			//
 			let swapperBro = ;
 			let amountOfPotatoes = ;
+			let thePotatoes = [];
 			
 			sendTx( potatoTokenContract.methods.sendPotato(swapperBro, amountOfPotatoes), onConfirm)
 			function onConfirm(){

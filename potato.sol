@@ -242,7 +242,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
     }
 
     // This is for the Potato Machine
-    event PotatoTransfer(address from, address to, uint amount);
+    event PotatoTransfer(address from, address to, uint amount, uint[] potatoes);
 
     function transferFrom(address from, address to, uint256[] memory tokenIds) public {
         //solhint-disable-next-line max-line-length
@@ -251,7 +251,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
             require(_isApprovedOrOwner(_msgSender(), tokenIds[i]), "ERC721: transfer caller is not owner nor approved");
             _transfer(from, to, tokenIds[i]);
         }
-        emit PotatoTransfer(from, to, L);
+        emit PotatoTransfer(from, to, L, tokenIds);
     }
     /*----------------------------------------------------*/
     /*----------------------------------------------------*/
@@ -393,7 +393,9 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: transfer caller is not owner nor approved");
 
         _transfer(from, to, tokenId);
-        emit PotatoTransfer(from, to, 1);
+        uint[] memory tokenIds = new uint[](1);
+        tokenIds[0] = tokenId;
+        emit PotatoTransfer(from, to, 1, tokenIds);
     }
     
 
