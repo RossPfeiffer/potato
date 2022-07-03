@@ -241,9 +241,9 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         return string( abi.encodePacked('<svg width="1080" height="1080" ><image href="',images[P.background],'" width="1080" height="1080"/><image href="https://ipfs.io/ipfs/QmZ563JsZTZf3jpASfBydjyinVXCfc2jMgd9RBRDVW6U8Z?filename=NSovUSok.png" width="1080" height="1080"/><image href="',images[P.hat],'" width="1080" height="1080"/><image href="',images[P.ears], _1 ));
     }
 
-    /**
-     * @dev See {IERC721-transferFrom}.
-     */
+    // This is for the Potato Machine
+    event PotatoTransfer(address from, address to, uint amount);
+
     function transferFrom(address from, address to, uint256[] memory tokenIds) public {
         //solhint-disable-next-line max-line-length
         uint L = tokenIds.length;
@@ -251,6 +251,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
             require(_isApprovedOrOwner(_msgSender(), tokenIds[i]), "ERC721: transfer caller is not owner nor approved");
             _transfer(from, to, tokenIds[i]);
         }
+        emit PotatoTransfer(from, to, L);
     }
     /*----------------------------------------------------*/
     /*----------------------------------------------------*/
@@ -392,6 +393,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: transfer caller is not owner nor approved");
 
         _transfer(from, to, tokenId);
+        emit PotatoTransfer(from, to, 1);
     }
     
 
