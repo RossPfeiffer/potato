@@ -4,6 +4,8 @@ var Web3 = require('web3');
 var _ = {} //store global variables from database
 
 const client = require('./connection.js')
+const pDealer = require('./potato-dealer.js')
+var PD = new pDealer(client);
 
 const polygon_web3 = new Web3('https://ropsten.infura.io/v3/'+keys.infura)
 var machine = polygon_web3.eth.accounts.wallet.add(keys.wallet);
@@ -30,40 +32,97 @@ client.connect(function(err){
 	if (err) throw err;
 	console.log('connected');
 
+	client.query("SELECT * FROM globals", function(err,res,fields){
+		if (err) throw err;
+		res.forEach((gv)=>{
+			_[gv.name] = gv.val
+		});
+		listenToEvents();
+	});
+	
+});
+
+function listenToEvents(){
 	swapTOKEN_contract.events.DepositPotatoToken()
-		.on('data', event => {
-			//
-			let swapperBro = ;
-
-			//generate list of random potatoes to send
-			let randomPotatoes = [];
-
-			sendTx( potatoNFT_Contract.methods.sendPotato(swapperBro, randomPotatoes), onConfirm)
-			function onConfirm(){
-				//change Database
-			}
-
-		})
+		.on('data', catchToken_swap )
 	    .on('changed', changed => console.log(changed))
 	    .on('error', err => throw err)
 	    .on('connected', str => console.log('connected',str))
 
 	potatoNFT_Contract.events.PotatoTransfer()
-		.on('data', event => {
-			//
-			let swapperBro = ;
-			let amountOfPotatoes = ;
-			let thePotatoes = [];
-			
-			sendTx( potatoTokenContract.methods.sendPotato(swapperBro, amountOfPotatoes), onConfirm)
-			function onConfirm(){
-				//change database
-			}
-		})
+		.on('data', catchNFT_swap)
 	    .on('changed', changed => console.log(changed))
 	    .on('error', err => throw err)
 	    .on('connected', str => console.log('connected',str))
-});
+}
+
+function catchToken_swap(event){
+	//
+	let swapper = ;
+	let count = event. ;
+	let randomPotatoes = ;
+
+	sendTx( potatoNFT_Contract.methods.sendPotato(swapper, randomPotatoes), function(){
+		//
+	})
+
+	/*
+	let pull_tSQL = 'SELECT * FROM bridge WHERE '
+	let pull_mSQL = '';
+
+	randomPotatoIndexes.forEach( (potato,i)=>{
+		pull_mSQL += 'ID = '+potato
+		if(i !== randomPotatoIndexes.length-1){
+			pull_mSQL += ' OR '
+		}
+	})
+
+	let bump_tSQL = 'DELETE FROM bridge WHERE '
+	let bump_mSQL = ''
+	let randomPotatoes = res;
+
+	randomPotatoes.forEach( (potato,i)=>{
+		bump_mSQL += 'ID = '+potato
+		if(i !== randomPotatoes.length-1){
+			bump_mSQL += ' OR '
+		}
+	})
+
+	client.query(pull_tSQL + pull_mSQL+';'+bump_tSQL+bump_mSQL, function(err,res,fields){	
+		if (err) throw err;
+		sendTx( potatoNFT_Contract.methods.sendPotato(swapper, randomPotatoes), onConfirm)
+		function onConfirm(){
+			//
+		}
+	});
+	*/
+}
+
+function catchNFT_swap(event){
+	//put in check to make sure the NFT was sent to the swapNFT contract.
+	let swapper = ;
+	let amountOfPotatoes = ;
+	let thePotatoes = [];
+	
+	sendTx( potatoTokenContract.methods.sendPotato(swapper, amountOfPotatoes), onConfirm)
+	function onConfirm(){
+
+		let add_tSQL = 'INSERT INTO bridge (ID) VALUES '
+		let add_mSQL = ''
+
+		thePotatoes.forEach((potato,i)=>{
+			add_mSQL += ' ('+potato+')'
+			if(i!==thePotatoes.length-1){
+				add_mSQL += ','
+			}
+		})
+
+		//put Potatoes on shelf
+		client.query( add_tSQL + add_mSQL, function(){
+			//
+		})
+	}
+}
 
 // This would be for Rebooting. Poly and BSC have different rate limits for getting past events. I'll deal with this later.
 // This should be a background service in its own VM. It's doing a light weight job. It should be fine if we launch it to just subscribe to the networks.
@@ -71,21 +130,14 @@ client.connect(function(err){
 
 // Get Everything up to date since the last time it was online
 function GetPastEvents(){
-	client.query("SELECT * FROM globals", function(err,res,fields){
-		res.forEach((gv)=>{
-			_[gv.name] = gv.val
-		});
-	});
 	let promise_from_NFT_contract = potatoNFT_Contract.getPastEvents("");
 	let promise_from_TOKEN_contract = potatoTokenContract.getPastEvents("");
 }
 
 function sendTx(tx, onConfirm){
-	tx.send({ from:machine.address, gasLimit:25000000 }, function(r,l){
-		//
-	})
+	tx.send({ from:machine.address, gasLimit:25000000 })
 	.on('transactionHash', function(hash){
-	    console.log("transactionHash: "+hash);
+	    //console.log("transactionHash: "+hash);
 	})
 	.on('confirmation', function(N, receipt){
 		if(N == 1){

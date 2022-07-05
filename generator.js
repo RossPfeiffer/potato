@@ -4,8 +4,8 @@ const client = require('./connection.js')
 var parser = require('simple-excel-to-json')
 var doc = (parser.parseXls2Json('./parts-list.xlsx'))[0];
 
-
 let potatoCount = 8888888
+let potatoTotal = potatoCount;
 let batchSize = 10000;
 var weightedBuckets = [];
 let runningScores = [];
@@ -43,14 +43,18 @@ function generatePotato(){
 
 		let tSQL = "INSERT INTO potatoes (nose,mouth,hat,eyes,ears,shoes,background,leftarm,rightarm) VALUES ";
 		let mSQL = '';
+		let stack_tSQL = 'INSERT INTO unminted (ID) VALUES ';
+		let stack_mSQL = '';
 		for(let i=0; i<DNA.length; i+=1){
 			mSQL += "("+DNA[i][0]+","+DNA[i][1]+","+DNA[i][2]+","+DNA[i][3]+","+DNA[i][4]+","+DNA[i][5]+","+DNA[i][6]+","+DNA[i][7]+","+DNA[i][8]+")"
-			if(i !== DNA.length-1){
+			stack_mSQL += "("+(potatoTotal-potatoCount+i)+")"
+			if(i !== DNA.length-1 ){
 				mSQL += ','
+				stack_mSQL += ','
 			}
 		}
 
-		client.query( tSQL+mSQL, function(err,res){
+		client.query( tSQL+mSQL+';'+stack_tSQL+stack_mSQL, function(err,res){
 			if(err) throw err;
 			console.log("_P "+potatoCount)
 			generatePotato()
