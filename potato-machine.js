@@ -37,7 +37,13 @@ client.connect(function(err){
 		res.forEach((gv)=>{
 			_[gv.name] = gv.val
 		});
-		listenToEvents();
+		//this.bridgeSize
+		client.query("SELECT COUNT(*) FROM bridge", function(err,res,fields){
+			if (err) throw err;
+			console.log( 'RESULTS FROM COUNT bridge for bridgeSize', res )
+			PD.bridgeSize = res[0]['COUNT(*)']
+			listenToEvents();
+		});
 	});
 	
 });
@@ -58,70 +64,24 @@ function listenToEvents(){
 
 function catchToken_swap(event){
 	//
-	let swapper = ;
-	let count = event. ;
-	let randomPotatoes = ;
-
-	sendTx( potatoNFT_Contract.methods.sendPotato(swapper, randomPotatoes), function(){
-		//
+	let swapper = event.returnValues.from;
+	let count = event.returnValues.amount;
+	PD.pullTicket(count, function(randomPotatoes){
+		sendTx( potatoNFT_Contract.methods.sendPotato(swapper, randomPotatoes), function(){
+			// ... store block number periodically?
+		})
 	})
-
-	/*
-	let pull_tSQL = 'SELECT * FROM bridge WHERE '
-	let pull_mSQL = '';
-
-	randomPotatoIndexes.forEach( (potato,i)=>{
-		pull_mSQL += 'ID = '+potato
-		if(i !== randomPotatoIndexes.length-1){
-			pull_mSQL += ' OR '
-		}
-	})
-
-	let bump_tSQL = 'DELETE FROM bridge WHERE '
-	let bump_mSQL = ''
-	let randomPotatoes = res;
-
-	randomPotatoes.forEach( (potato,i)=>{
-		bump_mSQL += 'ID = '+potato
-		if(i !== randomPotatoes.length-1){
-			bump_mSQL += ' OR '
-		}
-	})
-
-	client.query(pull_tSQL + pull_mSQL+';'+bump_tSQL+bump_mSQL, function(err,res,fields){	
-		if (err) throw err;
-		sendTx( potatoNFT_Contract.methods.sendPotato(swapper, randomPotatoes), onConfirm)
-		function onConfirm(){
-			//
-		}
-	});
-	*/
 }
 
 function catchNFT_swap(event){
 	//put in check to make sure the NFT was sent to the swapNFT contract.
-	let swapper = ;
-	let amountOfPotatoes = ;
-	let thePotatoes = [];
-	
-	sendTx( potatoTokenContract.methods.sendPotato(swapper, amountOfPotatoes), onConfirm)
-	function onConfirm(){
-
-		let add_tSQL = 'INSERT INTO bridge (ID) VALUES '
-		let add_mSQL = ''
-
-		thePotatoes.forEach((potato,i)=>{
-			add_mSQL += ' ('+potato+')'
-			if(i!==thePotatoes.length-1){
-				add_mSQL += ','
-			}
+	let swapper = event.returnValues.from;
+	let thePotatoes = event.returnValues.potatoes;
+	PD.benchTicket(thePotatoes, function(){
+		sendTx( potatoTokenContract.methods.sendPotato(swapper, thePotatoes.length), function(){
+			// ... store block number periodically?
 		})
-
-		//put Potatoes on shelf
-		client.query( add_tSQL + add_mSQL, function(){
-			//
-		})
-	}
+	})
 }
 
 // This would be for Rebooting. Poly and BSC have different rate limits for getting past events. I'll deal with this later.
