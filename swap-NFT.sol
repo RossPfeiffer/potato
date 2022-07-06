@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.14;
 contract SwapPotato{
     address THIS = address(this);
     address contractOwner;
-    NFT POTATO = NFT(0x000000000000000);
+    NFT POTATO = NFT(0xC03aA832683181b7F4EF0AAcAccF47bbD9589397);
     mapping(address => bool) worker;
     
     constructor(){
@@ -12,7 +13,7 @@ contract SwapPotato{
     modifier onlyOwner {
       require(msg.sender == contractOwner);
       _;
-   }
+    }
 
     function changeContractOwner(address newContractOwner) public onlyOwner{
         contractOwner = newContractOwner;
@@ -34,6 +35,6 @@ contract SwapPotato{
 }
 
 
-abstract contract NFT {
-    function transferFrom(address from, address to, uint256 tokenId) external;
+interface NFT {
+    function transferFrom(address from, address to, uint256[] memory tokenId) external;
 }

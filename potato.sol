@@ -103,7 +103,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         uint shoes;
     }
 
-    function newPiece(string memory image, string memory desc, int meta) public{
+    function newPiece(string memory image, string memory desc, uint meta) public{
         require(worker[msg.sender]);
         images[pieces] = image;
         names[pieces] = desc;
@@ -111,7 +111,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         pieces += 1;
     }
 
-    function newPieces(string[] memory image, string[] memory desc, int[] memory meta) public {
+    function newPieces(string[] memory image, string[] memory desc, uint[] memory meta) public {
         require(worker[msg.sender]);
         uint L = image.length;
         for(uint i; i<L; i+=1){
