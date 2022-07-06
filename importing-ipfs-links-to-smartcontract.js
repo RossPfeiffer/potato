@@ -17,11 +17,13 @@ function uploadBatchOfParts(position){
 	let batch = doc.slice(position, tail )
 	let names = [];
 	let ipfs_links = [];
+	let metas = [];
 	batch.forEach( (part)=>{
 		names.push(part.Name);
 		ipfs_links.push(part.IPFS);
+		metas.push(part.Metapoints);
 	})
-	var X = potatoContract.methods.newPieces(names, ipfs_links)
+	var X = potatoContract.methods.newPieces(names, ipfs_links, metas)
 
 	X.send({ from:machine.address, gasLimit:2500000 }, function(r,l){
 		console.log( "---> ",r, l )
