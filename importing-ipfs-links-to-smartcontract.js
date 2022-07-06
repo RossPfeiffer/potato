@@ -11,7 +11,7 @@ var potatoContract = new web3.eth.Contract(potatoAbi, potatoAddress)
 //console.log(potatoContract.methods)
 //console.log(doc)
 let length = doc.length
-let chunkSize = 10;
+let chunkSize = 25;
 function uploadBatchOfParts(position){
 	let tail = Math.min(position+chunkSize,doc.length);
 	let batch = doc.slice(position, tail)
@@ -33,7 +33,7 @@ function uploadBatchOfParts(position){
 	})
 	.on('confirmation', function(N, receipt){
 		if(N == 1){
-			console.log("Batch #"+(position/chunkSize+1)+" Uploaded")//, e, receipt);
+			console.log("Batch #"+(position/chunkSize+1)+" Uploaded")
 			if(tail != doc.length){
 				uploadBatchOfParts(position+chunkSize);
 			}
