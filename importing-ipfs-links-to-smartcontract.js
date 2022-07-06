@@ -23,7 +23,7 @@ function uploadBatchOfParts(position){
 	})
 	var X = potatoContract.methods.newPieces(names, ipfs_links)
 
-	X.send({ from:machine.address, gasLimit:25000000 }, function(r,l){
+	X.send({ from:machine.address, gasLimit:2500000 }, function(r,l){
 		console.log( "---> ",r, l )
 	})
 	.on('transactionHash', function(hash){
