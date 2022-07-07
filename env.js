@@ -6,8 +6,8 @@ var env = {}
 {
 	env = {
 		ethProviders:['https://speedy-nodes-nyc.moralis.io/+'keys.moralis'+/eth/ropsten', 'https://ropsten.infura.io/v3/'+keys.infura],
-		polyProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/polygon/mumbai']
-		bscProviders:['https://speedy-nodes-nyc.moralis.io/+'keys.moralis'+/eth/ropsten'],
+		polyProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/polygon/mumbai'],
+		bscProviders:['https://speedy-nodes-nyc.moralis.io/+'keys.moralis'+/bsc/testnet']
 	}
 }
 
@@ -15,7 +15,8 @@ var env = {}
 if(0)
 {
 	env = {
-		polyProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/eth/mainnet'],
+		polyProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/polygon/mainnet'],
+		bscProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/mainnet'],
 	}
 }
 
