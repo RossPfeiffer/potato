@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Econymous/potato#readme",
   "dependencies": {
     "mysql": "^2.18.1",
-    "simple-excel-to-json": "^2.3.0"
+    "simple-excel-to-json": "^2.3.0",
+    "web3": "^1.7.4"
   }
 }
