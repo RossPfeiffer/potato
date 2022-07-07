@@ -67,7 +67,7 @@ function listenToEvents(){
 	    .on('error', err => throw err)
 	    .on('connected', str => console.log('connected',str))
 
-	potatoNFT_Contract.events.PotatoTransfer()
+	swapNFT_contract.events.PotatoReceived()
 		.on('data', catchNFT_swap)
 	    .on('changed', changed => console.log(changed))
 	    .on('error', err => throw err)

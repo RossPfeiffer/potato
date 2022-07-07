@@ -21,6 +21,8 @@ function safeTransferFrom(address from, address to, uint256 tokenId, bytes calld
 pragma solidity ^0.8.14;
 interface IERC721Receiver {
 function onERC721Received(address from, uint256 tokenId, bytes calldata data) external returns (bytes4);}
+interface PotatoReceiver {
+function onPotatoReceived(address from, uint256[] memory tokenIds) external payable;}
 pragma solidity ^0.8.14;
 interface IERC721Metadata is IERC721 {function name() external view returns (string memory);
 function symbol() external view returns (string memory);function tokenURI(uint256 tokenId) external view returns (string memory);}
@@ -244,8 +246,21 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
     // This is for the Potato Machine
     event PotatoTransfer(address from, address to, uint amount, uint[] potatoes);
 
+    function transferFrom(address from, address to, uint256[] memory tokenIds) public payable {
+        require( to.isContract() );
+        uint L = tokenIds.length;
+        for (uint i; i<L; i+=1){
+            require(_isApprovedOrOwner(_msgSender(), tokenIds[i]), "ERC721: transfer caller is not owner nor approved");
+            _transfer(from, to, tokenIds[i]);
+        }
+        
+        (bool success, ) = to.onPotatoReceived{value: msg.value}(from, tokenIds);
+        require(success, "Transfer failed.");
+
+        emit PotatoTransfer(from, to, L, tokenIds);
+    }
+
     function transferFrom(address from, address to, uint256[] memory tokenIds) public {
-        //solhint-disable-next-line max-line-length
         uint L = tokenIds.length;
         for (uint i;i<L;i+=1){
             require(_isApprovedOrOwner(_msgSender(), tokenIds[i]), "ERC721: transfer caller is not owner nor approved");
@@ -253,6 +268,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         }
         emit PotatoTransfer(from, to, L, tokenIds);
     }
+    
     /*----------------------------------------------------*/
     /*----------------------------------------------------*/
     /*----------------------------------------------------*/

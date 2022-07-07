@@ -3,11 +3,12 @@ pragma solidity ^0.8.14;
 contract SwapToken{
     address THIS = address(this);
     address contractOwner;
+    address public beneficiary;
     ERC20 POTATO = ERC20(0x0A72ffd37b8eb9cC72A9abF6B15d6Dac9d0BFA89);
     mapping(address => bool) worker;
-    uint FEE;
+    uint public FEE;
     uint MAX_SWAP = 1000;
-    uint collections;
+    uint public collections;
 
     constructor(){
         contractOwner = msg.sender;
@@ -21,12 +22,18 @@ contract SwapToken{
     function changeContractOwner(address newContractOwner) public onlyOwner{
         contractOwner = newContractOwner;
     }
+    function changeBeneficiary(address newBeneficiary) public onlyOwner{
+        beneficiary = newBeneficiary;
+    }
 
     function setFee(uint newFee) public  onlyOwner{
         FEE = newFee;
     }
 
-    function withdraw() public  onlyOwner{
+    function withdraw() public {
+        require(msg.sender == beneficiary);
+        (bool success, ) = msg.sender.call{value:collections}("");
+        require(success, "Transfer failed.");
         collections = 0;
     }
 
@@ -42,9 +49,8 @@ contract SwapToken{
     function depositPotatoToken(address forWhom, uint256 amount) external payable{
         address sender = msg.sender;
         uint cost = amount*FEE;
-        require(msg.value == cost && amount<=MAX_SWAP);
+        require(msg.value == cost && amount<=MAX_SWAP && POTATO.transferFrom(sender, THIS, amount));
         collections += cost;
-        POTATO.transferFrom(sender, THIS, amount);
         emit DepositPotatoToken(sender, forWhom, amount);
     }
     
