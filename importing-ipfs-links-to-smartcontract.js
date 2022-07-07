@@ -18,7 +18,7 @@ function uploadBatchOfParts(position){
 	}
 	let tail = Math.min(position+chunkSize, doc.length);
 	let batch = doc.slice(position, tail)
-	console.log("TAIL - Position = " tail - position);
+	console.log("TAIL - Position = ", tail - position);
 	let names = [];
 	let ipfs_links = [];
 	let metas = [];
