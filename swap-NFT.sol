@@ -51,7 +51,7 @@ contract SwapPotato{
         emit SendPotato(to, tokenIds);
     }
 
-    event PotatoReceived(address from, uint[] tokenIds)
+    event PotatoReceived(address from, uint[] tokenIds);
     function onPotatoReceived(address from, uint[] memory tokenIds) external payable {
         require(msg.value == FEE);
         collections += FEE;

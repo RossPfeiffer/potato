@@ -246,17 +246,16 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
     // This is for the Potato Machine
     event PotatoTransfer(address from, address to, uint amount, uint[] potatoes);
 
-    function transferFrom(address from, address to, uint256[] memory tokenIds) public payable {
+    function potatoTransfer(address from, address to, uint256[] memory tokenIds) public payable {
         require( to.isContract() );
+
         uint L = tokenIds.length;
         for (uint i; i<L; i+=1){
             require(_isApprovedOrOwner(_msgSender(), tokenIds[i]), "ERC721: transfer caller is not owner nor approved");
             _transfer(from, to, tokenIds[i]);
-        }
+        }        
+        PotatoReceiver(to).onPotatoReceived{value: msg.value}(from, tokenIds);
         
-        (bool success, ) = to.onPotatoReceived{value: msg.value}(from, tokenIds);
-        require(success, "Transfer failed.");
-
         emit PotatoTransfer(from, to, L, tokenIds);
     }
 
