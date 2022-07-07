@@ -9,12 +9,12 @@ var PD = new pDealer(client);
 
 //Mainnet: 'https://mainnet.infura.io/v3/'+keys.infura
 //Testnet: 'https://ropsten.infura.io/v3/'+keys.infura
-const polygon_web3 = new Web3(env.polyProvider[0])
+const polygon_web3 = new Web3(env.polyProviders[0])
 var blue_machine = polygon_web3.eth.accounts.wallet.add(keys.wallet);
 
 //Mainnet: https://bsc-dataseed4.binance.org/
 //Testnet: https://data-seed-prebsc-1-s1.binance.org:8545/
-const bsc_web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545/')
+const bsc_web3 = new Web3(env.bscProviders[0])
 var orange_machine = bsc_web3.eth.accounts.wallet.add(keys.wallet);
 
 var machineAddress = orange_machine.address;
