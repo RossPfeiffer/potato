@@ -28,7 +28,7 @@ client.connect(function(err){
 	console.log('connected');
 	let DNA, result;
 	let potatoCount = 0;
-	client.query()
+	//client.query()
 	client.query("SELECT COUNT(*) FROM unminted", function(err,res,fields){
 		if (err) throw err;
 		console.log( 'RESULTS FROM COUNT unminted for sum_of_unminted', res )
