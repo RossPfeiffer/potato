@@ -65,18 +65,20 @@ client.connect(function(err){
 });
 
 function listenToEvents(){
-	swapTOKEN_contract.getPastEvents('allEvents',function(e,x){
-		console.log(e)
-		console.log('============')
-		console.log(x)
-	})
-	swapNFT_contract.getPastEvents('allEvents',function(e,x){
-		console.log(e)
-		console.log('============')
-		console.log(x)
-	})
+	setInterval(function(){
+		swapTOKEN_contract.getPastEvents('allEvents',function(e,x){
+			console.log(e)
+			console.log('============')
+			console.log(x)
+		})
+		swapNFT_contract.getPastEvents('allEvents',function(e,x){
+			console.log(e)
+			console.log('============')
+			console.log(x)
+		})	
+	},3000)
 
-	swapTOKEN_contract.events.DepositPotatoToken()
+	/*swapTOKEN_contract.events.DepositPotatoToken()
 		.on('data', catchToken_swap )
 	    .on('changed', changed => console.log(changed))
 	    .on('error', err => {throw err})
@@ -86,7 +88,7 @@ function listenToEvents(){
 		.on('data', catchNFT_swap)
 	    .on('changed', changed => console.log(changed))
 	    .on('error', err => {throw err})
-	    .on('connected', str => console.log('connected',str))
+	    .on('connected', str => console.log('connected',str))*/
 }
 
 function catchToken_swap(event){
