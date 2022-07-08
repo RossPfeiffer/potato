@@ -11,7 +11,7 @@ var env = {}
 		polyProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/polygon/mumbai'],
 		//https://speedy-nodes-nyc.moralis.io/313453df8c4f0c7eb4823465/bsc/testnet/archive
 		//bscProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/testnet']
-		bscProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/testnet/archive']
+		bscProviders:['wss://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/testnet/ws']
 	}
 }
 
