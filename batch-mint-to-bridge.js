@@ -31,15 +31,16 @@ client.connect(function(err){
 	//client.query()
 	client.query("SELECT COUNT(*) FROM unminted", function(err,res,fields){
 		if (err) throw err;
-		console.log( 'RESULTS FROM COUNT unminted for sum_of_unminted', res )
 		sum_of_unminted = res[0]['COUNT(*)']
+		console.log( 'RESULTS FROM COUNT unminted for sum_of_unminted', res, sum_of_unminted  )
+		
 		mintBatch()
 	});
 	
 })
 
 function mintBatch(){
-	let query = 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY stackorder) AS rn FROM bridge ) q WHERE '+(function(){
+	let query = 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY ID) AS rn FROM unminted ) q WHERE '+(function(){
 		var arr = [];
 		while(arr.length < BATCHSIZE){
 		    var r = Math.floor(Math.random() * sum_of_unminted) + 1;
@@ -54,5 +55,26 @@ function mintBatch(){
 		})
 		return q
 	})()+' ORDER BY rn';
-	console.log( "query :::::::::: ", query )
+	console.log( "QUERY :::::::::: ", query ," :::::::::: ")
+	client.query(query,function(err,res,fields){
+		if (err) throw err;
+		console.log("Pulled "+BATCHSIZE+" random potato IDs",res)
+		client.query('SELECT * FROM potatoes WHERE '+(function(){
+			let q = ''
+			res.forEach((row,i)=>{
+				q+= "ID="+row.ID
+				if(i!==res.length-1){
+					q+=' OR '
+				}
+			})
+			console.log( "RUNNING ID PULLING QUERY :::::::::::::::::::: ")
+			return q
+		})(),function(err,res,fields){
+			if (err) throw err;
+			console.log("Pulled "+BATCHSIZE+" random potatoes",res)
+		})
+		//collect ID's & remove them once batch mint is successful
+		//
+	})
+
 }
