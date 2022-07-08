@@ -8,14 +8,11 @@ let batchSize = 10000;
 function stackUnminted(){
 	let DNA = [];
 	if(potatoCount>0){
-		for(let i=0; i<batchSize && potatoCount>0; i+=1){
-			potatoCount -= 1
-		}
-
 		let stack_tSQL = 'INSERT INTO unminted (ID) VALUES ';
 		let stack_mSQL = '';
-		for(let i=1; i<=batchSize; i+=1){
+		for(let i=1; i<=batchSize && potatoCount>0; i+=1){
 			stack_mSQL += "("+(potatoTotal-potatoCount+i)+")"
+			potatoCount -= 1
 			if(i !== batchSize ){
 				stack_mSQL += ','
 			}
