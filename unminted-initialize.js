@@ -10,12 +10,12 @@ function stackUnminted(){
 	if(potatoCount>0){
 		let stack_tSQL = 'INSERT INTO unminted (ID) VALUES ';
 		let stack_mSQL = '';
-		for(let i=1; i<=batchSize && potatoCount>0; i+=1){
-			stack_mSQL += "("+(potatoTotal-potatoCount+i)+")"
-			potatoCount -= 1
+		for(let i=1; i<=batchSize && potatoCount>=0; i+=1){
+			stack_mSQL += "("+(potatoCount)+")"
 			if(i !== batchSize ){
 				stack_mSQL += ','
 			}
+			potatoCount -= 1
 		}
 
 		client.query( stack_tSQL+stack_mSQL, function(err,res){
