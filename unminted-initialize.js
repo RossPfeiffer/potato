@@ -12,10 +12,11 @@ function stackUnminted(){
 		let stack_mSQL = '';
 		for(let i=1; i<=batchSize && potatoCount>=0; i+=1){
 			stack_mSQL += "("+(potatoCount)+")"
-			if(i !== batchSize ){
+			potatoCount -= 1
+
+			if(i !== batchSize && potatoCount != 0){
 				stack_mSQL += ','
 			}
-			potatoCount -= 1
 		}
 
 		client.query( stack_tSQL+stack_mSQL, function(err,res){
