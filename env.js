@@ -9,7 +9,7 @@ var env = {}
 		test: true,
 		ethProviders:['wss://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/eth/ropsten', 'https://ropsten.infura.io/v3/'+keys.infura],
 		polyProviders:['wss://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/polygon/mumbai'],
-		bscProviders:['wss://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/testnet']
+		bscProviders:['https://lhqv7jbpfp7f.usemoralis.com:2053/server']
 	}
 }
 
