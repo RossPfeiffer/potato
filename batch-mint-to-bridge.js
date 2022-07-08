@@ -48,7 +48,7 @@ function mintBatch(){
 		let q = ''
 		arr.forEach((ID,i)=>{
 			q+= "rn="+ID
-			if(i!==p.length-1){
+			if(i!==BATCHSIZE-1){
 				q+=' OR '
 			}
 		})
