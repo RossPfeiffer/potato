@@ -173,7 +173,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         emit MintPotatoHead(receiver,potatoes);
         potatoes +=1;
     }
-    function mintPotatoHead(
+    function mintPotatoHeads(
         address receiver,
         uint256[] memory background,
         uint256[] memory leftArm,
