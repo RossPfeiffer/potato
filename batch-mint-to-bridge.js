@@ -28,7 +28,6 @@ client.connect(function(err){
 	if (err) throw err;
 	console.log('connected');
 	let DNA, result;
-	let potatoCount = 0;
 	//client.query()
 	client.query("SELECT COUNT(*) FROM unminted", function(err,res,fields){
 		if (err) throw err;
@@ -42,78 +41,85 @@ client.connect(function(err){
 
 function mintBatch(){
 	if(BATCHES==0){
+		console.log("Done with batches")
 		return
 	}
-	let query = 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY ID) AS rn FROM unminted ) q WHERE '+(function(){
-		var arr = [];
-		while(arr.length < BATCHSIZE){
-		    var r = Math.floor(Math.random() * sum_of_unminted) + 1;
-		    if(arr.indexOf(r) === -1) arr.push(r);
+	var arr = [];
+	while(arr.length < Math.min(BATCHSIZE,sum_of_unminted) ){
+	    var r = Math.floor(Math.random() * sum_of_unminted) + 1;
+	    if(arr.indexOf(r) === -1) arr.push(r);
+	}
+	let Q = ''
+	arr.forEach((order_number,i)=>{
+		Q+= "rn="+order_number
+		if(i!==BATCHSIZE-1){
+			Q+=' OR '
 		}
-		let q = ''
-		arr.forEach((ID,i)=>{
-			q+= "rn="+ID
-			if(i!==BATCHSIZE-1){
-				q+=' OR '
-			}
-		})
-		return q
-	})()+' ORDER BY rn';
+	})
+	let query = 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY ID) AS rn FROM unminted ) q WHERE '+Q+' ORDER BY rn';
 	console.log( "QUERY :::::::::: ", query ," :::::::::: ")
-	client.query(query,function(err,res,fields){
-		if (err) throw err;
-		console.log("Pulled "+BATCHSIZE+" random potato IDs",res)
-		client.query('SELECT *,ROW_NUMBER() OVER (ORDER BY rarity DESC) AS rare FROM potatoes WHERE '+(function(){
-			let q = ''
+	if(arr.length){
+		client.query(query,function(err,res,fields){
+			if (err) throw err;
+			console.log("Pulled "+BATCHSIZE+" random potato IDs",res)
+			let ID_query_chain = ''	
 			res.forEach((row,i)=>{
-				q+= "ID="+row.ID
+				ID_query_chain+= "ID="+row.ID
 				if(i!==res.length-1){
-					q+=' OR '
+					ID_query_chain+=' OR '
 				}
 			})
 			console.log( "RUNNING ID PULLING QUERY :::::::::::::::::::: ")
-			return q
-		})(),function(err,res,fields){
-			if (err) throw err;
-			console.log("Pulled "+BATCHSIZE+" random potatoes with attributes",res)
-			let leftArms = []
-			let rightArms = []
-			let hats = []
-			let ears = []
-			let eyes= []
-			let noses = []
-			let mouths = []
-			let shoes = []
-			let backgrounds = []
-			let rarityRanks = []
-			let gradeBonuses = []
-			res.forEach((p)=>{
-				leftArms.push(p.leftarm)
-				rightArms.push(p.rightarm)
-				hats.push(p.hat)
-				ears.push(p.ears)
-				eyes.push(p.eyes)
-				noses.push(p.nose)
-				mouths.push(p.mouth)
-				shoes.push(p.shoes)
-				backgrounds.push(p.background)
-				rarityRanks.push(p.rare)
-				gradeBonuses.push(0)
-			})
-			
-			insistTX(()=>{
-				return potatoNFT_Contract.methods.mintPotatoHeads(machineAddress,backgrounds, leftArms, rightArms, hats, ears, eyes, noses, mouths,shoes, rarityRanks,gradeBonuses)
-			},()=>{
-				console.log('Batch '+BATCHES+' minted')
-				BATCHES -=1
-				mintBatch()
-			})
+			client.query('SELECT *,ROW_NUMBER() OVER (ORDER BY rarity DESC) AS rare FROM potatoes WHERE '+ID_query_chain,function(err,res,fields){
+				if (err) throw err;
+				console.log("Pulled "+BATCHSIZE+" random potatoes with attributes",res)
+				let leftArms = []
+				let rightArms = []
+				let hats = []
+				let ears = []
+				let eyes= []
+				let noses = []
+				let mouths = []
+				let shoes = []
+				let backgrounds = []
+				let rarityRanks = []
+				let gradeBonuses = []
+				res.forEach((p)=>{
+					leftArms.push(p.leftarm)
+					rightArms.push(p.rightarm)
+					hats.push(p.hat)
+					ears.push(p.ears)
+					eyes.push(p.eyes)
+					noses.push(p.nose)
+					mouths.push(p.mouth)
+					shoes.push(p.shoes)
+					backgrounds.push(p.background)
+					rarityRanks.push(p.rare)
+					gradeBonuses.push(0)
+				})
+				
+				insistTX(()=>{
+					return potatoNFT_Contract.methods.mintPotatoHeads(machineAddress,backgrounds, leftArms, rightArms, hats, ears, eyes, noses, mouths,shoes, rarityRanks,gradeBonuses)
+				},()=>{
+					console.log('Batch #'+BATCHES+' minted, deleting IDs from the list of unminted potatoes:::', ID_query_chain)
+					BATCHES -=1
+
+					client.query('DELETE FROM unminted WHERE '+ID_query_chain,function(err,res,fields){
+						console.log('Deleted the minted IDs from the unminted list... checking for next batch to mint')
+						sum_of_unminted -= BATCHSIZE
+						mintBatch()	
+					})
+					
+				})
 
 
+			})
+			//collect ID's & remove them once batch mint is successful
+			//
 		})
-		//collect ID's & remove them once batch mint is successful
-		//
-	})
+	}else{
+		console.log("BATCHSIZE is 0, which could mean that all 8888888 have been minted ....\nFINISHED")
+	}
 
 }
 
