@@ -100,7 +100,7 @@ function mintBatch(){
 			})
 			
 			insistTX(()=>{
-				return potatoNFT_Contract.methods.mintPotatoHeads(backgrounds, leftArms, rightArms, hats, ears, eyes, noses, mouths,shoes, rarityRanks,gradeBonuses)
+				return potatoNFT_Contract.methods.mintPotatoHeads(machineAddress,backgrounds, leftArms, rightArms, hats, ears, eyes, noses, mouths,shoes, rarityRanks,gradeBonuses)
 			},()=>{
 				console.log('Batch '+BATCHES+' minted')
 				BATCHES -=1
