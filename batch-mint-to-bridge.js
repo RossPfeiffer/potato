@@ -84,7 +84,7 @@ function mintBatch(){
 			let shoes = []
 			let backgrounds = []
 			let rarityRanks = []
-			let gradebonuses = []
+			let gradeBonuses = []
 			res.forEach((p)=>{
 				leftArms.push(p.leftarm)
 				rightArms.push(p.rightarm)
@@ -96,11 +96,11 @@ function mintBatch(){
 				shoes.push(p.shoes)
 				backgrounds.push(p.background)
 				rarityRanks.push(p.rare)
-				gradebonuses.push(0)
+				gradeBonuses.push(0)
 			})
 			
 			insistTX(()=>{
-				return potatoNFT_Contract.methods.mintPotatoHeads(backgrounds, leftArms,rightArms, hats, ears, eyes, noses, mouths,shoes, rarityRanks,gradeBonuses)
+				return potatoNFT_Contract.methods.mintPotatoHeads(backgrounds, leftArms, rightArms, hats, ears, eyes, noses, mouths,shoes, rarityRanks,gradeBonuses)
 			},()=>{
 				console.log('Batch '+BATCHES+' minted')
 				BATCHES -=1
