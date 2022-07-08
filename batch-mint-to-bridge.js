@@ -5,7 +5,9 @@ var env = require("./env.js")
 var Web3 = require('web3');
 const client = require('./connection.js')
 
+var NETWORK = env.network
 var network = env.network ? env.polyProviders[0] : env.ethProviders[0]
+
 
 const polygon_web3 = new Web3(network)
 var blue_machine = polygon_web3.eth.accounts.wallet.add(keys.wallet);
@@ -117,7 +119,7 @@ function mintBatch(){
 
 function insistTX(txf,donef,timeout){
 	//f = function(){return potatoContract.methods.newPieces(names, ipfs_links, metas)}
-	function TX(){txf().send({ from:machine_address, gasLimit: NETWORK?2500000:25000000 }, function(r,hash){
+	function TX(){txf().send({ from:machineAddress, gasLimit: NETWORK?2500000:25000000 }, function(r,hash){
 		if(r) throw r;
 		console.log( "Tx Hash: ", hash )
 		let hashChecks = 0
