@@ -7,7 +7,7 @@ var env = {}
 	env = {
 		live: false,
 		test: true,
-		ethProviders:[ 'https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/eth/ropsten', 'https://ropsten.infura.io/v3/'+keys.infura],
+		ethProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/eth/ropsten', 'https://ropsten.infura.io/v3/'+keys.infura],
 		polyProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/polygon/mumbai'],
 		bscProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/testnet']
 	}
@@ -23,5 +23,12 @@ if(0)
 		bscProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/mainnet'],
 	}
 }
+
+var NETWORK = true
+env.potatoNFT = NETWORK ? '0x3963B4b48529c990EF8FC4882f2C03b83b3B91e2':'0xcb8ceea2129ee79fdde35c7d3bc3aa88659aa99f'
+env.swapNFT = NETWORK ? '0x3963B4b48529c990EF8FC4882f2C03b83b3B91e2':'0xcb8ceea2129ee79fdde35c7d3bc3aa88659aa99f'
+env.potatoToken = '0x0A72ffd37b8eb9cC72A9abF6B15d6Dac9d0BFA89'
+env.swapToken = '0x0A72ffd37b8eb9cC72A9abF6B15d6Dac9d0BFA89'
+
 
 module.exports = env
