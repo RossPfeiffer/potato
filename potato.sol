@@ -103,6 +103,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         uint nose;
         uint mouth;
         uint shoes;
+        uint rarityrank;
     }
 
     function newPiece(string memory image, string memory desc, uint meta) public{
@@ -150,8 +151,9 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         uint256 eyes,
         uint256 nose,
         uint256 mouth,
-        uint256 shoes
-    ) public{
+        uint256 shoes,
+        uint256 rarityrank
+    ) public {
         require(worker[msg.sender] && potatoes<MAX_POTATO_COUNT);
         Potato storage _potato = potato[potatoes];
         _potato.background = background;
@@ -163,6 +165,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         _potato.nose = nose;
         _potato.mouth = mouth;
         _potato.shoes = shoes;
+        _potato.rarityrank = rarityrank;
         _mint(buyer,potatoes);
         emit MintPotatoHead(buyer,potatoes);
         potatoes +=1;
@@ -201,7 +204,9 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         uint eyes,
         uint nose,
         uint mouth,
-        uint shoes){
+        uint shoes,
+        uint rarityrank,
+        uint metascore){
         owner = _owners[tokenId];
         Potato storage P = potato[tokenId];
         background = P.background;
@@ -213,6 +218,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         nose = P.nose;
         mouth = P.mouth;
         shoes = P.shoes;
+        metascore = P.rarityrank;
     }
     
     function tokenURI(uint256 ID) public view virtual override returns (string memory) {
