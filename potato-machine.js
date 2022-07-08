@@ -66,7 +66,7 @@ client.connect(function(err){
 
 function listenToEvents(){
 	setInterval(function(){
-		swapTOKEN_contract.getPastEvents('allEvents',function(e,x){
+		swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:20814338},function(e,x){
 			console.log(e)
 			console.log('============')
 			console.log(x)

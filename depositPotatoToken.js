@@ -4,7 +4,7 @@ var Web3 = require('web3');
 
 
 const bsc_web3 = new Web3(env.bscProviders[0])
-var machineAddress = bsc_web3.eth.accounts.wallet.add(keys.wallet);
+var machine = bsc_web3.eth.accounts.wallet.add(keys.wallet);
 
 //Binance Contracts
 var potatoERC_Address = env.potatoToken//
@@ -18,26 +18,26 @@ var swapTOKEN_contract = new bsc_web3.eth.Contract(swapTOKEN_ABI, swapTOKEN_addr
 
 insistTX(()=>{
 	console.log("going for the approve of the erc20 token")
-	return potatoTokenContract.methods.approve(machineAddress, 1)
+	return potatoTokenContract.methods.approve(env.swapToken, 1)
 },()=>{
-	console.log("Approved swap contracts use of potatoTokenContract["+ potatoTokenContract.address+']')
+	console.log("Approved swap contracts use of potatoTokenContract["+ env.potatoToken+']')
 	console.log('attempting to deposit tokens into contract')
 	insistTX(()=>{
-		return swapTOKEN_contract.methods.depositPotatoToken(machineAddress, 1)
+		return swapTOKEN_contract.methods.depositPotatoToken(machine.address, 1)
 	},()=>{
-		console.log(machineAddress,"should have an NFT now")
+		console.log(machine.address,"should have an NFT now")
 	})
 	
 })
 
 function insistTX(txf,donef,timeout){
-	function TX(){txf().send({ from:machineAddress, gasLimit: 25000000 }, function(r,hash){
+	function TX(){txf().send({ from:machine.address, gasLimit: 25000000 }, function(r,hash){
 		if(r) throw r;
 		console.log( "Tx Hash: ", hash )
 		let hashChecks = 0
 		function readHash(){
 			setTimeout(function(){
-				polygon_web3.eth.getTransactionReceipt(hash)
+				bsc_web3.eth.getTransactionReceipt(hash)
 				.then(function(res){
 					//
 					if(res === null){
