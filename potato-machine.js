@@ -17,7 +17,7 @@ var blue_machine = polygon_web3.eth.accounts.wallet.add(keys.wallet);
 
 //Mainnet: https://bsc-dataseed4.binance.org/
 //Testnet: https://data-seed-prebsc-1-s1.binance.org:8545/
-const bsc_web3 = new Web3(env.bscProviders[0])
+const bsc_web3 = new Web3( new Web3.providers.WebsocketProvider(env.bscProviders[0]) )
 var orange_machine = bsc_web3.eth.accounts.wallet.add(keys.wallet);
 
 var machineAddress = orange_machine.address;

@@ -107,6 +107,10 @@ function mintBatch(){
 					client.query('DELETE FROM unminted WHERE '+ID_query_chain,function(err,res,fields){
 						console.log('Deleted the minted IDs from the unminted list... checking for next batch to mint')
 						sum_of_unminted -= BATCHSIZE
+
+
+
+						//add them to bridge table
 						mintBatch()	
 					})
 					
