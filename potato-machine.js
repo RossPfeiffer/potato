@@ -71,11 +71,12 @@ function listenToEvents(){
 	swapNFT_contract.getPastEvents('allEvents',function(e,x){
 		console.log(e,x)
 	})
-	swapTOKEN_contract.events.DepositPotatoToken()
+	
+	/*swapTOKEN_contract.events.DepositPotatoToken()
 		.on('data', catchToken_swap )
 	    .on('changed', changed => console.log(changed))
 	    .on('error', err => {throw err})
-	    .on('connected', str => console.log('connected',str))
+	    .on('connected', str => console.log('connected',str))*/
 
 	/*swapNFT_contract.events.PotatoReceived()
 		.on('data', catchNFT_swap)
