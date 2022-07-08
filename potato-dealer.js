@@ -5,12 +5,14 @@ function PotatoDealer(client){
 }
 
 PotatoDealer.prototype.benchTicket = function(p,f){
+	console.log('A request for Tokens from a Potato NFT that has been benched')
 	this.queries.push({type:true,p:p,f:f})
 	if(this.queries.length == 1){
 		this.next();
 	}
 };
 PotatoDealer.prototype.pullTicket = function(p,f){
+	console.log('A request for an NFT from a BSC Tokens deposited')
 	this.queries.push({type:false,p:p,f:f})
 	if(this.queries.length == 1){
 		this.next();
@@ -30,10 +32,12 @@ PotatoDealer.prototype.next = function(){
 					query += ','
 				}
 			})
+			console.log("--------------- Running ---------------", query)
 			this.client.query(query,function(err,res,fields){
 				if(err) throw err;
 				//run call back to send tokens for the deposited NFTs
 				this.bridgeSize += p.length
+				console.log("running block tx")
 				work.f()
 				this.next()
 			})
@@ -60,6 +64,7 @@ PotatoDealer.prototype.next = function(){
 				console.log("RESULTS from complex ROW_NUMBER query", res)
 				query = 'DELETE FROM bridge WHERE '+ p;
 				let pIDs= [];
+				
 				res.forEach((potato,i)=>{
 					let pID = potato.ID;
 					query += "ID = "+pID;
@@ -68,8 +73,10 @@ PotatoDealer.prototype.next = function(){
 					}
 					pIDs.push(pID)
 				})
+
 				this.client.query(query,function(err,res,fields){
 					if(err) throw err;
+					console.log("running block tx")
 					work.f(pIDs)
 					// subtract from tracked bridge table size.
 					this.bridgeSize -= count

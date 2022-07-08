@@ -24,12 +24,12 @@ if(0)
 	}
 }
 
-var NETWORK = true
-env.network = NETWORK;
-env.potatoNFT = NETWORK ? '0x3963B4b48529c990EF8FC4882f2C03b83b3B91e2':'0xcb8ceea2129ee79fdde35c7d3bc3aa88659aa99f'
-env.swapNFT = NETWORK ? '0x5b4cc928e01b3ba9071d51ac7559e3e08f46d36c':'0xcb8ceea2129ee79fdde35c7d3bc3aa88659aa99f'
+var MUMBAI = true
+env.network = MUMBAI;
+env.potatoNFT = MUMBAI ? '0x3963B4b48529c990EF8FC4882f2C03b83b3B91e2':'0xcb8ceea2129ee79fdde35c7d3bc3aa88659aa99f'
+env.swapNFT = MUMBAI ? '0x5b4cc928e01b3ba9071d51ac7559e3e08f46d36c':'0xcb8ceea2129ee79fdde35c7d3bc3aa88659aa99f'
 env.potatoToken = '0x0A72ffd37b8eb9cC72A9abF6B15d6Dac9d0BFA89'
-env.swapToken = '0x0A72ffd37b8eb9cC72A9abF6B15d6Dac9d0BFA89'
+env.swapToken = '0x7d3FD5d44bcc9c85bBf4ae8DE0beB3248634F9C8'
 
 
 module.exports = env
