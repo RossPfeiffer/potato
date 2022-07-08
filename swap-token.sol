@@ -49,7 +49,7 @@ contract SwapToken{
     function depositPotatoToken(address forWhom, uint256 amount) external payable{
         address sender = msg.sender;
         uint cost = amount*FEE;
-        require(msg.value == cost && amount<=MAX_SWAP && POTATO.transferFrom(sender, THIS, amount));
+        require(msg.value == cost && amount<=MAX_SWAP && amount==(amount/1e18)*1e18/*only send flat amounts*/ && POTATO.transferFrom(sender, THIS, amount));
         collections += cost;
         emit DepositPotatoToken(sender, forWhom, amount);
     }
