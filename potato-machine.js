@@ -77,7 +77,7 @@ function listenToEvents(){
 				//
 			})
 		})
-		swapNFT_contract.getPastEvents('allEvents',{fromBlock:latest_poly_block_scanned},function(e,x){
+		swapNFT_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned},function(e,x){
 			console.log(e)
 			console.log('============')
 			console.log(x)
