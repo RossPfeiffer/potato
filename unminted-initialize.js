@@ -26,6 +26,7 @@ function stackUnminted(){
 		})
 	}else{
 		console.log("Done creating stack for the unminted potatoes")
+		client.end()
 	}
 }
 

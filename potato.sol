@@ -104,6 +104,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         uint mouth;
         uint shoes;
         uint rarityrank;
+        uint gradeBonus;
     }
 
     function newPiece(string memory image, string memory desc, uint meta) public{
@@ -140,9 +141,9 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         worker[workerAddress] = false;
     }
     
-    event MintPotatoHead(address buyer, uint potatoID);
+    event MintPotatoHead(address receiver, uint potatoID);
     function mintPotatoHead(
-        address buyer,
+        address receiver,
         uint256 background,
         uint256 leftArm,
         uint256 rightArm,
@@ -152,7 +153,8 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         uint256 nose,
         uint256 mouth,
         uint256 shoes,
-        uint256 rarityrank
+        uint256 rarityrank,
+        uint gradeBonus
     ) public {
         require(worker[msg.sender] && potatoes<MAX_POTATO_COUNT);
         Potato storage _potato = potato[potatoes];
@@ -166,9 +168,44 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         _potato.mouth = mouth;
         _potato.shoes = shoes;
         _potato.rarityrank = rarityrank;
-        _mint(buyer,potatoes);
-        emit MintPotatoHead(buyer,potatoes);
+        _potato.gradeBonus = gradeBonus;
+        _mint(receiver,potatoes);
+        emit MintPotatoHead(receiver,potatoes);
         potatoes +=1;
+    }
+    function mintPotatoHead(
+        address receiver,
+        uint256[] memory background,
+        uint256[] memory leftArm,
+        uint256[] memory rightArm,
+        uint256[] memory hat,
+        uint256[] memory ears,
+        uint256[] memory eyes,
+        uint256[] memory nose,
+        uint256[] memory mouth,
+        uint256[] memory shoes,
+        uint256[] memory rarityrank,
+        uint256[] memory gradeBonus
+    ) public {
+        require(worker[msg.sender] && potatoes<MAX_POTATO_COUNT);
+        Potato storage _potato = potato[potatoes];
+        uint L = eyes.length;
+        for(uint i; i<L;i+=1){
+            _potato.background = background[i];
+            _potato.leftArm = leftArm[i];
+            _potato.rightArm = rightArm[i];
+            _potato.hat = hat[i];
+            _potato.ears = ears[i];
+            _potato.eyes = eyes[i];
+            _potato.nose = nose[i];
+            _potato.mouth = mouth[i];
+            _potato.shoes = shoes[i];
+            _potato.rarityrank = rarityrank[i];
+            _potato.gradeBonus = gradeBonus[i];
+            _mint(receiver,potatoes);
+            emit MintPotatoHead(receiver,potatoes);
+            potatoes +=1;
+        }
     }
 
     /**
@@ -218,7 +255,8 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         nose = P.nose;
         mouth = P.mouth;
         shoes = P.shoes;
-        metascore = P.rarityrank;
+        rarityrank = P.rarityrank;
+        metascore = metapoints[P.background] + metapoints[P.leftArm] + metapoints[P.rightArm] + metapoints[P.hat] + metapoints[P.ears] + metapoints[P.eyes] + metapoints[P.nose] + metapoints[P.mouth] + metapoints[P.shoes] + P.gradeBonus;
     }
     
     function tokenURI(uint256 ID) public view virtual override returns (string memory) {
