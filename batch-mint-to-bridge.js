@@ -60,10 +60,13 @@ function mintBatch(){
 			if (err) throw err;
 			console.log("Pulled "+BATCHSIZE+" random potato IDs",res)
 			let ID_query_chain = ''	
+			let insert_into_bridge = ''	
 			res.forEach((row,i)=>{
 				ID_query_chain+= "ID="+row.ID
+				insert_into_bridge+= '(ID)'
 				if(i!==res.length-1){
 					ID_query_chain+=' OR '
+					insert_into_bridge+=','
 				}
 			})
 			console.log( "RUNNING ID PULLING QUERY :::::::::::::::::::: ")
@@ -105,10 +108,11 @@ function mintBatch(){
 						console.log('Deleted the minted IDs from the unminted list... checking for next batch to mint')
 						sum_of_unminted -= BATCHSIZE
 
-
-
 						//add them to bridge table
 						mintBatch()	
+						client.query("INSERT INTO bridge (ID) VALUES) "+insert_into_bridge,function(){
+							console.log(insert_into_bridge, ":::::: ADDED TO BRIDGE")		
+						})
 					})
 					
 				})

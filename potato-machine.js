@@ -66,15 +66,27 @@ client.connect(function(err){
 
 function listenToEvents(){
 	setInterval(function(){
-		swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:20814338},function(e,x){
+		swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned},function(e,x){
 			console.log(e)
 			console.log('============')
 			console.log(x)
+			x.forEach((event)=>{
+				if(event.blockNumber>_.latest_bsc_block_scanned){
+					_.latest_bsc_block_scanned = event.blockNumber
+				}
+				//
+			})
 		})
-		swapNFT_contract.getPastEvents('allEvents',function(e,x){
+		swapNFT_contract.getPastEvents('allEvents',{fromBlock:latest_poly_block_scanned},function(e,x){
 			console.log(e)
 			console.log('============')
 			console.log(x)
+			x.forEach((event)=>{
+				if(event.blockNumber>_.latest_poly_block_scanned){
+					_.latest_bsc_block_scanned = event.blockNumber
+				}
+				//
+			})
 		})	
 	},3000)
 
