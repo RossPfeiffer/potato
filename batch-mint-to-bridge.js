@@ -1,5 +1,5 @@
-let BATCHSIZE = 10
-let BATCHES = 5
+let BATCHSIZE = 1
+let BATCHES = 10
 var keys = require("./keys.js")
 var env = require("./env.js")
 var Web3 = require('web3');
