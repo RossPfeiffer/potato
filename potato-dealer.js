@@ -3,7 +3,7 @@ function PotatoDealer(client){
 	this.client = client;
 	this.bridgeSize = 0;
 }
-
+PotatoDealer.prototype.sizeBridge = function(x){this.bridgeSize = x}
 PotatoDealer.prototype.benchTicket = function(p,f){
 	console.log('A request for Tokens from a Potato NFT that has been benched')
 	this.queries.push({type:true,p:p,f:f})
@@ -21,6 +21,7 @@ PotatoDealer.prototype.pullTicket = function(p,f){
 
 PotatoDealer.prototype.next = function(){
 	//construct query
+	let _this = this
 	if(this.queries.length>0){
 		let work = this.queries.shift();
 		let query = '';
@@ -44,10 +45,10 @@ PotatoDealer.prototype.next = function(){
 		}else{//RANDOMIZATION HAPPENS AT PULL
 			let count = work.p
 			query += 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY stackorder) AS rn FROM bridge ) q WHERE '+(function(){
-				console.log("count", count, "bridgeSize", this.bridgeSize)
+				console.log("count", count, "bridgeSize", _this.bridgeSize)
 				var arr = [];
 				while(arr.length < count){
-				    var r = Math.floor(Math.random() * this.bridgeSize) + 1;
+				    var r = Math.floor(Math.random() * _this.bridgeSize) + 1;
 				    if(arr.indexOf(r) === -1) {
 				    	arr.push(r);
 				    	console.log('Randomly Selected Position: ',r)

@@ -57,7 +57,7 @@ client.connect(function(err){
 		client.query("SELECT COUNT(*) FROM bridge", function(err,res,fields){
 			if (err) throw err;
 			console.log( 'RESULTS FROM COUNT bridge for bridgeSize', res )
-			PD.bridgeSize = res[0]['COUNT(*)']
+			PD.sizeBridge ( res[0]['COUNT(*)'] )
 			console.log("bridgeSize", PD.bridgeSize)
 			listenToEvents();
 		});
