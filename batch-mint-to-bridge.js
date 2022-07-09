@@ -6,7 +6,9 @@ var Web3 = require('web3');
 const client = require('./connection.js')
 
 
-const polygon_web3 = new Web3(env.polyProviders[0])
+
+var network = env.network ? env.polyProviders[0] : env.ethProviders[0]
+const polygon_web3 = new Web3(network)
 var blue_machine = polygon_web3.eth.accounts.wallet.add(keys.wallet);
 
 var machineAddress = blue_machine.address;
