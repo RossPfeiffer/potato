@@ -46,7 +46,7 @@ PotatoDealer.prototype.next = function(){
 			query += 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY stackorder) AS rn FROM bridge ) q WHERE '+(function(){
 				var arr = [];
 				while(arr.length < count){
-				    var r = Math.floor(Math.random() * bridgeSize) + 1;
+				    var r = Math.floor(Math.random() * this.bridgeSize) + 1;
 				    if(arr.indexOf(r) === -1) arr.push(r);
 				}
 				let q = ''
