@@ -104,9 +104,10 @@ function mintBatch(){
 
 						//add them to bridge table	
 						client.query("INSERT INTO bridge (ID) VALUES "+insert_into_bridge,function(){
-							console.log(insert_into_bridge, ":::::: ADDED TO BRIDGE")		
+							console.log(insert_into_bridge, ":::::: ADDED TO BRIDGE")
+							mintBatch()
 						})
-						mintBatch()
+						
 					})
 				})
 

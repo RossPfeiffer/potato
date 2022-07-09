@@ -39,9 +39,10 @@ PotatoDealer.prototype.next = function(){
 				//run call back to send tokens for the deposited NFTs
 				_this.bridgeSize += p.length
 				console.log("running block tx")
-				work.f()
-				_this.queries.shift();
-				_this.next()
+				work.f(null,function(){
+					_this.queries.shift();
+					_this.next()	
+				})
 			})
 		}else{//RANDOMIZATION HAPPENS AT PULL
 			let count = work.p
@@ -84,11 +85,12 @@ PotatoDealer.prototype.next = function(){
 				_this.client.query(query,function(err,res,fields){
 					if(err) throw err;
 					console.log("running block tx")
-					work.f(pIDs)
-					// subtract from tracked bridge table size.
-					_this.bridgeSize -= count
-					_this.queries.shift();
-					_this.next()
+					work.f(pIDs,function(){
+						// subtract from tracked bridge table size.
+						_this.bridgeSize -= count
+						_this.queries.shift();
+						_this.next()
+					})
 				})
 			})
 
