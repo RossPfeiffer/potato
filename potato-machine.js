@@ -58,6 +58,7 @@ client.connect(function(err){
 			if (err) throw err;
 			console.log( 'RESULTS FROM COUNT bridge for bridgeSize', res )
 			PD.bridgeSize = res[0]['COUNT(*)']
+			console.log("bridgeSize", PD.bridgeSize)
 			listenToEvents();
 		});
 	});

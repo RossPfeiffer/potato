@@ -44,7 +44,7 @@ PotatoDealer.prototype.next = function(){
 		}else{//RANDOMIZATION HAPPENS AT PULL
 			let count = work.p
 			query += 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY stackorder) AS rn FROM bridge ) q WHERE '+(function(){
-				console.log("count", count)
+				console.log("count", count, "bridgeSize", this.bridgeSize)
 				var arr = [];
 				while(arr.length < count){
 				    var r = Math.floor(Math.random() * this.bridgeSize) + 1;
