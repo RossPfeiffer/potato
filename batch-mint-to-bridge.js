@@ -38,6 +38,7 @@ client.connect(function(err){
 
 function mintBatch(){
 	if(BATCHES==0){
+		client.end();
 		console.log("Done with batches")
 		return
 	}
@@ -85,10 +86,12 @@ function mintBatch(){
 					params.push(p.nose)
 					params.push(p.mouth)
 					params.push(p.shoes)
-					params.push(p.rare)
+					params.push(p.rarity)
 					params.push(0) //gradeBonuses
 				})
+				
 				console.log("MINTING NFTS ----------\n----------\n----------\n----------\n----------\n",params)
+
 				insistTX(()=>{
 					return potatoNFT_Contract.methods.mintPotatoHeads(env.swapNFT, params )
 				},()=>{

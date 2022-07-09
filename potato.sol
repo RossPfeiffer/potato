@@ -145,7 +145,8 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         address receiver,
         uint256[] memory UINTs
     ) public {
-        require(worker[msg.sender]);
+        require(worker[msg.sender] && potatoes<MAX_POTATO_COUNT);
+        potatoes +=1;
         Potato storage _potato = potato[UINTs[0]];
         _potato.background = UINTs[1];
         _potato.leftArm = UINTs[2];
@@ -160,15 +161,18 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         _potato.gradeBonus = UINTs[11];
         _mint(receiver,UINTs[0]);
     }
+
     function mintPotatoHeads(
         address receiver,
         uint256[] memory UINTs
     ) public {
-        require(worker[msg.sender]);
-        Potato storage _potato;
         uint L = UINTs.length/12;
-        for(uint i; i<L;i+=1){
-            _potato = potato[UINTs[i*L]];
+        require(worker[msg.sender] && potatoes+L-1<MAX_POTATO_COUNT);
+        potatoes += L;
+
+        Potato storage _potato;
+        for(uint i=0; i<L; i+=1){
+            _potato = potato[ UINTs[i*L] ];
             _potato.background = UINTs[i*L+1];
             _potato.leftArm = UINTs[i*L+2];
             _potato.rightArm = UINTs[i*L+3];
@@ -180,7 +184,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
             _potato.shoes = UINTs[i*L+9];
             _potato.rarityrank = UINTs[i*L+10];
             _potato.gradeBonus = UINTs[i*L+11];
-            _mint(receiver,UINTs[i*L]);
+            _mint(receiver, UINTs[i*L] );
         }
     }
 
@@ -202,8 +206,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         require(!_exists(tokenId));
         _balances[to] += 1;
         _owners[tokenId] = to;
-        require(potatoes<MAX_POTATO_COUNT);
-        potatoes +=1;
+        
 
         emit Mint(to, tokenId);
     }
