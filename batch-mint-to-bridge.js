@@ -72,7 +72,7 @@ function mintBatch(){
 			console.log( "RUNNING ID PULLING QUERY :::::::::::::::::::: ")
 			client.query('SELECT *,ROW_NUMBER() OVER (ORDER BY rarity DESC) AS rare FROM potatoes WHERE '+ID_query_chain,function(err,res,fields){
 				if (err) throw err;
-				console.log("Pulled "+BATCHSIZE+" random potatoes with attributes",res)
+				console.log("Pulled "+BATCHSIZE+" random potatoes with attributes")
 				let leftArms = []
 				let rightArms = []
 				let hats = []
