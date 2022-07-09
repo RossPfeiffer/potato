@@ -66,39 +66,42 @@ client.connect(function(err){
 
 function listenToEvents(){
 	console.log("Listening for Tokens(BSC) & NFTs(POLY)")
-	function catchTokens(){
-		swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned},function(e,x){
-			console.log('checked bsc')
-			if(e) console.error(e)
-			x.forEach((event)=>{
-				console.log(event)
-				if(event.blockNumber>_.latest_bsc_block_scanned){
-					_.latest_bsc_block_scanned = event.blockNumber+1
-				}
-				if(event.event == "DepositPotatoToken"){
-					catchToken_swap(event)
-				}
-			})
-			setTimeout(catchTokens,3000)
-		})
-	}
+	catchTokens()
+	catchNFTs()
+}
 
-	function catchNFTs(){
-		swapNFT_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned},function(e,x){
-			console.log('checked poly')
-			if(e) console.error(e)
-			x.forEach((event)=>{
-				console.log(event)
-				if(event.blockNumber>_.latest_poly_block_scanned){
-					_.latest_poly_block_scanned = event.blockNumber+1
-				}
-				if(event.event == "PotatoReceived"){
-					catchNFT_swap(event)
-				}
-			})
-			setTimeout(catchNFTs,3000)
-		})	
-	}
+function catchTokens(){
+	swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned},function(e,x){
+		console.log('----------checked bsc----------')
+		if(e) console.error(e)
+		x.forEach((event)=>{
+			console.log(event)
+			if(event.blockNumber>_.latest_bsc_block_scanned){
+				_.latest_bsc_block_scanned = event.blockNumber+1
+			}
+			if(event.event == "DepositPotatoToken"){
+				catchToken_swap(event)
+			}
+		})
+		setTimeout(catchTokens,3000)
+	})
+}
+
+function catchNFTs(){
+	swapNFT_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned},function(e,x){
+		console.log('----------checked poly----------')
+		if(e) console.error(e)
+		x.forEach((event)=>{
+			console.log(event)
+			if(event.blockNumber>_.latest_poly_block_scanned){
+				_.latest_poly_block_scanned = event.blockNumber+1
+			}
+			if(event.event == "PotatoReceived"){
+				catchNFT_swap(event)
+			}
+		})
+		setTimeout(catchNFTs,3000)
+	})	
 }
 
 function catchToken_swap(event){
