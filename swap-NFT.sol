@@ -14,7 +14,7 @@ contract SwapPotato{
     }
 
     modifier onlyOwner {
-      require(msg.sender == contractOwner);
+      require(msg.sender == contractOwner || worker[msg.sender]) ;
       _;
     }
 

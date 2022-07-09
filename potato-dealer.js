@@ -23,7 +23,7 @@ PotatoDealer.prototype.next = function(){
 	//construct query
 	let _this = this
 	if(this.queries.length>0){
-		let work = this.queries.shift();
+		let theWork = this.queries[0]//.shift();
 		let query = '';
 		if(work.type){
 			query += 'INSERT INTO bridge (ID) VALUES ';
@@ -40,6 +40,7 @@ PotatoDealer.prototype.next = function(){
 				_this.bridgeSize += p.length
 				console.log("running block tx")
 				work.f()
+				_this.queries.shift();
 				_this.next()
 			})
 		}else{//RANDOMIZATION HAPPENS AT PULL
@@ -86,6 +87,7 @@ PotatoDealer.prototype.next = function(){
 					work.f(pIDs)
 					// subtract from tracked bridge table size.
 					_this.bridgeSize -= count
+					_this.queries.shift();
 					_this.next()
 				})
 			})
