@@ -7,7 +7,6 @@ const client = require('./connection.js')
 const pDealer = require('./potato-dealer.js')
 var PD = new pDealer(client);
 
-var NETWORK = true
 var network = env.network ? env.polyProviders[0] : env.ethProviders[0]
 
 //Mainnet: 'https://mainnet.infura.io/v3/'+keys.infura
