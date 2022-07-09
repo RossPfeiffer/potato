@@ -23,7 +23,7 @@ PotatoDealer.prototype.next = function(){
 	//construct query
 	let _this = this
 	if(this.queries.length>0){
-		let theWork = this.queries[0]//.shift();
+		let work = this.queries[0]//.shift();
 		let query = '';
 		if(work.type){
 			query += 'INSERT INTO bridge (ID) VALUES ';
