@@ -65,46 +65,38 @@ client.connect(function(err){
 });
 
 function listenToEvents(){
-	setInterval(function(){
+	function catchTokens(){
 		swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned},function(e,x){
-			console.log(e)
-			console.log('============')
-			console.log(x)
+			if(e) console.error(e)
 			x.forEach((event)=>{
 				if(event.blockNumber>_.latest_bsc_block_scanned){
-					_.latest_bsc_block_scanned = event.blockNumber
+					_.latest_bsc_block_scanned = event.blockNumber+1
 				}
-				//
+				if(event.event == "DepositPotatoToken"){
+					catchToken_swap(event)
+				}
 			})
+			catchTokens()
 		})
+	}
+
+	function catchNFTs(){
 		swapNFT_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned},function(e,x){
-			console.log(e)
-			console.log('============')
-			console.log(x)
+			if(e) console.error(e)
 			x.forEach((event)=>{
 				if(event.blockNumber>_.latest_poly_block_scanned){
-					_.latest_bsc_block_scanned = event.blockNumber
+					_.latest_poly_block_scanned = event.blockNumber+1
 				}
-				//
+				if(event.event == "PotatoReceived"){
+					catchNFT_swap(event)
+				}
 			})
+			catchNFTs()
 		})	
-	},3000)
-
-	/*swapTOKEN_contract.events.DepositPotatoToken()
-		.on('data', catchToken_swap )
-	    .on('changed', changed => console.log(changed))
-	    .on('error', err => {throw err})
-	    .on('connected', str => console.log('connected',str))
-
-	swapNFT_contract.events.PotatoReceived()
-		.on('data', catchNFT_swap)
-	    .on('changed', changed => console.log(changed))
-	    .on('error', err => {throw err})
-	    .on('connected', str => console.log('connected',str))*/
+	}
 }
 
 function catchToken_swap(event){
-	//
 	console.log("Tokens received ... going to send POLY POTATO")
 	let swapper = event.returnValues.from;
 	let count = event.returnValues.amount;
