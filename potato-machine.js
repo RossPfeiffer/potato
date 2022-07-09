@@ -65,9 +65,15 @@ client.connect(function(err){
 });
 
 function listenToEvents(){
-	console.log("Listening for Tokens(BSC) & NFTs(POLY)")
-	catchTokens()
-	catchNFTs()
+	insistTX(polygon_web3,()=>{
+		return swapNFT_contract.methods.sendPotato(machineAddress, [917954])//swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
+	},()=>{
+		console.log("Tried sending, test...")
+	})
+	
+	//console.log("Listening for Tokens(BSC) & NFTs(POLY)")
+	//catchTokens()
+	//catchNFTs()
 }
 
 function catchTokens(){
@@ -76,7 +82,7 @@ function catchTokens(){
 		let swapper = event.returnValues.from;
 		let count = event.returnValues.amount;
 		PD.pullTicket(count, function(randomPotatoes,callback){
-			insistTX(polygon_web3,()=>{
+			insistTX(polygon_web3,()=>{//917954
 				return swapNFT_contract.methods.sendPotato(swapper, randomPotatoes)//swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
 			},()=>{
 				console.log("Successfully sent "+swapper+' these potatoes:', randomPotatoes)
