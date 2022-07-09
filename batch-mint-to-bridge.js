@@ -88,7 +88,7 @@ function mintBatch(){
 					params.push(p.rare)
 					params.push(0) //gradeBonuses
 				})
-				
+				console.log("MINTING NFTS ----------\n----------\n----------\n----------\n----------\n",params)
 				insistTX(()=>{
 					return potatoNFT_Contract.methods.mintPotatoHeads(env.swapNFT, params )
 				},()=>{
