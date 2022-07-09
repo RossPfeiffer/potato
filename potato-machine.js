@@ -110,7 +110,7 @@ function catchToken_swap(event){
 	let swapper = event.returnValues.from;
 	let count = event.returnValues.amount;
 	PD.pullTicket(count, function(randomPotatoes){
-		sendTx( potatoNFT_Contract.methods.sendPotato(swapper, randomPotatoes), function(){
+		sendTx( swapNFT_contract.methods.sendPotato(swapper, randomPotatoes), function(){
 			console.log("Successfully sent "+swapper+' these potatoes:', randomPotatoes)
 			// ... store block number periodically?
 		})
@@ -123,7 +123,7 @@ function catchNFT_swap(event){
 	let swapper = event.returnValues.from;
 	let thePotatoes = event.returnValues.potatoes;
 	PD.benchTicket(thePotatoes, function(){
-		sendTx( potatoTokenContract.methods.sendPotato(swapper, thePotatoes.length), function(){
+		sendTx( swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length), function(){
 			console.log("Successfully sent "+swapper+' BSC potato Tokens')
 			// ... store block number periodically?
 		})
