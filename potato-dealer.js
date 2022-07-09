@@ -68,7 +68,7 @@ PotatoDealer.prototype.next = function(){
 			this.client.query( query, function(err,res,fields){
 				if(err) throw err;
 				console.log("RESULTS from complex ROW_NUMBER query", res)
-				query = 'DELETE FROM bridge WHERE ';
+				let query = 'DELETE FROM bridge WHERE ';
 				let pIDs= [];
 				
 				res.forEach((potato,i)=>{
@@ -80,7 +80,7 @@ PotatoDealer.prototype.next = function(){
 					pIDs.push(pID)
 				})
 
-				this.client.query(query,function(err,res,fields){
+				_this.client.query(query,function(err,res,fields){
 					if(err) throw err;
 					console.log("running block tx")
 					work.f(pIDs)
