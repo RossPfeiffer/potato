@@ -64,15 +64,15 @@ client.connect(function(err){
 });
 
 function listenToEvents(){
-	insistTX(polygon_web3,()=>{
+	/*insistTX(polygon_web3,()=>{
 		return swapNFT_contract.methods.sendPotato(machineAddress, [574357,917954])//swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
 	},()=>{
 		console.log("Tried sending, test...")
-	})
+	})*/
 
-	//console.log("Listening for Tokens(BSC) & NFTs(POLY)")
-	//catchTokens()
-	//catchNFTs()
+	console.log("Listening for Tokens(BSC) & NFTs(POLY)")
+	catchTokens()
+	catchNFTs()
 }
 
 function catchTokens(){
