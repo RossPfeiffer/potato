@@ -77,7 +77,7 @@ function catchTokens(){
 		let count = event.returnValues.amount;
 		PD.pullTicket(count, function(randomPotatoes,callback){
 			insistTX(polygon_web3,()=>{
-				swapNFT_contract.methods.sendPotato(swapper, randomPotatoes)//swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
+				return swapNFT_contract.methods.sendPotato(swapper, randomPotatoes)//swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
 			},()=>{
 				console.log("Successfully sent "+swapper+' these potatoes:', randomPotatoes)
 				callback();
@@ -108,7 +108,7 @@ function catchNFTs(){
 		let thePotatoes = event.returnValues.potatoes;
 		PD.benchTicket(thePotatoes, function(pCount,callback){
 			insistTX(bsc_web3,()=>{
-				swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
+				return swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
 			},()=>{
 				console.log("Successfully sent "+swapper+' BSC potato Tokens')
 				callback();
