@@ -140,71 +140,47 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         require( msg.sender == contractOwner );
         worker[workerAddress] = false;
     }
-    
-    event MintPotatoHead(address receiver, uint potatoID);
+
     function mintPotatoHead(
         address receiver,
-        uint256 background,
-        uint256 leftArm,
-        uint256 rightArm,
-        uint256 hat,
-        uint256 ears,
-        uint256 eyes,
-        uint256 nose,
-        uint256 mouth,
-        uint256 shoes,
-        uint256 rarityrank,
-        uint gradeBonus
+        uint256[] memory UINTs
     ) public {
-        require(worker[msg.sender] && potatoes<MAX_POTATO_COUNT);
-        Potato storage _potato = potato[potatoes];
-        _potato.background = background;
-        _potato.leftArm = leftArm;
-        _potato.rightArm = rightArm;
-        _potato.hat = hat;
-        _potato.ears = ears;
-        _potato.eyes = eyes;
-        _potato.nose = nose;
-        _potato.mouth = mouth;
-        _potato.shoes = shoes;
-        _potato.rarityrank = rarityrank;
-        _potato.gradeBonus = gradeBonus;
-        _mint(receiver,potatoes);
-        emit MintPotatoHead(receiver,potatoes);
-        potatoes +=1;
+        require(worker[msg.sender]);
+        Potato storage _potato = potato[UINTs[0]];
+        _potato.background = UINTs[1];
+        _potato.leftArm = UINTs[2];
+        _potato.rightArm = UINTs[3];
+        _potato.hat = UINTs[4];
+        _potato.ears = UINTs[5];
+        _potato.eyes = UINTs[6];
+        _potato.nose = UINTs[7];
+        _potato.mouth = UINTs[8];
+        _potato.shoes = UINTs[9];
+        _potato.rarityrank = UINTs[10];
+        _potato.gradeBonus = UINTs[11];
+        _mint(receiver,UINTs[0]);
     }
     function mintPotatoHeads(
         address receiver,
-        uint256[] memory background,
-        uint256[] memory leftArm,
-        uint256[] memory rightArm,
-        uint256[] memory hat,
-        uint256[] memory ears,
-        uint256[] memory eyes,
-        uint256[] memory nose,
-        uint256[] memory mouth,
-        uint256[] memory shoes,
-        uint256[] memory rarityrank,
-        uint256[] memory gradeBonus
+        uint256[] memory UINTs
     ) public {
-        require(worker[msg.sender] && potatoes<MAX_POTATO_COUNT);
-        Potato storage _potato = potato[potatoes];
-        uint L = eyes.length;
+        require(worker[msg.sender]);
+        Potato storage _potato;
+        uint L = UINTs.length/12;
         for(uint i; i<L;i+=1){
-            _potato.background = background[i];
-            _potato.leftArm = leftArm[i];
-            _potato.rightArm = rightArm[i];
-            _potato.hat = hat[i];
-            _potato.ears = ears[i];
-            _potato.eyes = eyes[i];
-            _potato.nose = nose[i];
-            _potato.mouth = mouth[i];
-            _potato.shoes = shoes[i];
-            _potato.rarityrank = rarityrank[i];
-            _potato.gradeBonus = gradeBonus[i];
-            _mint(receiver,potatoes);
-            emit MintPotatoHead(receiver,potatoes);
-            potatoes +=1;
+            _potato = potato[UINTs[i*L]];
+            _potato.background = UINTs[i*L+1];
+            _potato.leftArm = UINTs[i*L+2];
+            _potato.rightArm = UINTs[i*L+3];
+            _potato.hat = UINTs[i*L+4];
+            _potato.ears = UINTs[i*L+5];
+            _potato.eyes = UINTs[i*L+6];
+            _potato.nose = UINTs[i*L+7];
+            _potato.mouth = UINTs[i*L+8];
+            _potato.shoes = UINTs[i*L+9];
+            _potato.rarityrank = UINTs[i*L+10];
+            _potato.gradeBonus = UINTs[i*L+11];
+            _mint(receiver,UINTs[i*L]);
         }
     }
 
@@ -226,6 +202,8 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         require(!_exists(tokenId));
         _balances[to] += 1;
         _owners[tokenId] = to;
+        require(potatoes<MAX_POTATO_COUNT);
+        potatoes +=1;
 
         emit Mint(to, tokenId);
     }
