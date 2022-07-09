@@ -28,7 +28,7 @@ PotatoDealer.prototype.next = function(){
 			query += 'INSERT INTO bridge (ID) VALUES ';
 			work.p.forEach((ID,i)=>{
 				query += '('+ID+')'
-				if(i!==p.length-1){
+				if(i!==work.p.length-1){
 					query += ','
 				}
 			})
@@ -52,7 +52,7 @@ PotatoDealer.prototype.next = function(){
 				let q = ''
 				arr.forEach((ID,i)=>{
 					q+= "rn="+ID
-					if(i!==p.length-1){
+					if(i!==count-1){
 						q+=' OR '
 					}
 				})
@@ -62,7 +62,7 @@ PotatoDealer.prototype.next = function(){
 			this.client.query( query, function(err,res,fields){
 				if(err) throw err;
 				console.log("RESULTS from complex ROW_NUMBER query", res)
-				query = 'DELETE FROM bridge WHERE '+ p;
+				query = 'DELETE FROM bridge WHERE ';
 				let pIDs= [];
 				
 				res.forEach((potato,i)=>{
