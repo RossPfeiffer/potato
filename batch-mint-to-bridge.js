@@ -108,11 +108,11 @@ function mintBatch(){
 						console.log('Deleted the minted IDs from the unminted list... checking for next batch to mint')
 						sum_of_unminted -= BATCHSIZE
 
-						//add them to bridge table
-						mintBatch()	
-						client.query("INSERT INTO bridge (ID) VALUES) "+insert_into_bridge,function(){
+						//add them to bridge table	
+						client.query("INSERT INTO bridge (ID) VALUES "+insert_into_bridge,function(){
 							console.log(insert_into_bridge, ":::::: ADDED TO BRIDGE")		
 						})
+						mintBatch()
 					})
 					
 				})
