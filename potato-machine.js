@@ -68,6 +68,7 @@ function listenToEvents(){
 	console.log("Listening for Tokens(BSC) & NFTs(POLY)")
 	function catchTokens(){
 		swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned},function(e,x){
+			console.log('checked bsc')
 			if(e) console.error(e)
 			x.forEach((event)=>{
 				console.log(event)
@@ -84,6 +85,7 @@ function listenToEvents(){
 
 	function catchNFTs(){
 		swapNFT_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned},function(e,x){
+			console.log('checked poly')
 			if(e) console.error(e)
 			x.forEach((event)=>{
 				console.log(event)
