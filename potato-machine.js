@@ -76,9 +76,10 @@ function catchTokens(){
 		let swapper = event.returnValues.from;
 		let count = event.returnValues.amount;
 		PD.pullTicket(count, function(randomPotatoes,callback){
-			sendTx( swapNFT_contract.methods.sendPotato(swapper, randomPotatoes), function(){
+			insistTX(polygon_web3,()=>{
+				swapNFT_contract.methods.sendPotato(swapper, randomPotatoes)//swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
+			},()=>{
 				console.log("Successfully sent "+swapper+' these potatoes:', randomPotatoes)
-				// ... store block number periodically?
 				callback();
 			})
 		})
@@ -106,9 +107,10 @@ function catchNFTs(){
 		let swapper = event.returnValues.from;
 		let thePotatoes = event.returnValues.potatoes;
 		PD.benchTicket(thePotatoes, function(pCount,callback){
-			sendTx( swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length), function(){
+			insistTX(bsc_web3,()=>{
+				swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
+			},()=>{
 				console.log("Successfully sent "+swapper+' BSC potato Tokens')
-				// ... store block number periodically?
 				callback();
 			})
 		})
@@ -140,7 +142,7 @@ function GetPastEvents(){
 	let promise_from_TOKEN_contract = potatoTokenContract.getPastEvents("");
 }
 
-function sendTx(tx, onConfirm){
+/*function sendTx(tx, onConfirm){
 	tx.send({ from:machineAddress, gasLimit:25000000 })
 	.on('transactionHash', function(hash){
 	    //console.log("transactionHash: "+hash);
@@ -151,4 +153,50 @@ function sendTx(tx, onConfirm){
 		}
 	})
 	.on('error', console.error);
+}*/
+
+
+function insistTX(WEB3,txf,donef,timeout){
+	//f = function(){return potatoContract.methods.newPieces(names, ipfs_links, metas)}
+	function TX(){txf().send({ from:machineAddress, gasLimit: 2500000 }, function(r,hash){
+		if(r) throw r;
+		console.log( "Tx Hash: ", hash )
+		let hashChecks = 0
+		function readHash(){
+			setTimeout(function(){
+				WEB3.eth.getTransactionReceipt(hash)
+				.then(function(res){
+					//
+					if(res === null){
+						hashChecks += 1
+						console.log("Nothing yet, trying again...", hashChecks)
+						readHash();
+					}else{
+						if(res.status){
+							//console.log('res',res.status)
+							console.log("Tx Success", hash)
+							donef()
+						}else{
+							//console.log('res',res.status)
+							console.log("Tx Dropped. Attempting again", hash)
+							TX();
+							//attempt tx again
+						}
+					}
+				}).catch(function(r){
+					console.error("------ ====== = ERROR = ====== ------")
+					console.error(r)
+				})
+			},timeout?timeout:5000)	
+		}
+
+		readHash();
+			
+		})
+		.catch(function(err){
+			console.error("====== = ------ ERROR ------ = ======")
+			console.error(err)
+		})
+	}
+	TX();
 }
