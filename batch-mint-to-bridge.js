@@ -63,7 +63,7 @@ function mintBatch(){
 			let insert_into_bridge = ''	
 			res.forEach((row,i)=>{
 				ID_query_chain+= "ID="+row.ID
-				insert_into_bridge+= '(ID)'
+				insert_into_bridge+= '('+row.ID+')'
 				if(i!==res.length-1){
 					ID_query_chain+=' OR '
 					insert_into_bridge+=','
