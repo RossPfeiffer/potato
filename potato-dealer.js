@@ -47,10 +47,14 @@ PotatoDealer.prototype.next = function(){
 				var arr = [];
 				while(arr.length < count){
 				    var r = Math.floor(Math.random() * this.bridgeSize) + 1;
-				    if(arr.indexOf(r) === -1) arr.push(r);
+				    if(arr.indexOf(r) === -1) {
+				    	arr.push(r);
+				    	console.log('Randomly Selected Position: ',r)
+				    }
 				}
 				let q = ''
 				arr.forEach((ID,i)=>{
+					console.log("Row Number ", ID)
 					q+= "rn="+ID
 					if(i!==count-1){
 						q+=' OR '
