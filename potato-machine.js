@@ -92,18 +92,18 @@ function catchTokens(){
 	bsc_web3.eth.getBlockNumber().then(function(latestBlock){
 		//console.log("latestBlock",latestBlock)
 		//console.log("_.latest_bsc_block_scanned",_.latest_bsc_block_scanned)
-		if(latestBlock != _.latest_bsc_block_scanned){
+		if(latestBlock > _.latest_bsc_block_scanned){
 			swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_bsc_block_scanned), toBlock:latestBlock},function(e,x){
 				console.log('----------checked bsc----------')
 				if(e) console.error(e)
 				if(x)
 				x.forEach((event)=>{
-					console.log("BSC:::",event.id ,'\n=======')
+					//console.log("BSC:::",event.id ,'\n=======')
 					if(event.event == "DepositPotatoToken"){
 						catchToken_swap(event)
 					}
 				})
-				_.latest_bsc_block_scanned = latestBlock
+				_.latest_bsc_block_scanned = latestBlock+1
 				client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
 					setTimeout(catchTokens,3000)
 				})
@@ -128,7 +128,7 @@ function catchNFTs(){
 		})
 	}
 	polygon_web3.eth.getBlockNumber().then(function(latestBlock){
-		if(latestBlock != _.latest_poly_block_scanned){
+		if(latestBlock > _.latest_poly_block_scanned){
 			//console.log("latestBlock",latestBlock)
 			//console.log("_.latest_poly_block_scanned",_.latest_poly_block_scanned)
 			swapNFT_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_poly_block_scanned), toBlock:latestBlock},function(e,x){
@@ -136,12 +136,12 @@ function catchNFTs(){
 				if(e) console.error(e)
 				if(x)
 				x.forEach((event)=>{
-					console.log("BSC:::",event.id ,'\n=======')
+					//console.log("BSC:::",event.id ,'\n=======')
 					if(event.event == "PotatoReceived"){
 						catchNFT_swap(event)
 					}
 				})
-				_.latest_poly_block_scanned = latestBlock
+				_.latest_poly_block_scanned = latestBlock+1
 				client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
 					setTimeout(catchNFTs,3000)
 				})
