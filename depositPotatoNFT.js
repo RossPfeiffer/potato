@@ -12,10 +12,15 @@ var potatoNFT_Contract = new polygon_web3.eth.Contract(potatoNFT_ABI, potatoNFT_
 
 var swapNFT_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"PotatoReceived","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"SendPotato","type":"event"},{"inputs":[],"name":"FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"beneficiary","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newBeneficiary","type":"address"}],"name":"changeBeneficiary","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"collections","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"contractOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"onPotatoReceived","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"sendPotato","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 var swapNFT_contract = new polygon_web3.eth.Contract(swapNFT_ABI, env.swapNFT)
-
+/*
+	6903482
+0x39046d30159e5f9defcbab55b1f57c612f266e9a96b90b5ffcee8fde49e57205	0x5cc1b270	2 hrs 19 mins ago	0x27792f8198e0685e6d1577ca8a463788d060cd8a	 IN 	0x2f712f2c2e4eee913d15caa8e4709400d61bfbac	3909363
+0x18c99b2a251a2db109fbebb8cd017b950ef4af7bf08efa889cd1617c083b18d4	0x5cc1b270	2 hrs 19 mins ago	0x27792f8198e0685e6d1577ca8a463788d060cd8a	 IN 	0x2f712f2c2e4eee913d15caa8e4709400d61bfbac	7481030
+0x45b049f6ee5ab69564f67c5aa0a89e807a63c61455d242192dc442720c04dca5	0x5cc1b270	2 hrs 19 mins ago	0x27792f8198e0685e6d1577ca8a463788d060cd8a	 IN 	0x2f712f2c2e4eee913d15caa8e4709400d61bfbac	
+*/
 
 insistTX(()=>{
-	return potatoNFT_Contract.methods.potatoTransfer(machine.address, env.swapNFT, [2267850,8813050,749064])
+	return potatoNFT_Contract.methods.potatoTransfer(machine.address, env.swapNFT, [3909363,7481030,5121990])
 },()=>{
 	console.log(machine.address,"should have an ERC20s now")
 })

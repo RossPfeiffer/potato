@@ -92,21 +92,23 @@ function catchTokens(){
 	bsc_web3.eth.getBlockNumber().then(function(latestBlock){
 		console.log("latestBlock",latestBlock)
 		console.log("_.latest_bsc_block_scanned",_.latest_bsc_block_scanned)
-		swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_bsc_block_scanned), toBlock:latestBlock},function(e,x){
-			console.log('----------checked bsc----------')
-			if(e) console.error(e)
-			if(x)
-			x.forEach((event)=>{
-				console.log("BSC:::",event.id ,'\n=======')
-				if(event.event == "DepositPotatoToken"){
-					catchToken_swap(event)
-				}
+		if(latestBlock != _.latest_bsc_block_scanned){
+			swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_bsc_block_scanned), toBlock:latestBlock},function(e,x){
+				console.log('----------checked bsc----------')
+				if(e) console.error(e)
+				if(x)
+				x.forEach((event)=>{
+					console.log("BSC:::",event.id ,'\n=======')
+					if(event.event == "DepositPotatoToken"){
+						catchToken_swap(event)
+					}
+				})
+				_.latest_bsc_block_scanned = latestBlock
+				client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
+					setTimeout(catchTokens,3000)
+				})
 			})
-			_.latest_bsc_block_scanned = latestBlock
-			client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
-				setTimeout(catchTokens,3000)
-			})
-		})
+		}
 	})
 }
 let jjj = false
@@ -127,27 +129,31 @@ function catchNFTs(){
 		})
 	}
 	polygon_web3.eth.getBlockNumber().then(function(latestBlock){
-		console.log("latestBlock",latestBlock)
-		console.log("_.latest_poly_block_scanned",_.latest_poly_block_scanned)
-		swapNFT_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_poly_block_scanned), toBlock:latestBlock},function(e,x){
-			console.log('----------checked poly----------')
-			if(e) console.error(e)
-				if(!jjj){
-					//jjj=true
-					console.log( 'DUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\n',x )
-				}
-			if(x)
-			x.forEach((event)=>{
-				console.log("BSC:::",event.id ,'\n=======')
-				if(event.event == "PotatoReceived"){
-					catchNFT_swap(event)
-				}
+		if(latestBlock != _.latest_poly_block_scanned){
+			//console.log("latestBlock",latestBlock)
+			//console.log("_.latest_poly_block_scanned",_.latest_poly_block_scanned)
+			swapNFT_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_poly_block_scanned), toBlock:latestBlock},function(e,x){
+				console.log('----------checked poly----------')
+				if(e) console.error(e)
+					if(!jjj){
+						//jjj=true
+						console.log( 'DUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\n',x )
+					}
+				if(x)
+				x.forEach((event)=>{
+					console.log("BSC:::",event.id ,'\n=======')
+					if(event.event == "PotatoReceived"){
+						catchNFT_swap(event)
+					}
+				})
+				_.latest_poly_block_scanned = latestBlock
+				client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
+					setTimeout(catchNFTs,3000)
+				})
 			})
-			_.latest_poly_block_scanned = latestBlock
-			client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
-				setTimeout(catchNFTs,3000)
-			})
-		})	
+		}else{
+			setTimeout(catchNFTs,3000)
+		}
 	})
 }
 
