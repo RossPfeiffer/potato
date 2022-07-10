@@ -89,7 +89,7 @@ function catchTokens(){
 			})
 		})
 	}
-	bsc_web3.eth.getBlockNumber(function(latestBlock){
+	bsc_web3.eth.getBlockNumber().then(function(latestBlock){
 		console.log("latestBlock",latestBlock)
 		console.log("_.latest_bsc_block_scanned",_.latest_bsc_block_scanned)
 		swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_bsc_block_scanned), toBlock:latestBlock},function(e,x){
@@ -127,7 +127,7 @@ function catchNFTs(){
 			})
 		})
 	}
-	polygon_web3.eth.getBlockNumber(function(latestBlock){
+	polygon_web3.eth.getBlockNumber().then(function(latestBlock){
 		console.log("latestBlock",latestBlock)
 		console.log("_.latest_poly_block_scanned",_.latest_poly_block_scanned)
 		swapNFT_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_poly_block_scanned), toBlock:latestBlock},function(e,x){
