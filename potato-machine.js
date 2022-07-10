@@ -90,12 +90,14 @@ function catchTokens(){
 		})
 	}
 	bsc_web3.eth.getBlockNumber(function(latestBlock){
+		console.log("latestBlock",latestBlock)
+		console.log("_.latest_bsc_block_scanned",_.latest_bsc_block_scanned)
 		swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_bsc_block_scanned), toBlock:latestBlock},function(e,x){
 			console.log('----------checked bsc----------')
 			if(e) console.error(e)
 			if(x)
 			x.forEach((event)=>{
-				console.log("POLY:::",event.id ,'\n=======')
+				console.log("BSC:::",event.id ,'\n=======')
 				if(event.blockNumber>_.latest_bsc_block_scanned){
 					_.latest_bsc_block_scanned = event.blockNumber+1
 				}
@@ -103,7 +105,7 @@ function catchTokens(){
 					catchToken_swap(event)
 				}
 			})
-			client.query("UPDATE globals SET val="+latestBlock+" WHERE name = 'latest_bsc_block_scanned'",function(){
+			client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
 				setTimeout(catchTokens,3000)
 			})
 		})
@@ -126,6 +128,8 @@ function catchNFTs(){
 		})
 	}
 	polygon_web3.eth.getBlockNumber(function(latestBlock){
+		console.log("latestBlock",latestBlock)
+		console.log("_.latest_poly_block_scanned",_.latest_poly_block_scanned)
 		swapNFT_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_poly_block_scanned), toBlock:latestBlock},function(e,x){
 			console.log('----------checked poly----------')
 			if(e) console.error(e)
@@ -139,7 +143,7 @@ function catchNFTs(){
 					catchNFT_swap(event)
 				}
 			})
-			client.query("UPDATE globals SET val="+latestBlock+" WHERE name = 'latest_poly_block_scanned'",function(){
+			client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
 				setTimeout(catchNFTs,3000)
 			})
 		})	
