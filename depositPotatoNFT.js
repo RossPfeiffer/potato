@@ -2,9 +2,8 @@ var keys = require("./keys.js")
 var env = require("./env.js")
 var Web3 = require('web3');
 
-
-const bsc_web3 = new Web3(env.bscProviders[0])
-var machine = bsc_web3.eth.accounts.wallet.add(keys.wallet);
+const polygon_web3 = new Web3(env.network ? env.polyProviders[0] : env.ethProviders[0])
+var machine = polygon_web3.eth.accounts.wallet.add(keys.wallet);
 
 //Polygon Contracts
 var potatoNFT_Address = env.potatoNFT
@@ -16,7 +15,7 @@ var swapNFT_contract = new polygon_web3.eth.Contract(swapNFT_ABI, env.swapNFT)
 
 
 insistTX(()=>{
-	return swapTOKEN_contract.methods.potatoTransfer(machine.address, [5703717,4004218,7219128])
+	return potatoNFT_Contract.methods.potatoTransfer(machine.address, env.swapNFT, [5703717,4004218,7219128])
 },()=>{
 	console.log(machine.address,"should have an ERC20s now")
 })
@@ -28,7 +27,7 @@ function insistTX(txf,donef,timeout){
 		let hashChecks = 0
 		function readHash(){
 			setTimeout(function(){
-				bsc_web3.eth.getTransactionReceipt(hash)
+				polygon_web3.eth.getTransactionReceipt(hash)
 				.then(function(res){
 					//
 					if(res === null){

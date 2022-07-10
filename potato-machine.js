@@ -90,8 +90,8 @@ function catchTokens(){
 		})
 	}
 	bsc_web3.eth.getBlockNumber().then(function(latestBlock){
-		console.log("latestBlock",latestBlock)
-		console.log("_.latest_bsc_block_scanned",_.latest_bsc_block_scanned)
+		//console.log("latestBlock",latestBlock)
+		//console.log("_.latest_bsc_block_scanned",_.latest_bsc_block_scanned)
 		swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_bsc_block_scanned), toBlock:latestBlock},function(e,x){
 			console.log('----------checked bsc----------')
 			if(e) console.error(e)
@@ -115,7 +115,8 @@ function catchNFTs(){
 		//put in check to make sure the NFT was sent to the swapNFT contract.
 		console.log("NFT received ... going to send BSC Tokens")
 		let swapper = event.returnValues.from;
-		let thePotatoes = event.returnValues.potatoes;
+		let thePotatoes = event.returnValues.tokenIds;
+		console.log("The potatoes we want to send:", thePotatoes)
 		PD.benchTicket(thePotatoes, function(pCount,callback){
 			insistTX(bsc_web3,()=>{
 				return swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
@@ -126,8 +127,8 @@ function catchNFTs(){
 		})
 	}
 	polygon_web3.eth.getBlockNumber().then(function(latestBlock){
-		console.log("latestBlock",latestBlock)
-		console.log("_.latest_poly_block_scanned",_.latest_poly_block_scanned)
+		//console.log("latestBlock",latestBlock)
+		//console.log("_.latest_poly_block_scanned",_.latest_poly_block_scanned)
 		swapNFT_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_poly_block_scanned), toBlock:latestBlock},function(e,x){
 			console.log('----------checked poly----------')
 			if(e) console.error(e)
