@@ -33,11 +33,11 @@ PotatoDealer.prototype.next = function(){
 					query += ','
 				}
 			})
-			console.log("--------------- Running ---------------", query)
+			console.log("--------------- Running ---------------\n", query)
 			this.client.query(query,function(err,res,fields){
 				if(err) throw err;
 				//run call back to send tokens for the deposited NFTs
-				_this.bridgeSize += p.length
+				_this.bridgeSize += work.p.length
 				console.log("running block tx")
 				work.f(null,function(){
 					_this.queries.shift();
