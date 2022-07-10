@@ -90,8 +90,8 @@ function catchTokens(){
 		})
 	}
 	bsc_web3.eth.getBlockNumber().then(function(latestBlock){
-		console.log("latestBlock",latestBlock)
-		console.log("_.latest_bsc_block_scanned",_.latest_bsc_block_scanned)
+		//console.log("latestBlock",latestBlock)
+		//console.log("_.latest_bsc_block_scanned",_.latest_bsc_block_scanned)
 		if(latestBlock != _.latest_bsc_block_scanned){
 			swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_bsc_block_scanned), toBlock:latestBlock},function(e,x){
 				console.log('----------checked bsc----------')
