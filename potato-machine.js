@@ -108,6 +108,8 @@ function catchTokens(){
 					setTimeout(catchTokens,3000)
 				})
 			})
+		}else{
+			setTimeout(catchTokens,3000)
 		}
 	})
 }
