@@ -133,7 +133,7 @@ function catchNFTs(){
 			console.log('----------checked poly----------')
 			if(e) console.error(e)
 				if(!jjj){
-					jjj=true
+					//jjj=true
 					console.log( 'DUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\n',x )
 				}
 			if(x)
