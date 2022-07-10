@@ -93,8 +93,8 @@ function catchTokens(){
 		//console.log("latestBlock",latestBlock)
 		//console.log("_.latest_bsc_block_scanned",_.latest_bsc_block_scanned)
 		if(latestBlock > _.latest_bsc_block_scanned){
-			swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_bsc_block_scanned), toBlock:latestBlock},function(e,x){
-				console.log('----------checked bsc----------')
+			swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned, toBlock:latestBlock},function(e,x){
+				console.log('----------checked bsc---------- ',_.latest_bsc_block_scanned+" >>>> "+latestBlock)
 				if(e) console.error(e)
 				if(x)
 				x.forEach((event)=>{
@@ -131,8 +131,8 @@ function catchNFTs(){
 		if(latestBlock > _.latest_poly_block_scanned){
 			//console.log("latestBlock",latestBlock)
 			//console.log("_.latest_poly_block_scanned",_.latest_poly_block_scanned)
-			swapNFT_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_poly_block_scanned), toBlock:latestBlock},function(e,x){
-				console.log('----------checked poly----------')
+			swapNFT_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned, toBlock:latestBlock},function(e,x){
+				console.log('----------checked poly----------',_.latest_poly_block_scanned+" >>>> "+latestBlock)
 				if(e) console.error(e)
 				if(x)
 				x.forEach((event)=>{
