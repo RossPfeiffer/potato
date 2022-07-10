@@ -98,13 +98,11 @@ function catchTokens(){
 			if(x)
 			x.forEach((event)=>{
 				console.log("BSC:::",event.id ,'\n=======')
-				if(event.blockNumber>_.latest_bsc_block_scanned){
-					_.latest_bsc_block_scanned = event.blockNumber+1
-				}
 				if(event.event == "DepositPotatoToken"){
 					catchToken_swap(event)
 				}
 			})
+			_.latest_bsc_block_scanned = latestBlock
 			client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
 				setTimeout(catchTokens,3000)
 			})
@@ -136,13 +134,11 @@ function catchNFTs(){
 			if(x)
 			x.forEach((event)=>{
 				console.log("BSC:::",event.id ,'\n=======')
-				if(event.blockNumber>_.latest_poly_block_scanned){
-					_.latest_poly_block_scanned = event.blockNumber+1
-				}
 				if(event.event == "PotatoReceived"){
 					catchNFT_swap(event)
 				}
 			})
+			_.latest_poly_block_scanned = latestBlock
 			client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
 				setTimeout(catchNFTs,3000)
 			})
