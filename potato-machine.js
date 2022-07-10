@@ -95,7 +95,7 @@ function catchTokens(){
 			if(e) console.error(e)
 			if(x)
 			x.forEach((event)=>{
-				console.log("POLY:::",event.id ,'\n=======\n=======\n=======')
+				console.log("POLY:::",event.id ,'\n=======')
 				if(event.blockNumber>_.latest_bsc_block_scanned){
 					_.latest_bsc_block_scanned = event.blockNumber+1
 				}
@@ -103,7 +103,7 @@ function catchTokens(){
 					catchToken_swap(event)
 				}
 			})
-			client.query("UPDATE globals SET val="+latestBlock+" WHERE name = latest_bsc_block_scanned",function(){
+			client.query("UPDATE globals SET val="+latestBlock+" WHERE name = 'latest_bsc_block_scanned'",function(){
 				setTimeout(catchTokens,3000)
 			})
 		})
@@ -131,7 +131,7 @@ function catchNFTs(){
 			if(e) console.error(e)
 			if(x)
 			x.forEach((event)=>{
-				console.log("BSC:::",event.id ,'\n=======\n=======\n=======')
+				console.log("BSC:::",event.id ,'\n=======')
 				if(event.blockNumber>_.latest_poly_block_scanned){
 					_.latest_poly_block_scanned = event.blockNumber+1
 				}
@@ -139,7 +139,7 @@ function catchNFTs(){
 					catchNFT_swap(event)
 				}
 			})
-			client.query("UPDATE globals SET val="+latestBlock+" WHERE name = latest_poly_block_scanned",function(){
+			client.query("UPDATE globals SET val="+latestBlock+" WHERE name = 'latest_poly_block_scanned'",function(){
 				setTimeout(catchNFTs,3000)
 			})
 		})	
