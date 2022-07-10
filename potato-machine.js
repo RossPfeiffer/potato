@@ -103,7 +103,7 @@ function catchTokens(){
 						catchToken_swap(event)
 					}
 				})
-				_.latest_bsc_block_scanned = latestBlock
+				_.latest_bsc_block_scanned = latestBlock+1
 				client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
 					setTimeout(catchTokens,3000)
 				})
@@ -141,7 +141,7 @@ function catchNFTs(){
 						catchNFT_swap(event)
 					}
 				})
-				_.latest_poly_block_scanned = latestBlock
+				_.latest_poly_block_scanned = latestBlock+1
 				client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
 					setTimeout(catchNFTs,3000)
 				})
