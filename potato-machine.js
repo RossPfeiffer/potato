@@ -143,7 +143,7 @@ function catchNFTs(){
 				setTimeout(catchNFTs,3000)
 			})
 		})	
-	}
+	})
 }
 
 
