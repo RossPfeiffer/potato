@@ -111,7 +111,6 @@ function catchTokens(){
 		}
 	})
 }
-let jjj = false
 function catchNFTs(){
 	function catchNFT_swap(event){
 		//put in check to make sure the NFT was sent to the swapNFT contract.
@@ -135,10 +134,6 @@ function catchNFTs(){
 			swapNFT_contract.getPastEvents('allEvents',{fromBlock:Math.min(latestBlock,_.latest_poly_block_scanned), toBlock:latestBlock},function(e,x){
 				console.log('----------checked poly----------')
 				if(e) console.error(e)
-					if(!jjj){
-						//jjj=true
-						console.log( 'DUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\nDUMP\n',x )
-					}
 				if(x)
 				x.forEach((event)=>{
 					console.log("BSC:::",event.id ,'\n=======')
