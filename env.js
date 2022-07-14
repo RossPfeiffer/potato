@@ -7,11 +7,9 @@ var env = {}
 	env = {
 		live: false,
 		test: true,
-		ethProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/eth/ropsten', 'https://ropsten.infura.io/v3/'+keys.infura],
-		polyProviders:['wss://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/polygon/mumbai/ws'],
-		//https://speedy-nodes-nyc.moralis.io/313453df8c4f0c7eb4823465/bsc/testnet/archive
-		//bscProviders:['https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/testnet']
-		bscProviders:['wss://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/testnet/ws']
+		ethProviders:[/*'https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/eth/ropsten',*/ 'https://ropsten.infura.io/v3/'+keys.infura],
+		polyProviders:['https://polygon-mumbai.g.alchemy.com/v2/'+keys.alchemy,/*'wss://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/polygon/mumbai/ws'*/],
+		bscProviders:['https://nd-907-484-822.p2pify.com/'+keys.chainstack,/*'wss://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/testnet/ws'*/]
 	}
 }
 

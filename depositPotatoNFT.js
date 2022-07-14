@@ -20,7 +20,7 @@ var swapNFT_contract = new polygon_web3.eth.Contract(swapNFT_ABI, env.swapNFT)
 */
 
 insistTX(()=>{
-	return potatoNFT_Contract.methods.potatoTransfer(machine.address, env.swapNFT, [7285328/*,1021064,8353816*/])
+	return potatoNFT_Contract.methods.potatoTransfer(machine.address, env.swapNFT, [ 5375709, 8631060, 1173310, 6709459, 2530043 ])
 },()=>{
 	console.log(machine.address,"should have an ERC20s now")
 })

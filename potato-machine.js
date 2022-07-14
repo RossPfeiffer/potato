@@ -3,6 +3,13 @@ var env = require("./env.js")
 var Web3 = require('web3');
 var _ = {} //store global variables from database
 
+/*const Moralis = require("moralis/node");
+const serverUrl = 
+const appId = keys.moralis_appId
+const masterKey = keys.moralis_masterKey*/
+
+//const events = await Moralis.Web3API.native.getContractEvents(options);
+
 const client = require('./connection.js')
 const pDealer = require('./potato-dealer.js')
 var PD = new pDealer(client);
@@ -60,7 +67,6 @@ client.connect(function(err){
 			listenToEvents();
 		});
 	});
-	
 });
 
 function listenToEvents(){
@@ -71,6 +77,19 @@ function listenToEvents(){
 	})*/
 
 	console.log("Listening for Tokens(BSC) & NFTs(POLY)")
+	/*await Moralis.start({serverUrl, appId, masterKey});
+
+	const ABI = {"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"address","name":"forWhom","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"DepositPotatoToken","type":"event"}
+	const options = {
+	  chain: "eth",
+	  address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+	  topic: "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+	  from_block:,
+	  to_block:,
+	  abi: ABI,
+	};
+	Moralis.Web3API.native.getContractEvents(options)*/
+
 	catchTokens()
 	catchNFTs()
 }
@@ -105,12 +124,16 @@ function catchTokens(){
 				})
 				_.latest_bsc_block_scanned = latestBlock+1
 				client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
-					setTimeout(catchTokens,3000)
+					setTimeout(catchTokens,30000)
 				})
 			})
 		}else{
 			setTimeout(catchTokens,3000)
 		}
+	}).catch(err=>{
+		console.log(err)
+		console.log("\n=========\n=========\n Gonna try continuing catching tokens events")
+		catchTokens()
 	})
 }
 function catchNFTs(){
@@ -145,12 +168,16 @@ function catchNFTs(){
 				})
 				_.latest_poly_block_scanned = latestBlock+1
 				client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
-					setTimeout(catchNFTs,3000)
+					setTimeout(catchNFTs,30000)
 				})
 			})
 		}else{
 			setTimeout(catchNFTs,3000)
 		}
+	}).catch(err=>{
+		console.log(err)
+		console.log("\n=========\n=========\n Gonna try continuing catching NFT events")
+		catchNFTs()
 	})
 }
 
