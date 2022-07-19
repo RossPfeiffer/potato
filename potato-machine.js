@@ -206,6 +206,16 @@ function catch_duel(event){
 	let duelID = event.returnValues.duelID;
 	PD.fightTicket(null, function(wildPotato){
 		//
+		if(playerRarity>wildPotato.rarity_rank){
+			insistTX(bsc_web3,()=>{
+				
+				return potatoTokenContract.methods.transfer( (playerRarity>wildPotato.rarity_rank)?env.swapNFT:machineAddress, 1)
+
+			},()=>{
+				console.log("Successfully sent Potato Token to destination")
+			})
+		}
+
 		insistTX(polygon_web3,()=>{
 			let params = []
 			params.push(wildPotato.ID)
