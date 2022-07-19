@@ -73,7 +73,7 @@ function mintBatch(){
 				}
 			})
 			console.log( "RUNNING ID PULLING QUERY :::::::::::::::::::: ")
-			client.query('SELECT *,ROW_NUMBER() OVER (ORDER BY rarity DESC) AS rare FROM potatoes WHERE '+ID_query_chain,function(err,res,fields){
+			client.query('SELECT *,ROW_NUMBER() OVER (ORDER BY rarity_rank DESC) AS rare FROM potatoes WHERE '+ID_query_chain,function(err,res,fields){
 				if (err) throw err;
 				console.log("Pulled "+BATCHSIZE+" random potatoes with attributes")
 				let params = []
@@ -88,7 +88,7 @@ function mintBatch(){
 					params.push(p.nose)
 					params.push(p.mouth)
 					params.push(p.shoes)
-					params.push(p.rarity)
+					params.push(p.rarity_rank)
 					params.push(0) //gradeBonuses
 				})
 				

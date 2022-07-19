@@ -4,7 +4,8 @@ contract SwapPotato{
     address THIS = address(this);
     address public contractOwner;
     address public beneficiary;
-    NFT POTATO = NFT(0x2c9B0abC2d52d48cB4831dB4aAaC1801762856B1);
+    address potatoAddress = 0x2c9B0abC2d52d48cB4831dB4aAaC1801762856B1;
+    NFT POTATO = NFT(potatoAddress);
     mapping(address => bool) worker;
     uint public FEE;
     uint public collections;
@@ -52,8 +53,8 @@ contract SwapPotato{
     }
 
     event PotatoReceived(address from, uint[] tokenIds);
-    function onPotatoReceived(address from, uint[] memory tokenIds) external payable {
-        require(msg.value == FEE);
+    function onPotatoReceived(address from, uint[] memory tokenIds) external payable returns(bytes32){
+        require(msg.value == FEE && msg.sender == potatoAddress);
         collections += FEE;
         emit PotatoReceived(from,tokenIds);
     }

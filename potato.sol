@@ -22,7 +22,7 @@ pragma solidity ^0.8.14;
 interface IERC721Receiver {
 function onERC721Received(address from, uint256 tokenId, bytes calldata data) external returns (bytes4);}
 interface PotatoReceiver {
-function onPotatoReceived(address from, uint256[] memory tokenIds) external payable;}
+function onPotatoReceived(address from, uint256[] memory tokenIds) external payable returns (bytes32);}
 pragma solidity ^0.8.14;
 interface IERC721Metadata is IERC721 {function name() external view returns (string memory);
 function symbol() external view returns (string memory);function tokenURI(uint256 tokenId) external view returns (string memory);}
@@ -207,7 +207,6 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         _balances[to] += 1;
         _owners[tokenId] = to;
         
-
         emit Mint(to, tokenId);
     }
 
@@ -290,7 +289,6 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
             require(_isApprovedOrOwner(_msgSender(), tokenIds[i]), "ERC721: transfer caller is not owner nor approved");
             _transfer(from, to, tokenIds[i]);
         }
-        emit PotatoTransfer(from, to, L, tokenIds);
     }
     
     /*----------------------------------------------------*/
@@ -433,9 +431,6 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: transfer caller is not owner nor approved");
 
         _transfer(from, to, tokenId);
-        uint[] memory tokenIds = new uint[](1);
-        tokenIds[0] = tokenId;
-        emit PotatoTransfer(from, to, 1, tokenIds);
     }
     
 

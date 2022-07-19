@@ -36,6 +36,9 @@ var potatoNFT_Contract = new polygon_web3.eth.Contract(potatoNFT_ABI, potatoNFT_
 var swapNFT_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"PotatoReceived","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"SendPotato","type":"event"},{"inputs":[],"name":"FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"beneficiary","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newBeneficiary","type":"address"}],"name":"changeBeneficiary","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"collections","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"contractOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"onPotatoReceived","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"sendPotato","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 var swapNFT_contract = new polygon_web3.eth.Contract(swapNFT_ABI, env.swapNFT)
 
+var potatoDuel_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"duelist","type":"address"},{"indexed":false,"internalType":"uint256","name":"rarity","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"potatoID","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"duelID","type":"uint256"}],"name":"PotatoDuel","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"PotatoReceived","type":"event"},{"inputs":[],"name":"FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"beneficiary","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newBeneficiary","type":"address"}],"name":"changeBeneficiary","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"collections","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"contractOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"duelID","type":"uint256"},{"internalType":"uint256","name":"wildPotatoID","type":"uint256"},{"internalType":"bool","name":"WIN","type":"bool"}],"name":"finalizeDuel","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"onPotatoReceived","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+var potatoDuel_contract = new polygon_web3.eth.Contract(potatoDuel_ABI, env.potatoDuel)
+
 //Binance Contracts
 var potatoERC_Address = env.potatoToken//
 var potatoTokenABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"delegate","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"delegate","type":"address"},{"internalType":"uint256","name":"numTokens","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"},{"internalType":"uint256","name":"numTokens","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"buyer","type":"address"},{"internalType":"uint256","name":"numTokens","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}];
@@ -91,7 +94,8 @@ function listenToEvents(){
 	Moralis.Web3API.native.getContractEvents(options)*/
 
 	catchTokens()
-	catchNFTs()
+	catch_polygon_events()
+	catchDuels()
 }
 
 function catchTokens(){
@@ -99,25 +103,22 @@ function catchTokens(){
 		console.log("Tokens received ... going to send POLY POTATO")
 		let swapper = event.returnValues.from;
 		let count = event.returnValues.amount;
-		PD.pullTicket(count, function(randomPotatoes,callback){
+		PD.pullTicket(count, function(randomPotatoes){
 			insistTX(polygon_web3,()=>{//917954
 				return swapNFT_contract.methods.sendPotato(swapper, randomPotatoes)//swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
 			},()=>{
 				console.log("Successfully sent "+swapper+' these potatoes:', randomPotatoes)
-				callback();
 			})
 		})
 	}
 	bsc_web3.eth.getBlockNumber().then(function(latestBlock){
-		//console.log("latestBlock",latestBlock)
-		//console.log("_.latest_bsc_block_scanned",_.latest_bsc_block_scanned)
+
 		if(latestBlock > _.latest_bsc_block_scanned){
 			swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned, toBlock:latestBlock},function(e,x){
 				console.log('----------checked bsc---------- ',_.latest_bsc_block_scanned+" >>>> "+latestBlock)
 				if(e) console.error(e)
 				if(x)
 				x.forEach((event)=>{
-					//console.log("BSC:::",event.id ,'\n=======')
 					if(event.event == "DepositPotatoToken"){
 						catchToken_swap(event)
 					}
@@ -136,50 +137,98 @@ function catchTokens(){
 		catchTokens()
 	})
 }
-function catchNFTs(){
-	function catchNFT_swap(event){
-		//put in check to make sure the NFT was sent to the swapNFT contract.
-		console.log("NFT received ... going to send BSC Tokens")
-		let swapper = event.returnValues.from;
-		let thePotatoes = event.returnValues.tokenIds;
-		console.log("The potatoes we want to send:", thePotatoes)
-		PD.benchTicket(thePotatoes, function(pCount,callback){
-			insistTX(bsc_web3,()=>{
-				return swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
-			},()=>{
-				console.log("Successfully sent "+swapper+' BSC potato Tokens')
-				callback();
-			})
-		})
-	}
+function catch_polygon_events(){
+	
 	polygon_web3.eth.getBlockNumber().then(function(latestBlock){
 		if(latestBlock > _.latest_poly_block_scanned){
 			//console.log("latestBlock",latestBlock)
 			//console.log("_.latest_poly_block_scanned",_.latest_poly_block_scanned)
-			swapNFT_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned, toBlock:latestBlock},function(e,x){
-				console.log('----------checked poly----------',_.latest_poly_block_scanned+" >>>> "+latestBlock)
+			let promise1 = swapNFT_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned, toBlock:latestBlock},function(e,x){
 				if(e) console.error(e)
 				if(x)
 				x.forEach((event)=>{
-					//console.log("BSC:::",event.id ,'\n=======')
 					if(event.event == "PotatoReceived"){
 						catchNFT_swap(event)
 					}
 				})
-				_.latest_poly_block_scanned = latestBlock+1
-				client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
-					setTimeout(catchNFTs,30000)
+
+			})
+
+			let promise2 = potatoDuel_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned, toBlock:latestBlock},function(e,x){
+				if(e) console.error(e)
+				if(x)
+				x.forEach((event)=>{
+					if(event.event == "PotatoDuelGo"){
+						catch_duel(event)
+					}
 				})
 			})
+
+			Promise.all([promise1,promise2]).then(()=>{
+				console.log('----------checked Poly----------',_.latest_poly_block_scanned+" >>>> "+latestBlock)
+				_.latest_poly_block_scanned = latestBlock+1
+				client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
+					setTimeout(catch_polygon_events,30000)
+				})
+			})
+
 		}else{
-			setTimeout(catchNFTs,3000)
+			setTimeout(catch_polygon_events,3000)
 		}
 	}).catch(err=>{
 		console.log(err)
 		console.log("\n=========\n=========\n Gonna try continuing catching NFT events")
-		catchNFTs()
+		catch_polygon_events()
 	})
 }
+
+function catchNFT_swap(event){
+	//put in check to make sure the NFT was sent to the swapNFT contract.
+	console.log("NFT received for swap ... going to send BSC Tokens")
+	let swapper = event.returnValues.from;
+	let thePotatoes = event.returnValues.tokenIds;
+	console.log("The potatoes we want to send:", thePotatoes)
+	PD.benchTicket(thePotatoes, function(pCount){
+		insistTX(bsc_web3,()=>{
+			return swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
+		},()=>{
+			console.log("Successfully sent "+swapper+' BSC potato Tokens')
+		})
+	})
+}
+
+function catch_duel(event){
+	//put in check to make sure the NFT was sent to the swapNFT contract.
+	console.log("NFT received for DUEL ... going to battle")
+	//event PotatoDuelGo(address duelist, uint rarity, uint potatoID, uint duelID);
+	let duelist = event.returnValues.duelist;
+	let playerRarity = event.returnValues.rarity;
+	let duelID = event.returnValues.duelID;
+	PD.fightTicket(null, function(wildPotato){
+		//
+		insistTX(polygon_web3,()=>{
+			let params = []
+			params.push(wildPotato.ID)
+			params.push(wildPotato.background)
+			params.push(wildPotato.leftarm)
+			params.push(wildPotato.rightarm)
+			params.push(wildPotato.hat)
+			params.push(wildPotato.ears)
+			params.push(wildPotato.eyes)
+			params.push(wildPotato.nose)
+			params.push(wildPotato.mouth)
+			params.push(wildPotato.shoes)
+			params.push(wildPotato.rarity_rank)
+			params.push(0) //gradeBonuses
+			
+			return potatoNFT_Contract.methods.mintPotatoHeads( (playerRarity>wildPotato.rarity_rank)?duelist:machineAddress/*our personal pocket*/, params)
+
+		},()=>{
+			console.log("Successfully ... did transaction")
+		})
+	})
+}
+
 
 
 // This would be for Rebooting. Poly and BSC have different rate limits for getting past events. I'll deal with this later.
