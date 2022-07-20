@@ -18,9 +18,9 @@ var potatoNFT_Contract = new polygon_web3.eth.Contract(potatoNFT_ABI, potatoNFT_
 */
 
 insistTX(()=>{
-	return potatoNFT_Contract.methods.potatoTransfer(machine.address, env.swapNFT, [ 5375709, 8631060, 1173310, 6709459, 2530043 ])
+	return potatoNFT_Contract.methods.potatoTransfer(machine.address, env.potatoDuel, [ 6332642 ])
 },()=>{
-	console.log(machine.address,"should have an ERC20s now")
+	console.log(machine.address,"waiting on potato machine to respond with results")
 })
 
 function insistTX(txf,donef,timeout){

@@ -23,7 +23,7 @@ insistTX(()=>{
 	insistTX(()=>{
 		return swapTOKEN_contract.methods.depositPotatoToken(machine.address, 5)
 	},()=>{
-		console.log(machine.address,"should have an NFT now")
+		console.log(machine.address,"waiting on potato machine to respond with NFT now")
 	})
 	
 })

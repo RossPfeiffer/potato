@@ -111,6 +111,7 @@ PotatoDealer.prototype.next = function(){
 
 				let pick = Math.floor(Math.random() * sum_of_unminted) + 1
 				let query = 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY ID) AS rn FROM unminted ) q WHERE rn='+pick;
+				console.log("")
 				_this.client.query(query,function(err,res,fields){
 					if (err) throw err;
 					
@@ -130,7 +131,7 @@ PotatoDealer.prototype.next = function(){
 							wildPotato = p;// ikno	
 						})
 						
-						client.query('DELETE FROM unminted WHERE ID='+ID_of_the_potato_we_need_data_for,function(err,res,fields){
+						_this.client.query('DELETE FROM unminted WHERE ID='+ID_of_the_potato_we_need_data_for,function(err,res,fields){
 							console.log('Deleted the minted ID #'+ID_of_the_potato_we_need_data_for+' from the unminted list...')
 							//sum_of_unminted -= BATCHSIZE
 							_this.queries.shift();

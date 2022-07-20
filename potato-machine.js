@@ -125,7 +125,7 @@ function catchTokens(){
 				})
 				_.latest_bsc_block_scanned = latestBlock+1
 				client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
-					setTimeout(catchTokens,30000)
+					setTimeout(catchTokens,5000)
 				})
 			})
 		}else{
@@ -168,7 +168,7 @@ function catch_polygon_events(){
 				console.log('----------checked Poly----------',_.latest_poly_block_scanned+" >>>> "+latestBlock)
 				_.latest_poly_block_scanned = latestBlock+1
 				client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
-					setTimeout(catch_polygon_events,30000)
+					setTimeout(catch_polygon_events,5000)
 				})
 			})
 
@@ -208,9 +208,7 @@ function catch_duel(event){
 		//
 		if(playerRarity>wildPotato.rarity_rank){
 			insistTX(bsc_web3,()=>{
-				
 				return potatoTokenContract.methods.transfer( (playerRarity>wildPotato.rarity_rank)?env.swapNFT:machineAddress, 1)
-
 			},()=>{
 				console.log("Successfully sent Potato Token to destination")
 			})
