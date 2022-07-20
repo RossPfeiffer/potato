@@ -95,7 +95,7 @@ function listenToEvents(){
 
 	catchTokens()
 	catch_polygon_events()
-	catchDuels()
+	//catchDuels()
 }
 
 function catchTokens(){
