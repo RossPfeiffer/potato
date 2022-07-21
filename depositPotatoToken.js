@@ -16,12 +16,12 @@ var swapTOKEN_contract = new bsc_web3.eth.Contract(swapTOKEN_ABI, env.swapToken)
 
 insistTX(()=>{
 	console.log("going for the approve of the erc20 token")
-	return potatoTokenContract.methods.approve(env.swapToken, 5)
+	return potatoTokenContract.methods.approve(env.swapToken, 1)
 },()=>{
 	console.log("Approved swap contracts use of potatoTokenContract["+ env.potatoToken+']')
 	console.log('attempting to deposit tokens into contract')
 	insistTX(()=>{
-		return swapTOKEN_contract.methods.depositPotatoToken(machine.address, 5)
+		return swapTOKEN_contract.methods.depositPotatoToken(machine.address, 1)
 	},()=>{
 		console.log(machine.address,"waiting on potato machine to respond with NFT now")
 	})

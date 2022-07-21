@@ -213,6 +213,8 @@ function catch_duel(event){
 				console.log("Successfully sent Potato Token to destination")
 			})
 		}
+		console.log("Player Rarity:", playerRarity)
+		console.log("Wild Potato Rarity:",wildPotato.rarity_rank)
 
 		insistTX(polygon_web3,()=>{
 			let params = []
