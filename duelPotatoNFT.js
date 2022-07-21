@@ -18,7 +18,7 @@ var potatoNFT_Contract = new polygon_web3.eth.Contract(potatoNFT_ABI, potatoNFT_
 */
 
 insistTX(()=>{
-	return potatoNFT_Contract.methods.potatoTransfer(machine.address, env.potatoDuel, [ 7574927 ])
+	return potatoNFT_Contract.methods.potatoTransfer(machine.address, env.potatoDuel, [ 8420989 ])
 },()=>{
 	console.log(machine.address,"waiting on potato machine to respond with results")
 })

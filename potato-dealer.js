@@ -111,8 +111,9 @@ PotatoDealer.prototype.next = function(){
 
 				let pick = Math.floor(Math.random() * sum_of_unminted) + 1
 				let query = 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY ID) AS rn FROM unminted ) q WHERE rn='+pick;
-				console.log("")
+				console.log("Start:::", Date.now() )
 				_this.client.query(query,function(err,res,fields){
+					console.log("End:::", Date.now() )
 					if (err) throw err;
 					
 					let ID_of_the_potato_we_need_data_for = res[0].ID;
