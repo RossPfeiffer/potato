@@ -204,7 +204,7 @@ PotatoDealer.prototype.next = function(){
 					*/
 					_this.client.query('SELECT *,rarity_rank FROM potatoes WHERE '+IDs_of_the_potato_we_need_data_for,function(err,pBatch,fields){
 						if (err) throw err;
-
+						console.log(pBatch);
 						//let params = []
 						//let wildPotato;
 						//pBatch.forEach((p)=>{
@@ -213,7 +213,7 @@ PotatoDealer.prototype.next = function(){
 						
 						_this.client.query('DELETE FROM unminted WHERE '+IDs_of_the_potato_we_need_data_for,function(err,res,fields){
 							if (err) throw err;
-							console.log('Deleted the minted IDs from the unminted list...')
+							console.log('Deleted the minted IDs from the unminted list...',res)
 							//sum_of_unminted -= BATCHSIZE
 							_this.queries.shift();
 							_this.next()
