@@ -170,7 +170,7 @@ function run_wheelSpin(event){
 	}
 
 	let chosenPrize = prizes[j];
-	console.log("PRIZE REWARD :::::: " chosenPrize)
+	console.log("PRIZE REWARD :::::: ", chosenPrize)
 
 	
 	PD.batchmint( chosenPrize.count, function(rewards){
