@@ -17,7 +17,7 @@ var winspin_contract = new bsc_web3.eth.Contract(winspin_abi, env.winspin)
 
 insistTX(()=>{
 	console.log("going for the approve of the erc20 token")
-	return BUSD_contract.methods.approve(env.winspin, 1)
+	return BUSD_contract.methods.approve(env.winspin,11)
 },()=>{
 	console.log("Approved BUSD  use of ["+ env.potatoToken+']')
 	console.log('attempting to deposit tokens into contract')
@@ -29,7 +29,7 @@ insistTX(()=>{
 })
 
 function insistTX(txf,donef,timeout){
-	function TX(){txf().send({ from:machine.address, gasLimit: 27000000 }, function(r,hash){
+	function TX(){txf().send({ from:machine.address, gasLimit: 18000000 }, function(r,hash){
 		if(r) throw r;
 		console.log( "Tx Hash: ", hash )
 		let hashChecks = 0
