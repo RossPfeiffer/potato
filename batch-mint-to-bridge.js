@@ -1,4 +1,4 @@
-let BATCHSIZE = 1
+let BATCHSIZE = 5
 let BATCHES = 10
 var keys = require("./keys.js")
 var env = require("./env.js")
@@ -56,7 +56,7 @@ function mintBatch(){
 			Q+=' OR '
 		}
 	})
-	let query = 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY ID) AS rn FROM unminted ) q WHERE '+Q+' ORDER BY rn';
+	let query = 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY ID) AS rn FROM unminted ) q WHERE '+Q;//+' ORDER BY rn';
 	console.log( "QUERY :::::::::: ", query ," :::::::::: ")
 	if(arr.length){
 		client.query(query,function(err,res,fields){
@@ -78,6 +78,7 @@ function mintBatch(){
 				console.log("Pulled "+BATCHSIZE+" random potatoes with attributes")
 				let params = []
 				res.forEach((p)=>{
+					console.log("POTATO =-=-=-=-=--=-=",p)
 					params.push(p.ID)
 					params.push(p.background)
 					params.push(p.leftarm)

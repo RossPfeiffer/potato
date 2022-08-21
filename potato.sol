@@ -71,7 +71,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
 
     address THIS = address(this);
     address contractOwner;
-    mapping(address => bool) worker; 
+    mapping(address => bool) public worker; 
     address mintingAddress;
     uint MAX_POTATO_COUNT = 8888888;
 
@@ -88,11 +88,12 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
     mapping(uint => uint) public metapoints;
 
     function totalSupply() public view returns(uint){
-        return potatoes;   
+        return potatoes;
     }
 
     uint public potatoes;
     mapping( uint => Potato ) potato;
+    
     struct Potato {
         uint background;
         uint leftArm;
@@ -172,19 +173,19 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
 
         Potato storage _potato;
         for(uint i=0; i<L; i+=1){
-            _potato = potato[ UINTs[i*L] ];
-            _potato.background = UINTs[i*L+1];
-            _potato.leftArm = UINTs[i*L+2];
-            _potato.rightArm = UINTs[i*L+3];
-            _potato.hat = UINTs[i*L+4];
-            _potato.ears = UINTs[i*L+5];
-            _potato.eyes = UINTs[i*L+6];
-            _potato.nose = UINTs[i*L+7];
-            _potato.mouth = UINTs[i*L+8];
-            _potato.shoes = UINTs[i*L+9];
-            _potato.rarityrank = UINTs[i*L+10];
-            _potato.gradeBonus = UINTs[i*L+11];
-            _mint(receiver, UINTs[i*L] );
+            _potato = potato[ UINTs[i*12] ];
+            _potato.background = UINTs[i*12+1];
+            _potato.leftArm = UINTs[i*12+2];
+            _potato.rightArm = UINTs[i*12+3];
+            _potato.hat = UINTs[i*12+4];
+            _potato.ears = UINTs[i*12+5];
+            _potato.eyes = UINTs[i*12+6];
+            _potato.nose = UINTs[i*12+7];
+            _potato.mouth = UINTs[i*12+8];
+            _potato.shoes = UINTs[i*12+9];
+            _potato.rarityrank = UINTs[i*12+10];
+            _potato.gradeBonus = UINTs[i*12+11];
+            _mint( receiver, UINTs[i*12] );
         }
     }
 
@@ -268,7 +269,7 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
     }
 
     // This is for the Potato Machine
-    event PotatoTransfer(address from, address to, uint amount, uint[] potatoes);
+    event PotatoTransfer( address from, address to, uint amount, uint[] potatoes );
 
     function potatoTransfer(address from, address to, uint256[] memory tokenIds) public payable {
         require( to.isContract() );

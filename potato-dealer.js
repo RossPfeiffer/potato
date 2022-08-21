@@ -13,6 +13,14 @@ PotatoDealer.prototype.fightTicket = function(p,f){
 	}
 };
 
+PotatoDealer.prototype.batchmint = function(p,f){
+	console.log('A request for a batchmint')
+	this.queries.push({type:'batchmint',p:p,f:f})
+	if(this.queries.length == 1){
+		this.next();
+	}
+};
+
 PotatoDealer.prototype.benchTicket = function(p,f){
 	console.log('A request for Tokens from a Potato NFT that has been benched')
 	this.queries.push({type:'bench',p:p,f:f})
@@ -34,6 +42,7 @@ PotatoDealer.prototype.next = function(){
 	if(this.queries.length>0){
 		let work = this.queries[0]//.shift();
 		let query = '';
+
 		if(work.type == 'bench'){
 			query += 'INSERT INTO bridge (ID) VALUES ';
 			work.p.forEach((ID,i)=>{
@@ -53,6 +62,7 @@ PotatoDealer.prototype.next = function(){
 				work.f()
 			})
 		}
+
 		if(work.type == 'draw'){//RANDOMIZATION HAPPENS AT PULL
 			let count = work.p
 			query += 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY stackorder) AS rn FROM bridge ) q WHERE '+(function(){
@@ -116,14 +126,14 @@ PotatoDealer.prototype.next = function(){
 					console.log("End:::", Date.now() )
 					if (err) throw err;
 					
-					let ID_of_the_potato_we_need_data_for = res[0].ID;
+					let IDs_of_the_potato_we_need_data_for = res[0].ID;
 					/*
 					just gonna leave this here.
 
 					SET @r=0;
 					UPDATE potatoes SET rarity_rank= @r:= (@r+1) ORDER BY rarity DESC;
 					*/
-					_this.client.query('SELECT *,rarity_rank FROM potatoes WHERE ID='+ID_of_the_potato_we_need_data_for,function(err,res,fields){
+					_this.client.query('SELECT *,rarity_rank FROM potatoes WHERE ID='+IDs_of_the_potato_we_need_data_for,function(err,res,fields){
 						if (err) throw err;
 
 						//let params = []
@@ -132,12 +142,81 @@ PotatoDealer.prototype.next = function(){
 							wildPotato = p;// ikno	
 						})
 						
-						_this.client.query('DELETE FROM unminted WHERE ID='+ID_of_the_potato_we_need_data_for,function(err,res,fields){
-							console.log('Deleted the minted ID #'+ID_of_the_potato_we_need_data_for+' from the unminted list...')
+						_this.client.query('DELETE FROM unminted WHERE ID='+IDs_of_the_potato_we_need_data_for,function(err,res,fields){
+							console.log('Deleted the minted ID #'+IDs_of_the_potato_we_need_data_for+' from the unminted list...')
 							//sum_of_unminted -= BATCHSIZE
 							_this.queries.shift();
 							_this.next()
 							work.f(wildPotato)
+							//add them to bridge table	
+							/*client.query("INSERT INTO bridge (ID) VALUES "+insert_into_bridge,function(){
+								console.log(insert_into_bridge, ":::::: ADDED TO BRIDGE")
+								mintBatch()
+							})*/
+						})
+
+					})
+
+				})
+			});
+		}
+
+		if(work.type == 'batchmint'){
+			_this.client.query("SELECT COUNT(*) FROM unminted", function(err,res,fields){
+				if (err) throw err;
+				sum_of_unminted = res[0]['COUNT(*)']
+				console.log( 'RESULTS FROM COUNT unminted for sum_of_unminted', res, sum_of_unminted  )
+
+				//let pick = Math.floor(Math.random() * sum_of_unminted) + 1
+				var BATCHSIZE = work.p
+				var arr = [];
+				while(arr.length < Math.min(BATCHSIZE,sum_of_unminted) ){
+				    var r = Math.floor(Math.random() * sum_of_unminted) + 1;
+				    if(arr.indexOf(r) === -1) arr.push(r);
+				}
+
+				let Q = ''
+				arr.forEach((order_number,i)=>{
+					Q+= "rn="+order_number
+					if(i!==BATCHSIZE-1){
+						Q+=' OR '
+					}
+				})
+
+				let query = 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY ID) AS rn FROM unminted ) q WHERE ' + Q;
+				console.log("Start:::", Date.now() )
+				_this.client.query(query,function(err,res,fields){
+					console.log("End:::", Date.now() )
+					if (err) throw err;
+					
+					let IDs_of_the_potato_we_need_data_for = '' // = res[0].ID;
+					res.forEach((row,i)=>{
+						IDs_of_the_potato_we_need_data_for+= "ID="+row.ID
+						if(i!==BATCHSIZE-1){
+							IDs_of_the_potato_we_need_data_for+=' OR '
+						}
+					})
+					/*
+					just gonna leave this here.
+
+					SET @r=0;
+					UPDATE potatoes SET rarity_rank= @r:= (@r+1) ORDER BY rarity DESC;
+					*/
+					_this.client.query('SELECT *,rarity_rank FROM potatoes WHERE '+IDs_of_the_potato_we_need_data_for,function(err,pBatch,fields){
+						if (err) throw err;
+
+						//let params = []
+						//let wildPotato;
+						//pBatch.forEach((p)=>{
+						//	wildPotato = p;// ikno	
+						//})
+						
+						_this.client.query('DELETE FROM unminted WHERE '+IDs_of_the_potato_we_need_data_for,function(err,res,fields){
+							console.log('Deleted the minted IDs from the unminted list...')
+							//sum_of_unminted -= BATCHSIZE
+							_this.queries.shift();
+							_this.next()
+							work.f(pBatch)
 							//add them to bridge table	
 							/*client.query("INSERT INTO bridge (ID) VALUES "+insert_into_bridge,function(){
 								console.log(insert_into_bridge, ":::::: ADDED TO BRIDGE")

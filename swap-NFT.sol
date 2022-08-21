@@ -4,7 +4,7 @@ contract SwapPotato{
     address THIS = address(this);
     address public contractOwner;
     address public beneficiary;
-    address potatoAddress = 0xfc8eE68Afd22Ea304Bd54dB47518A1AEB41CDFeE;
+    address potatoAddress = 0x9ee1285facdb4268c1c117a9EFc8A972c332b6E9;
     NFT POTATO = NFT(potatoAddress);
     mapping(address => bool) worker;
     uint public FEE;

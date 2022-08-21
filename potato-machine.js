@@ -29,9 +29,8 @@ var orange_machine = bsc_web3.eth.accounts.wallet.add(keys.wallet);
 var machineAddress = orange_machine.address;
 
 //Polygon Contracts
-var potatoNFT_Address = env.potatoNFT
 var potatoNFT_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokenID","type":"uint256"}],"name":"Mint","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":false,"internalType":"uint256[]","name":"potatoes","type":"uint256[]"}],"name":"PotatoTransfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"ID","type":"uint256"}],"name":"constructAttributes","outputs":[{"internalType":"string","name":"JSON","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"ID","type":"uint256"}],"name":"constructDescription","outputs":[{"internalType":"string","name":"URI","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"ID","type":"uint256"}],"name":"constructName","outputs":[{"internalType":"string","name":"URI","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"ID","type":"uint256"}],"name":"constructSVG","outputs":[{"internalType":"string","name":"SVG","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getPotatoData","outputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"uint256","name":"background","type":"uint256"},{"internalType":"uint256","name":"leftArm","type":"uint256"},{"internalType":"uint256","name":"rightArm","type":"uint256"},{"internalType":"uint256","name":"hat","type":"uint256"},{"internalType":"uint256","name":"ears","type":"uint256"},{"internalType":"uint256","name":"eyes","type":"uint256"},{"internalType":"uint256","name":"nose","type":"uint256"},{"internalType":"uint256","name":"mouth","type":"uint256"},{"internalType":"uint256","name":"shoes","type":"uint256"},{"internalType":"uint256","name":"rarityrank","type":"uint256"},{"internalType":"uint256","name":"metascore","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"images","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"metapoints","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"},{"internalType":"uint256[]","name":"UINTs","type":"uint256[]"}],"name":"mintPotatoHead","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"},{"internalType":"uint256[]","name":"UINTs","type":"uint256[]"}],"name":"mintPotatoHeads","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"names","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"image","type":"string"},{"internalType":"string","name":"desc","type":"string"},{"internalType":"uint256","name":"meta","type":"uint256"}],"name":"newPiece","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string[]","name":"image","type":"string[]"},{"internalType":"string[]","name":"desc","type":"string[]"},{"internalType":"uint256[]","name":"meta","type":"uint256[]"}],"name":"newPieces","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"pieces","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"potatoTransfer","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"potatoes","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"ID","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"}]
-var potatoNFT_Contract = new polygon_web3.eth.Contract(potatoNFT_ABI, potatoNFT_Address)
+var potatoNFT_Contract = new polygon_web3.eth.Contract(potatoNFT_ABI, env.potatoNFT)
 
 var swapNFT_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"PotatoReceived","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"SendPotato","type":"event"},{"inputs":[],"name":"FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"beneficiary","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newBeneficiary","type":"address"}],"name":"changeBeneficiary","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"collections","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"contractOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"onPotatoReceived","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256[]","name":"tokenIds","type":"uint256[]"}],"name":"sendPotato","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 var swapNFT_contract = new polygon_web3.eth.Contract(swapNFT_ABI, env.swapNFT)
@@ -40,13 +39,14 @@ var potatoDuel_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constr
 var potatoDuel_contract = new polygon_web3.eth.Contract(potatoDuel_ABI, env.potatoDuel)
 
 //Binance Contracts
-var potatoERC_Address = env.potatoToken//
 var potatoTokenABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"delegate","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"delegate","type":"address"},{"internalType":"uint256","name":"numTokens","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"},{"internalType":"uint256","name":"numTokens","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"buyer","type":"address"},{"internalType":"uint256","name":"numTokens","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}];
-var potatoTokenContract = new bsc_web3.eth.Contract(potatoTokenABI, potatoERC_Address)
+var potatoTokenContract = new bsc_web3.eth.Contract(potatoTokenABI, env.potatoToken)
 
-var swapTOKEN_address = env.swapToken//
 var swapTOKEN_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"address","name":"forWhom","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"DepositPotatoToken","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"SendPotato","type":"event"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"forWhom","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"depositPotatoToken","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"sendPotato","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
-var swapTOKEN_contract = new bsc_web3.eth.Contract(swapTOKEN_ABI, swapTOKEN_address)
+var swapTOKEN_contract = new bsc_web3.eth.Contract(swapTOKEN_ABI, env.swapToken)
+
+var winspin_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"from","type":"address"},{"indexed":false,"internalType":"address","name":"forWhom","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"DepositPotatoToken","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"SendPotato","type":"event"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"forWhom","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"depositPotatoToken","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"sendPotato","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}];
+var winspin_contract = new bsc_web3.eth.Contract(winspin_ABI, env.winspin)
 
 
 //THIS IS STARTING THE WHOLE THING
@@ -93,29 +93,15 @@ function listenToEvents(){
 	};
 	Moralis.Web3API.native.getContractEvents(options)*/
 
-	catchTokens()
+	catch_BSC_events()
 	catch_polygon_events()
 	//catchDuels()
 }
 
-function catchTokens(){
-	function catchToken_swap(event){
-		console.log("Tokens received ... going to send POLY POTATO")
-		let swapper = event.returnValues.from;
-		let count = event.returnValues.amount;
-		PD.pullTicket(count, function(randomPotatoes){
-			insistTX(polygon_web3,()=>{//917954
-				return swapNFT_contract.methods.sendPotato(swapper, randomPotatoes)//swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
-			},()=>{
-				console.log("Successfully sent "+swapper+' these potatoes:', randomPotatoes)
-			})
-		})
-	}
+function catch_BSC_events(){
 	bsc_web3.eth.getBlockNumber().then(function(latestBlock){
-
 		if(latestBlock > _.latest_bsc_block_scanned){
-			swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned, toBlock:latestBlock},function(e,x){
-				console.log('----------checked bsc---------- ',_.latest_bsc_block_scanned+" >>>> "+latestBlock)
+			let promise1 = swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned, toBlock:latestBlock},function(e,x){
 				if(e) console.error(e)
 				if(x)
 				x.forEach((event)=>{
@@ -123,26 +109,122 @@ function catchTokens(){
 						catchToken_swap(event)
 					}
 				})
-				_.latest_bsc_block_scanned = latestBlock+1
-				client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
-					setTimeout(catchTokens,5000)
+			})
+			let promise2 = swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned, toBlock:latestBlock},function(e,x){
+				if(e) console.error(e)
+				if(x)
+				x.forEach((event)=>{
+					if(event.event == "SpinWheel"){
+						run_wheelSpin(event)
+					}
 				})
 			})
+			
+			Promise.all([promise1,promise2]).then(()=>{
+				console.log('----------checked bsc---------- ',_.latest_bsc_block_scanned+" >>>> "+latestBlock)
+				_.latest_bsc_block_scanned = latestBlock+1
+				client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
+					setTimeout(catch_BSC_events,5000)
+				})
+			})
+
 		}else{
-			setTimeout(catchTokens,3000)
+			setTimeout(catch_BSC_events,3000)
 		}
 	}).catch(err=>{
 		console.log(err)
 		console.log("\n=========\n=========\n Gonna try continuing catching tokens events")
-		catchTokens()
+		catch_BSC_events()
 	})
 }
-function catch_polygon_events(){
+function run_wheelSpin(event){
+	console.log("BUSD received for spin... ...")
+	let spinner = event.returnValues.from;
+	let prizes = [
+		{type:'NFT',count:1,weight:100},
+		{type:'NFT',count:3,weight:50},
+		{type:'NFT',count:5,weight:10},
+		{type:'ERC20',count:1,weight:100},
+		{type:'ERC20',count:3,weight:50},
+		{type:'ERC20',count:5,weight:10}
+	];
 	
+	let bucketSize = 0;
+	prizes.forEach(function(x){
+		bucketSize += x.weight;
+	})
+	
+
+	let weightedRoll = Math.floor( bucketSize * Math.random() )	
+	let chosen;
+	let j;
+	
+	for(j=0; j<prizes.length; j+=1){
+		let prize = prizes[j];
+		weightedRoll -= prize.weight
+		if(weightedRoll <= 0){
+			chosen = j;
+			break;
+		}
+	}
+
+	let chosenPrize = prizes[j];
+
+	
+	PD.batchmint( chosenPrize.count, function(rewards){
+		let pIDs = []
+		let nft_dest = chosenPrize.type=="NFT"?spinner:env.swapNFT
+		let token_dest = chosenPrize.type=="NFT"?env.swapToken:spinner
+		insistTX(polygon_web3,()=>{
+			let params = []
+			rewards.forEach((p)=>{
+				params.push(p.ID)
+				pIDs.push(p.ID)
+				params.push(p.background)
+				params.push(p.leftarm)
+				params.push(p.rightarm)
+				params.push(p.hat)
+				params.push(p.ears)
+				params.push(p.eyes)
+				params.push(p.nose)
+				params.push(p.mouth)
+				params.push(p.shoes)
+				params.push(p.rarity_rank)
+				params.push(0) //gradeBonuses
+			})
+			return potatoNFT_Contract.methods.mintPotatoHeads(nft_dest, params)
+		},()=>{
+			console.log("Successfully minted "+nft_dest.substr(0,8)+' these Potato NFTs:', pIDs)
+			PD.benchTicket(pIDs, function(){
+				insistTX(bsc_web3,()=>{
+					return potatoTokenContract.methods.transfer(token_dest, chosenPrize.count)
+				},()=>{
+					console.log("Successfully sent "+token_dest.substr(0,8)+' BSC potato Tokens')
+				})
+			})
+		})
+	})
+	/*if(chosenPrize.type=='NFT'){}
+	if(chosenPrize.type=='ERC20'){}*/
+}
+
+function catchToken_swap(event){
+	console.log("Tokens received ... going to send POLY POTATO")
+	let swapper = event.returnValues.from;
+	let count = event.returnValues.amount;
+	PD.pullTicket(count, function(randomPotatoes){
+		insistTX(polygon_web3,()=>{
+			return swapNFT_contract.methods.sendPotato(swapper, randomPotatoes)
+		},()=>{
+			console.log("Successfully sent "+swapper+' these potatoes:', randomPotatoes)
+		})
+	})
+}
+
+function catch_polygon_events(){	
 	polygon_web3.eth.getBlockNumber().then(function(latestBlock){
 		if(latestBlock > _.latest_poly_block_scanned){
-			//console.log("latestBlock",latestBlock)
-			//console.log("_.latest_poly_block_scanned",_.latest_poly_block_scanned)
+			
 			let promise1 = swapNFT_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned, toBlock:latestBlock},function(e,x){
 				if(e) console.error(e)
 				if(x)
@@ -151,7 +233,6 @@ function catch_polygon_events(){
 						catchNFT_swap(event)
 					}
 				})
-
 			})
 
 			let promise2 = potatoDuel_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned, toBlock:latestBlock},function(e,x){
@@ -188,7 +269,7 @@ function catchNFT_swap(event){
 	let swapper = event.returnValues.from;
 	let thePotatoes = event.returnValues.tokenIds;
 	console.log("The potatoes we want to send:", thePotatoes)
-	PD.benchTicket(thePotatoes, function(pCount){
+	PD.benchTicket(thePotatoes, function(){
 		insistTX(bsc_web3,()=>{
 			return swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length)
 		},()=>{
@@ -206,15 +287,8 @@ function catch_duel(event){
 	let duelID = event.returnValues.duelID;
 	PD.fightTicket(null, function(wildPotato){
 		//
-		if(playerRarity>wildPotato.rarity_rank){
-			insistTX(bsc_web3,()=>{
-				return potatoTokenContract.methods.transfer( (playerRarity>wildPotato.rarity_rank)?env.swapNFT:machineAddress, 1)
-			},()=>{
-				console.log("Successfully sent Potato Token to destination")
-			})
-		}
 		console.log("Player Rarity:", playerRarity)
-		console.log("Wild Potato Rarity:",wildPotato.rarity_rank)
+		console.log("Wild Potato Rarity:", wildPotato.rarity_rank)
 
 		insistTX(polygon_web3,()=>{
 			let params = []
@@ -234,7 +308,17 @@ function catch_duel(event){
 			return potatoNFT_Contract.methods.mintPotatoHeads( (playerRarity>wildPotato.rarity_rank)?duelist:machineAddress/*our personal pocket*/, params)
 
 		},()=>{
-			console.log("Successfully ... did transaction")
+			console.log("Successfully minted potatoes")
+			insistTX(bsc_web3,()=>{
+				return potatoTokenContract.methods.transfer( (playerRarity>wildPotato.rarity_rank)?env.swapToken:machineAddress, 1)
+			},()=>{
+				console.log("Successfully sent Potato Token to: "+(playerRarity>wildPotato.rarity_rank)?"Bridge":"Machine Address")
+				insistTX(polygon_web3,()=>{
+					return potatoDuel_contract.methods.finalizeDuel( duelID, wildPotato.ID , (playerRarity>wildPotato.rarity_rank) )
+				},()=>{
+					console.log("Successfully Fianlized the duel:" + duelID )
+				})
+			})
 		})
 	})
 }

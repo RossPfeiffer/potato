@@ -4,7 +4,7 @@ contract PotatoDuel{
     address THIS = address(this);
     address public contractOwner;
     address public beneficiary;
-    address potatoAddress = 0xfc8eE68Afd22Ea304Bd54dB47518A1AEB41CDFeE;
+    address potatoAddress = 0x9ee1285facdb4268c1c117a9EFc8A972c332b6E9;
     //address bridge = 0x27792F8198e0685e6d1577cA8a463788D060cd8a;
     NFT POTATO = NFT(potatoAddress);
     mapping(address => bool) worker;
@@ -76,8 +76,8 @@ contract PotatoDuel{
         return bytes32(duels-1);
     }
 
-    //overkill
-    /*function finalizeDuel(uint duelID, uint wildPotatoID, bool WIN) public onlyOwner{
+    event FinalizeDuel(uint duelID, uint wildPotatoID, bool WIN);
+    function finalizeDuel(uint duelID, uint wildPotatoID, bool WIN) public onlyOwner{
         PotatoTicket storage potatoTicket = potatoTickets[duelID];
         require(!potatoTicket.finished);
         potatoTicket.finished = true;
@@ -89,8 +89,9 @@ contract PotatoDuel{
         }else{
             to = beneficiary;//There's an ERC20 on the bridge for this potato, so what do we do with that and this potato?
         }
-        POTATO.transferFrom(THIS, to, potatoTicket.playerPotato );
-    }*/
+        POTATO.transferFrom(THIS, to, potatoTicket.playerPotato);
+        emit FinalizeDuel(duelID, wildPotatoID, WIN);
+    }
 }
 
 

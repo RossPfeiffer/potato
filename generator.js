@@ -186,7 +186,7 @@ function mutate(X){
 	let weightedRoll;
 	for(let i=0;i<9;i+=1){
 		weightedRoll = Math.floor( bucketSizes[i] * Math.random() )
-		wr = weightedRoll;
+		//wr = weightedRoll;
 		let chosen;
 
 		for(let j=0; j<weightedBuckets[i].length; j+=1){
