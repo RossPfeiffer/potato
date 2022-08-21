@@ -184,6 +184,7 @@ function run_wheelSpin(event){
 		},()=>{
 			console.log("Successfully minted "+nft_dest.substr(0,8)+' these Potato NFTs:', rewards.IDs)
 			PD.benchTicket(rewards.IDs, function(){
+				console.log("work.f() ... 2")
 				insistTX(bsc_web3,()=>{
 					return potatoTokenContract.methods.transfer(token_dest, chosenPrize.count)
 				},()=>{
