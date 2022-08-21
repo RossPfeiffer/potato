@@ -110,7 +110,7 @@ function catch_BSC_events(){
 					}
 				})
 			})
-			let promise2 = swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned, toBlock:latestBlock},function(e,x){
+			let promise2 = winspin_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned, toBlock:latestBlock},function(e,x){
 				if(e) console.error(e)
 				if(x)
 				x.forEach((event)=>{

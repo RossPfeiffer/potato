@@ -30,7 +30,8 @@ contract WinSpin{
     }
 
     function withdraw() public {
-        require(msg.sender == beneficiary &&  BUSD.transfer( beneficiary, collections) );
+        require(msg.sender == beneficiary );
+        BUSD.transfer( beneficiary, collections);
         collections = 0;
     }
 
@@ -47,7 +48,7 @@ contract WinSpin{
         address sender = msg.sender;
         require( BUSD.transferFrom(sender, THIS, FEE) );
         collections += FEE;
-        emit SpinWheel(sender, forWhom, amount);
+        emit SpinWheel(sender);
     }
     
 }
