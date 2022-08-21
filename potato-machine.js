@@ -173,6 +173,7 @@ function run_wheelSpin(event){
 
 	
 	PD.batchmint( chosenPrize.count, function(rewards){
+		console.log("work.f()")
 		let pIDs = []
 		let nft_dest = chosenPrize.type=="NFT"?spinner:env.swapNFT
 		let token_dest = chosenPrize.type=="NFT"?env.swapToken:spinner
