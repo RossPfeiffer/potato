@@ -212,6 +212,7 @@ PotatoDealer.prototype.next = function(){
 						//})
 						
 						_this.client.query('DELETE FROM unminted WHERE '+IDs_of_the_potato_we_need_data_for,function(err,res,fields){
+							if (err) throw err;
 							console.log('Deleted the minted IDs from the unminted list...')
 							//sum_of_unminted -= BATCHSIZE
 							_this.queries.shift();
