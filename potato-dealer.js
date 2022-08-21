@@ -205,15 +205,28 @@ PotatoDealer.prototype.next = function(){
 						SET @r=0;
 						UPDATE potatoes SET rarity_rank= @r:= (@r+1) ORDER BY rarity DESC;
 						*/
-					_this.client.query('SELECT * FROM potatoes WHERE '+IDs_of_the_potato_we_need_data_for,function(err,pBatch,fields){
+					_this.client.query('SELECT * FROM potatoes WHERE '+IDs_of_the_potato_we_need_data_for,function(err,res,fields){
 						//
 							if (err) throw err;
-							console.log(pBatch);
 							//let params = []
 							//let wildPotato;
-							//pBatch.forEach((p)=>{
-							//	wildPotato = p;// ikno	
-							//})
+							let params = []
+							let pIDs = []
+							res.forEach((p)=>{
+								params.push(p.ID)
+								pIDs.push(p.ID)
+								params.push(p.background)
+								params.push(p.leftarm)
+								params.push(p.rightarm)
+								params.push(p.hat)
+								params.push(p.ears)
+								params.push(p.eyes)
+								params.push(p.nose)
+								params.push(p.mouth)
+								params.push(p.shoes)
+								params.push(p.rarity_rank)
+								params.push(0) //gradeBonuses
+							})
 						
 						_this.client.query('DELETE FROM unminted WHERE '+IDs_of_the_potato_we_need_data_for,function(err,res,fields){
 							//
@@ -222,7 +235,7 @@ PotatoDealer.prototype.next = function(){
 								//sum_of_unminted -= BATCHSIZE
 								_this.queries.shift();
 								_this.next()
-								work.f(pBatch)
+								work.f({IDs:pIDs,params:params})
 								//add them to bridge table	
 								/*client.query("INSERT INTO bridge (ID) VALUES "+insert_into_bridge,function(){
 									console.log(insert_into_bridge, ":::::: ADDED TO BRIDGE")

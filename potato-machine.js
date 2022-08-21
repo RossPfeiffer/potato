@@ -175,30 +175,15 @@ function run_wheelSpin(event){
 	
 	PD.batchmint( chosenPrize.count, function(rewards){
 		console.log("work.f()")
-		let pIDs = []
+		
 		let nft_dest = chosenPrize.type=="NFT"?spinner:env.swapNFT
 		let token_dest = chosenPrize.type=="NFT"?env.swapToken:spinner
 		insistTX(polygon_web3,()=>{
-			let params = []
-			rewards.forEach((p)=>{
-				params.push(p.ID)
-				pIDs.push(p.ID)
-				params.push(p.background)
-				params.push(p.leftarm)
-				params.push(p.rightarm)
-				params.push(p.hat)
-				params.push(p.ears)
-				params.push(p.eyes)
-				params.push(p.nose)
-				params.push(p.mouth)
-				params.push(p.shoes)
-				params.push(p.rarity_rank)
-				params.push(0) //gradeBonuses
-			})
-			return potatoNFT_Contract.methods.mintPotatoHeads(nft_dest, params)
+			//####
+			return potatoNFT_Contract.methods.mintPotatoHeads(nft_dest, rewards.params)
 		},()=>{
-			console.log("Successfully minted "+nft_dest.substr(0,8)+' these Potato NFTs:', pIDs)
-			PD.benchTicket(pIDs, function(){
+			console.log("Successfully minted "+nft_dest.substr(0,8)+' these Potato NFTs:', rewards.IDs)
+			PD.benchTicket(rewards.IDs, function(){
 				insistTX(bsc_web3,()=>{
 					return potatoTokenContract.methods.transfer(token_dest, chosenPrize.count)
 				},()=>{
