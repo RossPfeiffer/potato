@@ -4,7 +4,7 @@ contract PotatoDuel{
     address THIS = address(this);
     address public contractOwner;
     address public beneficiary;
-    address potatoAddress = 0x38c4B68Df2E404AeB711907a86882B700409bbe8;
+    address potatoAddress = 0x3DF1ee679B7124283a8334C574492009e985E94c;
     //address bridge = 0x27792F8198e0685e6d1577cA8a463788D060cd8a;
     NFT POTATO = NFT(potatoAddress);
     mapping(address => bool) worker;

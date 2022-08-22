@@ -32,7 +32,7 @@ function uploadBatchOfParts(position){
 		if(part.Name){
 			names.push(part.Name);
 			ipfs_links.push(part.IPFS);
-			metas.push(part.Metapoints);
+			metas.push(part.Metapoints+1);
 		}
 	});
 
