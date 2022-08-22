@@ -170,7 +170,7 @@ function run_wheelSpin(event){
 	}
 
 	let chosenPrize = prizes[j];
-	console.log("PRIZE REWARD :::::: ", chosenPrize)
+	console.log("}}}}}}}}}}}}}}}}}}}}PRIZE REWARD :::::: ", chosenPrize)
 
 	
 	PD.batchmint( chosenPrize.count, function(rewards){
@@ -188,6 +188,7 @@ function run_wheelSpin(event){
 				PD.benchTicket(rewards.IDs, function(){
 					console.log("work.f() ... 2")
 					insistTX(bsc_web3,()=>{
+						console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>spinner: ",spinner)
 						return potatoTokenContract.methods.transfer(spinner, chosenPrize.count)
 					},()=>{
 						console.log("Successfully sent BSC potato Tokens to the player")
