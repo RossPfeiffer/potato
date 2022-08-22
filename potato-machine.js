@@ -140,7 +140,7 @@ function catch_BSC_events(){
 
 function run_wheelSpin(event){
 	console.log("BUSD received for spin... ...")
-	let spinner = event.returnValues.from;
+	let spinner = event.returnValues.spinner;
 	let prizes = [
 		{type:'NFT',count:1,weight:100},
 		{type:'NFT',count:3,weight:50},
