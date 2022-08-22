@@ -1,4 +1,4 @@
-let BATCHSIZE = 5
+	let BATCHSIZE = 5
 let BATCHES = 10
 var keys = require("./keys.js")
 var env = require("./env.js")
@@ -80,15 +80,15 @@ function mintBatch(){
 				res.forEach((p)=>{
 					console.log("POTATO =-=-=-=-=--=-=",p)
 					params.push(p.ID)
-					params.push(p.background)
-					params.push(p.leftarm)
-					params.push(p.rightarm)
-					params.push(p.hat)
-					params.push(p.ears)
-					params.push(p.eyes)
-					params.push(p.nose)
-					params.push(p.mouth)
-					params.push(p.shoes)
+					params.push(p.background+1)
+					params.push(p.leftarm+1)
+					params.push(p.rightarm+1)
+					params.push(p.hat+1)
+					params.push(p.ears+1)
+					params.push(p.eyes+1)
+					params.push(p.nose+1)
+					params.push(p.mouth+1)
+					params.push(p.shoes+1)
 					params.push(p.rarity_rank)
 					params.push(0) //gradeBonuses
 				})
