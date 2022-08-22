@@ -266,9 +266,9 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
     }
     function constructSVG(uint ID) public view returns (string memory SVG){
         Potato storage P = potato[ID];
-        string memory _2 = string( abi.encodePacked(ipfs_base(images[P.leftArm]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.shoes]),'" width="1080" height="1080"/></svg>'));
-        string memory _1 = string( abi.encodePacked('" width="1080" height="1080"/><image href="',ipfs_base(images[P.eyes]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.mouth]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.nose]),'" width="1080" height="1080"/><image href="',_2));
-        return string( abi.encodePacked('<svg width="1080" height="1080" ><image href="',ipfs_base(images[P.background]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.rightArm]),'" width="1080" height="1080"/><image href="https://ipfs.io/ipfs/QmZ563JsZTZf3jpASfBydjyinVXCfc2jMgd9RBRDVW6U8Z?filename=NSovUSok.png" width="1080" height="1080"/><image href="',ipfs_base(images[P.hat]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.ears]), _1 ));
+        string memory _2 = string( abi.encodePacked(ipfs_base(images[P.leftArm]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.rightArm]),'" width="1080" height="1080"/></svg>'));
+        string memory _1 = string( abi.encodePacked('" width="1080" height="1080"/><image href="',ipfs_base(images[P.mouth]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.nose]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.eyes]),'" width="1080" height="1080"/><image href="',_2));
+        return string( abi.encodePacked('<svg width="1080" height="1080" ><image href="',ipfs_base(images[P.background]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.shoes]),'" width="1080" height="1080"/><image href="https://ipfs.io/ipfs/QmZ563JsZTZf3jpASfBydjyinVXCfc2jMgd9RBRDVW6U8Z?filename=NSovUSok.png" width="1080" height="1080"/><image href="',ipfs_base(images[P.ears]),'" width="1080" height="1080"/>','<image href="',ipfs_base(images[P.hat]), _1 ));
     }
 
     // This is for the Potato Machine
