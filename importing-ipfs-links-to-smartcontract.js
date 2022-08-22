@@ -5,7 +5,7 @@ var env = require("./env.js")
 var Web3 = require('web3');
 //console.log(web3)
 
-var POLY = true//poly
+var POLY = false//poly
 //var network = POLY ? env.polyProviders[0] : env.ethProviders[0]
 
 const web3 = new Web3(env.polyProviders[0])
