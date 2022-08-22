@@ -235,7 +235,7 @@ PotatoDealer.prototype.next = function(){
 								//sum_of_unminted -= BATCHSIZE
 								_this.queries.shift();
 								_this.next()
-								setTimout(function(){
+								setTimeout(function(){
 									work.f({IDs:pIDs,params:params})
 								},1)
 						})
