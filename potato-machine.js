@@ -183,14 +183,33 @@ function run_wheelSpin(event){
 			return potatoNFT_Contract.methods.mintPotatoHeads(nft_dest, rewards.params)
 		},()=>{
 			console.log("Successfully minted "+nft_dest.substr(0,8)+' these Potato NFTs:', rewards.IDs)
-			PD.benchTicket(rewards.IDs, function(){
+			
+			let xf = function(){
 				console.log("work.f() ... 2")
 				insistTX(bsc_web3,()=>{
 					return potatoTokenContract.methods.transfer(token_dest, chosenPrize.count)
 				},()=>{
 					console.log("Successfully sent "+token_dest.substr(0,8)+' BSC potato Tokens')
 				})
-			})
+			}
+
+			if(chosenPrize.type=="ERC20"){
+				PD.benchTicket(rewards.IDs, function(){
+					console.log("work.f() ... 2")
+					insistTX(bsc_web3,()=>{
+						return potatoTokenContract.methods.transfer(token_dest, chosenPrize.count)
+					},()=>{
+						console.log("Successfully sent BSC potato Tokens to the player")
+					})
+				})
+			}else{
+				insistTX(bsc_web3,()=>{
+					return potatoTokenContract.methods.transfer(token_dest, chosenPrize.count)
+				},()=>{
+					console.log("Successfully sent BSC potato Tokens to the bridge")
+				})
+			}
+
 		})
 	})
 	/*if(chosenPrize.type=='NFT'){}

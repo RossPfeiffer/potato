@@ -22,14 +22,14 @@ PotatoDealer.prototype.batchmint = function(p,f){
 };
 
 PotatoDealer.prototype.benchTicket = function(p,f){
-	console.log('A request for Tokens from a Potato NFT that has been benched')
+	console.log('.... Potato NFT that has been benched')
 	this.queries.push({type:'bench',p:p,f:f})
 	if(this.queries.length == 1){
 		this.next();
 	}
 };
 PotatoDealer.prototype.pullTicket = function(p,f){
-	console.log('A request for an NFT from a BSC Tokens deposited')
+	console.log('... BSC Tokens deposited')
 	this.queries.push({type:'draw',p:p,f:f})
 	if(this.queries.length == 1){
 		this.next();
@@ -235,9 +235,7 @@ PotatoDealer.prototype.next = function(){
 								//sum_of_unminted -= BATCHSIZE
 								_this.queries.shift();
 								_this.next()
-								setTimeout(function(){
-									work.f({IDs:pIDs,params:params})
-								},1)
+								work.f({IDs:pIDs,params:params})
 						})
 
 					})
