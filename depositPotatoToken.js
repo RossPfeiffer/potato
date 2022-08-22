@@ -28,7 +28,7 @@ insistTX(()=>{
 })
 
 function insistTX(txf,donef,timeout){
-	function TX(){txf().send({ from:machine.address, gasLimit: 27000000 }, function(r,hash){
+	function TX(){txf().send({ from:machine.address, gasLimit: 16000000 }, function(r,hash){
 		if(r) throw r;
 		console.log( "Tx Hash: ", hash )
 		let hashChecks = 0

@@ -235,12 +235,9 @@ PotatoDealer.prototype.next = function(){
 								//sum_of_unminted -= BATCHSIZE
 								_this.queries.shift();
 								_this.next()
-								work.f({IDs:pIDs,params:params})
-								//add them to bridge table	
-								/*client.query("INSERT INTO bridge (ID) VALUES "+insert_into_bridge,function(){
-									console.log(insert_into_bridge, ":::::: ADDED TO BRIDGE")
-									mintBatch()
-								})*/
+								setTimout(function(){
+									work.f({IDs:pIDs,params:params})
+								},1)
 						})
 
 					})
