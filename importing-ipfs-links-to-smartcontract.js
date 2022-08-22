@@ -21,6 +21,7 @@ function uploadBatchOfParts(position){
 	if(position>=doc.length){
 		return;
 	}
+
 	let tail = Math.min(position+chunkSize, doc.length);
 	let batch = doc.slice(position, tail)
 	//console.log("TAIL - Position = ", tail - position);
@@ -43,7 +44,7 @@ function uploadBatchOfParts(position){
 	
 
 	function TX(){
-		var tx = potatoContract.methods.newPieces(names, ipfs_links, metas)
+		var tx = potatoContract.methods.newPieces(ipfs_links, names, metas)
 		tx.send({ from:machine.address, gasLimit: POLY?2500000:25000000 }, function(r,hash){
 			if(r) throw r;
 			console.log( "Hash: ", hash )
