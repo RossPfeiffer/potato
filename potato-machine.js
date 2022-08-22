@@ -177,34 +177,25 @@ function run_wheelSpin(event){
 		console.log("work.f()")
 		
 		let nft_dest = chosenPrize.type=="NFT"?spinner:env.swapNFT
-		let token_dest = chosenPrize.type=="NFT"?env.swapToken:spinner
 		insistTX(polygon_web3,()=>{
 			//####
 			return potatoNFT_Contract.methods.mintPotatoHeads(nft_dest, rewards.params)
 		},()=>{
 			console.log("Successfully minted "+nft_dest.substr(0,8)+' these Potato NFTs:', rewards.IDs)
 			
-			let xf = function(){
-				console.log("work.f() ... 2")
-				insistTX(bsc_web3,()=>{
-					return potatoTokenContract.methods.transfer(token_dest, chosenPrize.count)
-				},()=>{
-					console.log("Successfully sent "+token_dest.substr(0,8)+' BSC potato Tokens')
-				})
-			}
 
 			if(chosenPrize.type=="ERC20"){
 				PD.benchTicket(rewards.IDs, function(){
 					console.log("work.f() ... 2")
 					insistTX(bsc_web3,()=>{
-						return potatoTokenContract.methods.transfer(token_dest, chosenPrize.count)
+						return potatoTokenContract.methods.transfer(spinner, chosenPrize.count)
 					},()=>{
 						console.log("Successfully sent BSC potato Tokens to the player")
 					})
 				})
 			}else{
 				insistTX(bsc_web3,()=>{
-					return potatoTokenContract.methods.transfer(token_dest, chosenPrize.count)
+					return potatoTokenContract.methods.transfer(env.swapToken, chosenPrize.count)
 				},()=>{
 					console.log("Successfully sent BSC potato Tokens to the bridge")
 				})
