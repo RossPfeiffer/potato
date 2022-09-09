@@ -147,7 +147,8 @@ function run_wheelSpin(event){
 		{type:'NFT',count:5,weight:10},
 		{type:'ERC20',count:1,weight:100},
 		{type:'ERC20',count:3,weight:50},
-		{type:'ERC20',count:5,weight:10}
+		{type:'ERC20',count:5,weight:10},
+		{type:'LOSS',count:0,weight:10}
 	];
 	
 	let bucketSize = 0;
@@ -172,38 +173,41 @@ function run_wheelSpin(event){
 	let chosenPrize = prizes[j];
 	console.log("}}}}}}}}}}}}}}}}}}}}PRIZE REWARD :::::: ", chosenPrize)
 
-	
-	PD.batchmint( chosenPrize.count, function(rewards){
-		console.log("work.f()")
-		
-		let nft_dest = chosenPrize.type=="NFT"?spinner:env.swapNFT
-		insistTX(polygon_web3,()=>{
-			//####
-			return potatoNFT_Contract.methods.mintPotatoHeads(nft_dest, rewards.params)
-		},()=>{
-			console.log("Successfully minted "+nft_dest.substr(0,8)+' these Potato NFTs:', rewards.IDs)
+	if(chosenPrize.type !== "LOSS"){
+		PD.batchmint( chosenPrize.count, function(rewards){
+			console.log("work.f()")
 			
+			let nft_dest = chosenPrize.type=="NFT"?spinner:env.swapNFT
+			insistTX(polygon_web3,()=>{
+				//####
+				return potatoNFT_Contract.methods.mintPotatoHeads(nft_dest, rewards.params)
+			},()=>{
+				console.log("Successfully minted "+nft_dest.substr(0,8)+' these Potato NFTs:', rewards.IDs)
+				
 
-			if(chosenPrize.type=="ERC20"){
-				PD.benchTicket(rewards.IDs, function(){
-					console.log("work.f() ... 2")
-					insistTX(bsc_web3,()=>{
-						console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>spinner: ",spinner)
-						return potatoTokenContract.methods.transfer(spinner, chosenPrize.count)
-					},()=>{
-						console.log("Successfully sent BSC potato Tokens to the player")
+				if(chosenPrize.type=="ERC20"){
+					PD.benchTicket(rewards.IDs, function(){
+						console.log("work.f() ... 2")
+						insistTX(bsc_web3,()=>{
+							console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>spinner: ",spinner)
+							return potatoTokenContract.methods.transfer(spinner, chosenPrize.count)
+						},()=>{
+							console.log("Successfully sent BSC potato Tokens to the player")
+						})
 					})
-				})
-			}else{
-				insistTX(bsc_web3,()=>{
-					return potatoTokenContract.methods.transfer(env.swapToken, chosenPrize.count)
-				},()=>{
-					console.log("Successfully sent BSC potato Tokens to the bridge")
-				})
-			}
+				}else{
+					insistTX(bsc_web3,()=>{
+						return potatoTokenContract.methods.transfer(env.swapToken, chosenPrize.count)
+					},()=>{
+						console.log("Successfully sent BSC potato Tokens to the bridge")
+					})
+				}
 
+			})
 		})
-	})
+	}else{
+		console.log("Loss winspin")
+	}
 	/*if(chosenPrize.type=='NFT'){}
 	if(chosenPrize.type=='ERC20'){}*/
 }
@@ -302,8 +306,20 @@ function catch_duel(event){
 			params.push(wildPotato.nose)
 			params.push(wildPotato.mouth)
 			params.push(wildPotato.shoes)
-			params.push(wildPotato.rarity_rank)
-			params.push(0) //gradeBonuses
+			let rare = wildPotato.rarity_rank;
+			params.push(rare)
+			//6237282755832998000
+			let gb = 0;
+			if (rare<8888888/20){
+				gb = 40
+			}else if (rare<8888888/5){
+				gb = 30
+			}else if (rare<8888888/2){
+				gb = 20
+			}else{
+				gb = 10
+			}
+			params.push(gb) //gradeBonuses
 			
 			return potatoNFT_Contract.methods.mintPotatoHeads( (playerRarity>wildPotato.rarity_rank)?duelist:machineAddress/*our personal pocket*/, params)
 

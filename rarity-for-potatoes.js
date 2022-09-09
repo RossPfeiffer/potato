@@ -25,6 +25,7 @@ function updateNextBatch(){
 		if(res.length==0){
 			return;
 		}
+		
 		let topSQL = 'UPDATE potatoes SET rarity = CASE ID';
 		let pSQL = '';
 		let mSQL = '';
@@ -33,10 +34,20 @@ function updateNextBatch(){
 		res.forEach((p)=>{
 			let score = p2p[p.nose] * p2p[p.mouth] * p2p[p.hat] * p2p[p.eyes] * p2p[p.ears] * p2p[p.shoes] * p2p[p.background] * p2p[p.leftarm] * p2p[p.rightarm];
 			let metascore = m2p[p.nose] + m2p[p.mouth] + m2p[p.hat] + m2p[p.eyes] + m2p[p.ears] + m2p[p.shoes] + m2p[p.background] + m2p[p.leftarm] + m2p[p.rightarm]; 
-			//console.log("============\n==========\n=========\n",p.nose,p.mouth,p.hat,p.eyes,p.ears,p.shoes,p.background,p.leftarm,p.rightarm)
-			//console.log("Score "+p.ID+":::: ", score)
+
 			pSQL += ' WHEN '+p.ID+' THEN '+score
-			mSQL += ' WHEN '+p.ID+' THEN '+metascore
+			let rare = p.rarity_rank;
+			let gb = 0;
+			if (rare<8888888/20){
+				gb = 40
+			}else if (rare<8888888/5){
+				gb = 30
+			}else if (rare<8888888/2){
+				gb = 20
+			}else{
+				gb = 10
+			}
+			mSQL += ' WHEN '+p.ID+' THEN '+(metascore+gb)
 			
 		});
 		console.log("::::: Updating "+batch+':::::');

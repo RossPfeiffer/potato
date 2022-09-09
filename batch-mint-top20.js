@@ -39,12 +39,7 @@ client.connect(function(err){
 })
 
 function mintBatch(){
-	if(BATCHES==0){
-		client.end();
-		console.log("Done with batches")
-		return
-	}
-	var arr = [];
+	/*var arr = [];
 	while(arr.length < Math.min(BATCHSIZE,sum_of_unminted) ){
 	    var r = Math.floor(Math.random() * sum_of_unminted) + 1;
 	    if(arr.indexOf(r) === -1) arr.push(r);
@@ -55,14 +50,14 @@ function mintBatch(){
 		if(i!==BATCHSIZE-1){
 			Q+=' OR '
 		}
-	})
-	let query = 'SELECT ID FROM ( SELECT ID, ROW_NUMBER() OVER (ORDER BY ID) AS rn FROM unminted ) q WHERE '+Q;//+' ORDER BY rn';
+	})*/
+	let query = 'SELECT ID FROM potatoes ORDER BY rare ASC LIMIT 5 OFFSET 0 ';//+' ORDER BY rn';
 	console.log( "QUERY :::::::::: ", query ," :::::::::: ")
-	if(arr.length){
+	if(true){
 		client.query(query,function(err,res,fields){
 			if (err) throw err;
 			console.log("Pulled "+BATCHSIZE+" random potato IDs",res)
-			let ID_query_chain = ''	
+			let ID_query_chain = ''
 			let insert_into_bridge = ''	
 			res.forEach((row,i)=>{
 				ID_query_chain+= "ID="+row.ID
@@ -72,6 +67,7 @@ function mintBatch(){
 					insert_into_bridge+=','
 				}
 			})
+
 			console.log( "RUNNING ID PULLING QUERY :::::::::::::::::::: ")
 			client.query('SELECT * FROM potatoes WHERE '+ID_query_chain,function(err,res,fields){
 				if (err) throw err;
@@ -120,7 +116,7 @@ function mintBatch(){
 						//add them to bridge table	
 						client.query("INSERT INTO bridge (ID) VALUES "+insert_into_bridge,function(){
 							console.log(insert_into_bridge, ":::::: ADDED TO BRIDGE")
-							mintBatch()
+							//mintBatch()
 						})
 						
 					})
