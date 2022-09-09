@@ -51,7 +51,7 @@ function mintBatch(){
 			Q+=' OR '
 		}
 	})*/
-	let query = 'SELECT ID FROM potatoes ORDER BY rare ASC LIMIT 5 OFFSET 0 ';//+' ORDER BY rn';
+	let query = 'SELECT ID FROM potatoes ORDER BY rarity_rank ASC LIMIT 5 OFFSET 0 ';//+' ORDER BY rn';
 	console.log( "QUERY :::::::::: ", query ," :::::::::: ")
 	if(true){
 		client.query(query,function(err,res,fields){
