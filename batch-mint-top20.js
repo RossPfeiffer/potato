@@ -85,7 +85,7 @@ function mintBatch(){
 					params.push(p.nose-1)
 					params.push(p.mouth-1)
 					params.push(p.shoes-1)
-					let rare = wildPotato.rarity_rank;
+					let rare = p.rarity_rank;
 					params.push(rare)
 					//6237282755832998000
 					let gb = 0;
