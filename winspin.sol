@@ -8,6 +8,7 @@ contract WinSpin{
     mapping(address => bool) worker;
     uint public FEE;
     uint public collections;
+    bool active;
 
     constructor(){
         contractOwner = msg.sender;
@@ -18,9 +19,21 @@ contract WinSpin{
       _;
    }
 
+    modifier ifActive {
+      require(active);
+      _;
+    }
+    function activate() public onlyOwner{
+        active = true;
+    }
+    function deactivate() public onlyOwner{
+        active = false;
+    }
+
     function changeContractOwner(address newContractOwner) public onlyOwner{
         contractOwner = newContractOwner;
     }
+
     function changeBeneficiary(address newBeneficiary) public onlyOwner{
         beneficiary = newBeneficiary;
     }
@@ -44,13 +57,17 @@ contract WinSpin{
     }
 
     event SpinWheel(address spinner);
-    function spinWheel() external payable{
+    function spinWheel() external{
         address sender = msg.sender;
         require( BUSD.transferFrom(sender, THIS, FEE) );
         collections += FEE;
         emit SpinWheel(sender);
     }
-    
+
+    event SpinWheelNotification(string inResponseTo, string notification);
+    function spinWheelNotification(string memory inResponseTo, string memory notification) external{
+        emit SpinWheelNotification(inResponseTo, notification);
+    }
 }
 
 

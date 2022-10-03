@@ -27,10 +27,6 @@ pragma solidity ^0.8.14;
 interface IERC721Metadata is IERC721 {function name() external view returns (string memory);
 function symbol() external view returns (string memory);function tokenURI(uint256 tokenId) external view returns (string memory);}
 pragma solidity ^0.8.14;
-interface IERC721Enumerable is IERC721 {function totalSupply() external view returns (uint256);
-function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256 tokenId);
-function tokenByIndex(uint256 index) external view returns (uint256);}
-pragma solidity ^0.8.14;
 library Address {
 function isContract(address account) internal view returns (bool) { uint256 size; assembly { size := extcodesize(account) } return size > 0;}
 function sendValue(address payable recipient, uint256 amount) internal { require(address(this).balance >= amount, "Address: insufficient balance"); (bool success, ) = recipient.call{ value: amount }(""); require(success, "Address: unable to send value, recipient may have reverted");}
@@ -207,6 +203,8 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         require(!_exists(tokenId));
         _balances[to] += 1;
         _owners[tokenId] = to;
+        _addTokenToOwnerEnumeration(to, tokenId);
+        _addTokenToAllTokensEnumeration(tokenId);
         
         emit Mint(to, tokenId);
     }
@@ -515,7 +513,10 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
      */
     function _burn(uint256 tokenId) internal virtual {
         address owner = ownerOf(tokenId);
+        _removeTokenFromOwnerEnumeration(owner, tokenId);
+        _ownedTokensIndex[tokenId] = 0;
 
+        _removeTokenFromAllTokensEnumeration(tokenId);
 
         // Clear approvals
         _approve(address(0), tokenId);
@@ -526,6 +527,50 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         emit Transfer(owner, address(0), tokenId);
     }
 
+    mapping(address => uint256[]) private _ownedTokens;
+    mapping(uint256 => uint256) private _ownedTokensIndex;
+    mapping(uint256 => uint256) private _allTokensIndex;
+
+    uint256[] private _allTokens;
+
+    function _addTokenToOwnerEnumeration(address to, uint256 tokenId) private {
+        _ownedTokensIndex[tokenId] = _ownedTokens[to].length;
+        _ownedTokens[to].push(tokenId);
+    }
+
+    function _addTokenToAllTokensEnumeration(uint256 tokenId) private {
+        _allTokensIndex[tokenId] = _allTokens.length;
+        _allTokens.push(tokenId);
+    }
+
+    function _removeTokenFromOwnerEnumeration(address from, uint256 tokenId) private {
+
+        uint256 lastTokenIndex = _ownedTokens[from].length - 1;
+        uint256 tokenIndex = _ownedTokensIndex[tokenId];
+
+        if (tokenIndex != lastTokenIndex) {
+            uint256 lastTokenId = _ownedTokens[from][lastTokenIndex];
+
+            _ownedTokens[from][tokenIndex] = lastTokenId;
+            _ownedTokensIndex[lastTokenId] = tokenIndex;
+        }
+
+        _ownedTokens[from].pop();
+    }
+
+    function _removeTokenFromAllTokensEnumeration(uint256 tokenId) private {
+
+        uint256 lastTokenIndex = _allTokens.length - 1;
+        uint256 tokenIndex = _allTokensIndex[tokenId];
+
+        uint256 lastTokenId = _allTokens[lastTokenIndex];
+
+        _allTokens[tokenIndex] = lastTokenId;
+        _allTokensIndex[lastTokenId] = tokenIndex;
+
+        _allTokens.pop();
+        delete _allTokensIndex[tokenId];
+    }
     /**
      * @dev Transfers `tokenId` from `from` to `to`.
      *  As opposed to {transferFrom}, this imposes no restrictions on msg.sender.
@@ -540,7 +585,8 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
     function _transfer(address from, address to, uint256 tokenId) internal virtual {
         require(ownerOf(tokenId) == from, "ERC721: transfer of token that is not own");
         require(to != address(0), "ERC721: transfer to the zero address");
-
+        _removeTokenFromOwnerEnumeration(from, tokenId);
+        _addTokenToOwnerEnumeration(to, tokenId);
         // Clear approvals from the previous owner
         _approve(address(0), tokenId);
 

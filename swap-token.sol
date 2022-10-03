@@ -9,6 +9,7 @@ contract SwapToken{
     uint public FEE;
     uint MAX_SWAP = 1000;
     uint public collections;
+    bool active = true;
 
     constructor(){
         contractOwner = msg.sender;
@@ -19,9 +20,21 @@ contract SwapToken{
       _;
    }
 
+    modifier ifActive {
+      require(active);
+      _;
+    }
+
+    function activate() public onlyOwner{
+        active = true;
+    }
+    function deactivate() public onlyOwner{
+        active = false;
+    }
     function changeContractOwner(address newContractOwner) public onlyOwner{
         contractOwner = newContractOwner;
     }
+
     function changeBeneficiary(address newBeneficiary) public onlyOwner{
         beneficiary = newBeneficiary;
     }
@@ -46,7 +59,7 @@ contract SwapToken{
     }
 
     event DepositPotatoToken(address from, address forWhom, uint amount);
-    function depositPotatoToken(address forWhom, uint256 amount) external payable{
+    function depositPotatoToken(address forWhom, uint256 amount) external payable ifActive{
         address sender = msg.sender;
         uint cost = amount*FEE;
         require(msg.value == cost && amount<=MAX_SWAP && amount==(amount/1e18)*1e18/*only send flat amounts*/ && POTATO.transferFrom(sender, THIS, amount));
@@ -54,10 +67,10 @@ contract SwapToken{
         emit DepositPotatoToken(sender, forWhom, amount);
     }
     
-    event SendPotato(address to, uint amount);
-    function sendPotato(address to, uint amount) public onlyOwner{
+    event SendPotato(address to, uint amount,string inResponseTo);
+    function sendPotato(address to, uint amount, string memory inResponseTo) public onlyOwner{
         POTATO.transfer(to, amount);
-        emit SendPotato(to, amount);
+        emit SendPotato(to, amount, inResponseTo);
     }
 }
 

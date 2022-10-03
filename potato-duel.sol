@@ -4,12 +4,12 @@ contract PotatoDuel{
     address THIS = address(this);
     address public contractOwner;
     address public beneficiary;
-    address potatoAddress = 0xE08549fB0BEa283d8CC99ED9F062EEa6CF956abb;
-    //address bridge = 0x27792F8198e0685e6d1577cA8a463788D060cd8a;
+    address potatoAddress = 0xA772D31c44d6393ad74c87CA62a64d92c635D8B9;
     NFT POTATO = NFT(potatoAddress);
     mapping(address => bool) worker;
     uint public FEE;
     uint public collections;
+    bool active = true;
 
     uint duels;
     
@@ -20,6 +20,17 @@ contract PotatoDuel{
     modifier onlyOwner {
       require(msg.sender == contractOwner || worker[msg.sender]) ;
       _;
+    }
+
+    modifier ifActive {
+      require(active);
+      _;
+    }
+    function activate() public onlyOwner{
+        active = true;
+    }
+    function deactivate() public onlyOwner{
+        active = false;
     }
 
     function changeContractOwner(address newContractOwner) public onlyOwner{
@@ -61,7 +72,7 @@ contract PotatoDuel{
     event PotatoReceived(address from, uint[] tokenIds);
     event PotatoDuelGo(address duelist, uint rarity, uint potatoID, uint duelID);
     function onPotatoReceived(address from, uint[] memory tokenIds) external payable returns(bytes32){
-        require(msg.value == FEE && msg.sender == potatoAddress && tokenIds.length == 1);
+        require(msg.value == FEE && msg.sender == potatoAddress && tokenIds.length == 1 && active);
         collections += FEE;
         uint potatoID = tokenIds[0];
         PotatoTicket storage potatoTicket = potatoTickets[duels];
@@ -76,8 +87,8 @@ contract PotatoDuel{
         return bytes32(duels-1);
     }
 
-    event FinalizeDuel(uint duelID, uint wildPotatoID, bool WIN);
-    function finalizeDuel(uint duelID, uint wildPotatoID, bool WIN) public onlyOwner{
+    event FinalizeDuel(uint duelID, uint wildPotatoID, bool WIN,string inResponseTo);
+    function finalizeDuel(uint duelID, uint wildPotatoID, bool WIN,string memory inResponseTo) public onlyOwner{
         PotatoTicket storage potatoTicket = potatoTickets[duelID];
         require(!potatoTicket.finished);
         potatoTicket.finished = true;
@@ -90,7 +101,7 @@ contract PotatoDuel{
             to = beneficiary;//There's an ERC20 on the bridge for this potato, so what do we do with that and this potato?
         }
         POTATO.transferFrom(THIS, to, potatoTicket.playerPotato);
-        emit FinalizeDuel(duelID, wildPotatoID, WIN);
+        emit FinalizeDuel(duelID, wildPotatoID, WIN, inResponseTo);
     }
 }
 

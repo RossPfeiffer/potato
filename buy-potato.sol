@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.14;
-contract SwapPotato{
+contract PotatoBuy{
     address THIS = address(this);
     address public contractOwner;
     address public beneficiary;
-    address potatoAddress = 0xA772D31c44d6393ad74c87CA62a64d92c635D8B9;
-    NFT POTATO = NFT(potatoAddress);
     mapping(address => bool) worker;
     uint public FEE;
     uint public collections;
@@ -16,7 +14,7 @@ contract SwapPotato{
     }
 
     modifier onlyOwner {
-      require(msg.sender == contractOwner || worker[msg.sender]);
+      require(msg.sender == contractOwner || worker[msg.sender]) ;
       _;
     }
 
@@ -58,21 +56,17 @@ contract SwapPotato{
         worker[workerAddress] = false;
     }
 
-    event SendPotato(address to, uint[] tokenIds, string inResponseTo);
-    function sendPotato(address to, uint[] memory tokenIds, string memory inResponseTo) public onlyOwner{
-        POTATO.transferFrom(THIS, to, tokenIds);
-        emit SendPotato(to, tokenIds, inResponseTo);
+    event BuyPotato(address sender, uint paid, uint amount);
+    function buyPotato() external payable{
+        uint money = msg.value;
+        require( money > 0 && money==(money/FEE)*FEE/*only send flat amounts*/ && active);
+        collections += money;
+        emit BuyPotato(msg.sender, money, money/FEE);
     }
-
-    event PotatoReceived(address from, uint[] tokenIds);
-    function onPotatoReceived(address from, uint[] memory tokenIds) external payable returns(bytes32){
-        require(msg.value == FEE && msg.sender == potatoAddress && active);
-        collections += FEE;
-        emit PotatoReceived(from,tokenIds);
+    
+    //lazy admin controls
+    event Batchmint(address destination, uint amount);
+    function batchmint(address destination, uint amount) public onlyOwner{
+        emit Batchmint(destination, amount);
     }
-}
-
-
-interface NFT {
-    function transferFrom(address from, address to, uint256[] memory tokenId) external;
 }
