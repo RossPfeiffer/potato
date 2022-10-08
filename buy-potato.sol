@@ -59,7 +59,7 @@ contract PotatoBuy{
     event BuyPotato(address sender, uint paid, uint amount);
     function buyPotato() external payable{
         uint money = msg.value;
-        require( money > 0 && money==(money/FEE)*FEE/*only send flat amounts*/ && active);
+        require( money>0 && money==(money/FEE)*FEE/*only send flat amounts*/ && active );
         collections += money;
         emit BuyPotato(msg.sender, money, money/FEE);
     }

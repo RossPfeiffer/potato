@@ -314,14 +314,15 @@ function catchPotatoSale(event){
 	let sender = event.returnValues.sender;
 	let count = event.returnValues.amount;
 	let inResponseTo = event.transactionHash;
-	PD.batchmint( count, function(rewards){
+	PD.batchmint(count, function(rewards){
 		insistTX(polygon_web3,()=>{
 			return potatoNFT_Contract.methods.mintPotatoHeads(sender, rewards.params)
 		},()=>{
-			console.log("Successfully purchase and mint by "+sender.substr(0,8)+' of these Potato NFTs:', rewards.IDs)
+			console.log("Successfully purchased and minted by "+sender.substr(0,8)+' these Potato NFTs:', rewards.IDs)
 		})
 	});
 }
+
 function catch_duel(event){
 	//put in check to make sure the NFT was sent to the swapNFT contract.
 	console.log("NFT received for DUEL ... going to battle")

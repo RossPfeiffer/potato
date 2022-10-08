@@ -241,11 +241,11 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
     function tokenURI(uint256 ID) public view virtual override returns (string memory) {
         require(_exists(ID), "ERC721Metadata: URI query for nonexistent token");
 
-        return string( abi.encodePacked('data:text/json,{"name":"', constructName(ID) ,'","attributes":[', constructAttributes(ID) ,'],"description":"', constructDescription(ID) ,'","image":"data:image/svg+xml;base64,',constructSVG(ID),'"}' ) );
+        return string( abi.encodePacked('data:text/json,{"name":"', constructName(ID) ,'","attributes":[', constructAttributes(ID) ,'],"description":"', constructDescription(ID) ,'","image":"data:image/svg+xml;base64,',constructSVGEscaped(ID),'"}' ) );
     }
 
     function constructName(uint ID) public pure returns (string memory URI){
-        return "Mr. Potato Head";
+        return string( abi.encodePacked("Mr. Potato Head #", toString(ID) ) );
     }
 
     function constructDescription(uint ID) public pure returns (string memory URI){
@@ -259,6 +259,25 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         return string( abi.encodePacked(_1,'"},{"trait_type":"Shoes","value":"',names[P.shoes],'"},{"trait_type":"Nose","value":"',names[P.nose],'"}' ));
     }
 
+    function toString(uint256 value) public pure returns (string memory) {
+        if (value == 0) {
+            return "0";
+        }
+        uint256 temp = value;
+        uint256 digits;
+        while (temp != 0) {
+            digits++;
+            temp /= 10;
+        }
+        bytes memory buffer = new bytes(digits);
+        while (value != 0) {
+            digits -= 1;
+            buffer[digits] = bytes1(uint8(48 + uint256(value % 10)));
+            value /= 10;
+        }
+        return string(buffer);
+    }
+
     function ipfs_base(string memory ipfsID) public pure returns(string memory){
         return string( abi.encodePacked('https://ipfs.io/ipfs/',ipfsID));
     }
@@ -267,6 +286,35 @@ contract MrPotatoNFT is Context, ERC165, IERC721, IERC721Metadata {
         string memory _2 = string( abi.encodePacked(ipfs_base(images[P.leftArm]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.rightArm]),'" width="1080" height="1080"/></svg>'));
         string memory _1 = string( abi.encodePacked('" width="1080" height="1080"/><image href="',ipfs_base(images[P.mouth]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.nose]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.eyes]),'" width="1080" height="1080"/><image href="',_2));
         return string( abi.encodePacked('<svg width="1080" height="1080" ><image href="',ipfs_base(images[P.background]),'" width="1080" height="1080"/><image href="',ipfs_base(images[P.shoes]),'" width="1080" height="1080"/><image href="https://ipfs.io/ipfs/QmZ563JsZTZf3jpASfBydjyinVXCfc2jMgd9RBRDVW6U8Z?filename=NSovUSok.png" width="1080" height="1080"/><image href="',ipfs_base(images[P.ears]),'" width="1080" height="1080"/>','<image href="',ipfs_base(images[P.hat]), _1 ));
+    }
+    function constructSVGEscaped(uint ID) public view returns (string memory SVG){
+        Potato storage P = potato[ID];
+        string memory _2 = string( abi.encodePacked(ipfs_base(images[P.leftArm]),'\" width=\"1080\" height=\"1080\"/><image href=\"',ipfs_base(images[P.rightArm]),'\" width=\"1080\" height=\"1080\"/></svg>'));
+        string memory _1 = string( abi.encodePacked('\" width=\"1080\" height=\"1080\"/><image href=\"',ipfs_base(images[P.mouth]),'\" width=\"1080\" height=\"1080\"/><image href=\"',ipfs_base(images[P.nose]),'\" width=\"1080\" height=\"1080\"/><image href=\"',ipfs_base(images[P.eyes]),'\" width=\"1080\" height=\"1080\"/><image href=\"',_2));
+        return string( abi.encodePacked('<svg width=\"1080\" height=\"1080\" ><image href=\"',ipfs_base(images[P.background]),'\" width=\"1080\" height=\"1080\"/><image href=\"',ipfs_base(images[P.shoes]),'\" width=\"1080\" height=\"1080\"/><image href=\"https://ipfs.io/ipfs/QmZ563JsZTZf3jpASfBydjyinVXCfc2jMgd9RBRDVW6U8Z?filename=NSovUSok.png\" width=\"1080\" height=\"1080\"/><image href=\"',ipfs_base(images[P.ears]),'\" width=\"1080\" height=\"1080\"/>','<image href=\"',ipfs_base(images[P.hat]), _1 ));
+    }
+
+    function getOwnersPotatoes(address owner, uint offset, uint limit) public view returns (string[] memory SVGs, uint256[] memory UINTs){
+        Potato storage P;
+        UINTs = new uint256[](limit*12);
+        SVGs = new string[](limit);
+        for(uint i = offset; i < offset+limit && offset+i<_ownedTokens[owner].length; i++){
+            uint ID = _ownedTokens[owner][i];
+            P = potato[ ID ];
+            UINTs[i*12] = ID;
+            UINTs[i*12+1] = P.background;
+            UINTs[i*12+2] = P.leftArm;
+            UINTs[i*12+3] = P.rightArm;
+            UINTs[i*12+4] = P.hat;
+            UINTs[i*12+5] = P.ears;
+            UINTs[i*12+6] = P.eyes;
+            UINTs[i*12+7] = P.nose;
+            UINTs[i*12+8] = P.mouth;
+            UINTs[i*12+9] = P.shoes;
+            UINTs[i*12+10] = P.rarityrank;
+            UINTs[i*12+11] = metapoints[P.background] + metapoints[P.leftArm] + metapoints[P.rightArm] + metapoints[P.hat] + metapoints[P.ears] + metapoints[P.eyes] + metapoints[P.nose] + metapoints[P.mouth] + metapoints[P.shoes] + P.gradeBonus;
+            SVGs[i] = constructSVG(ID);
+        }
     }
 
     // This is for the Potato Machine

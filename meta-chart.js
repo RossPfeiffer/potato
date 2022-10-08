@@ -20,7 +20,7 @@ client.connect( function(err){
 	client.query("SELECT metascore FROM potatoes ORDER BY metascore DESC LIMIT 0,1",function(err,res,fields){
 		if(err) throw err;
 		high = res[0].metascore
-		console.log('Highest Metascore ',high);
+		console.log('Highest Metascore ', high);
 		for(let i=10;i<=rezDepth+10; i+=10){
 			console.log('Resolution Chunk Size: ', high/i)
 			chunkResolutions.push(high/i)
