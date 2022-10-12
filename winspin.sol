@@ -23,9 +23,11 @@ contract WinSpin{
       require(active);
       _;
     }
+
     function activate() public onlyOwner{
         active = true;
     }
+    
     function deactivate() public onlyOwner{
         active = false;
     }
