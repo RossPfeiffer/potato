@@ -238,6 +238,7 @@ function catchToken_swap(event){
 function catch_polygon_events(){	
 	polygon_web3.eth.getBlockNumber().then(function(latestBlock){
 		if(latestBlock > _.latest_poly_block_scanned){
+			console.log({fromBlock:_.latest_poly_block_scanned, toBlock:latestBlock})
 
 			let promise0 = potatoBuy_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned, toBlock:latestBlock},function(e,x){
 				if(e) console.error(e)

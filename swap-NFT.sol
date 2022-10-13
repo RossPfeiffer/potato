@@ -64,11 +64,11 @@ contract SwapPotato{
         emit SendPotato(to, tokenIds, inResponseTo);
     }
 
-    event PotatoReceived(address from, uint[] tokenIds);
-    function onPotatoReceived(address from, uint[] memory tokenIds) external payable returns(bytes32){
+    event PotatoReceived(address from, uint[] tokenIds, address for);
+    function onPotatoReceived(address from, uint[] memory tokenIds,bytes32 data) external payable returns(bytes32){
         require(msg.value == FEE && msg.sender == potatoAddress && active);
         collections += FEE;
-        emit PotatoReceived(from,tokenIds);
+        emit PotatoReceived(from,tokenIds,address(data) );
     }
 }
 
