@@ -305,7 +305,7 @@ function catchNFT_swap(event){
 	console.log("The potatoes we want to send:", thePotatoes)
 	PD.benchTicket(thePotatoes, function(){
 		insistTX(bsc_web3,()=>{
-			return swapTOKEN_contract.methods.sendPotato(swapper, thePotatoes.length, inResponseTo)
+			return swapTOKEN_contract.methods.sendPotato(swapper, web3.toBigNumber(1).pow(18).mul(thePotatoes.length) , inResponseTo)
 		},()=>{
 			console.log("Successfully sent "+swapper+' BSC potato Tokens')
 		})
@@ -344,7 +344,7 @@ function catch_duel(event){
 		//
 		console.log("Player Rarity:", playerRarity)
 		console.log("Wild Potato Rarity:", wildPotato.rarity_rank)
-
+		let playerWinning = playerRarity<wildPotato.rarity_rank
 		insistTX(polygon_web3,()=>{
 			let params = []
 			params.push(wildPotato.ID)
@@ -372,18 +372,18 @@ function catch_duel(event){
 			}
 			params.push(gb) //gradeBonuses
 			
-			return potatoNFT_Contract.methods.mintPotatoHeads( (playerRarity>wildPotato.rarity_rank)?duelist:adminAddress/*our personal pocket*/, params)
+			return potatoNFT_Contract.methods.mintPotatoHeads( (playerWinning)?duelist:adminAddress/*our personal pocket*/, params)
 
 		},()=>{
 			console.log("Successfully minted potatoes")
 			insistTX(bsc_web3,()=>{
-				return potatoTokenContract.methods.transfer( (playerRarity>wildPotato.rarity_rank)?env.swapToken:adminAddress, 1)
+				return potatoTokenContract.methods.transfer( (playerWinning)?env.swapToken:adminAddress, 1)
 			},()=>{
-				console.log("Successfully sent Potato Token to: "+(playerRarity>wildPotato.rarity_rank)?"Bridge":"Admin Address")
+				console.log("Successfully sent Potato Token to: "+(playerWinning)?"Bridge":"Admin Address")
 				insistTX(polygon_web3,()=>{
-					return potatoDuel_contract.methods.finalizeDuel( duelID, wildPotato.ID , (playerRarity>wildPotato.rarity_rank), inResponseTo )
+					return potatoDuel_contract.methods.finalizeDuel( duelID, wildPotato.ID , (playerWinning), inResponseTo )
 				},()=>{
-					console.log("Successfully Fianlized the duel:" + duelID )
+					console.log("Successfully Fianlized the duel: " + duelID )
 				})
 			})
 		})
