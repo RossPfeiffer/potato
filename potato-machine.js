@@ -320,7 +320,7 @@ function catchPotatoSale(event){
 	//let inResponseTo = event.transactionHash;
 	PD.batchmint(count, function(rewards){
 		insistTX(bsc_web3,()=>{
-			return potatoTokenContract.methods.transfer(env.swapToken,count)
+			return potatoTokenContract.methods.transfer( env.swapToken, web3.toBigNumber(1).pow(18).mul(count) )
 		},()=>{
 			console.log("Stocked bridge with "+count+" Potato ERC20 tokens ")
 			
