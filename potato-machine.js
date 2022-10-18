@@ -183,7 +183,7 @@ function run_wheelSpin(event){
 	function sendNotification(json,inResponseToTx){
 		insistTX(bsc_web3, ()=>{
 			return winspin_contract.methods.spinWheelNotification(inResponseToTx,json)
-		},functino(){
+		},function(){
 			console.log("spinWheelNotification  sent");
 		} )
 	}
