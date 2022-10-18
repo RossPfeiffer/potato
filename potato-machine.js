@@ -228,7 +228,7 @@ function run_wheelSpin(event){
 function catchToken_swap(event){
 	console.log("Tokens received ... going to send POLY POTATO")
 	let swapper = event.returnValues.from;
-	let count = event.returnValues.amount
+	let count =  ETHERS.BigNumber.from(event.returnValues.amount).div(10**18)
 	//.div(10**18).toNumber();
 	console.log("Comparing Decimal Sizes",count,event.returnValues.amount)
 	let inResponseTo = event.transactionHash;
