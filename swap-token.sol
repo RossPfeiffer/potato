@@ -16,13 +16,13 @@ contract SwapToken{
     }
 
     modifier onlyOwner {
-      require(msg.sender == contractOwner || worker[msg.sender]);
-      _;
-   }
+        require(msg.sender == contractOwner || worker[msg.sender]);
+        _;
+    }
 
     modifier ifActive {
-      require(active);
-      _;
+        require(active);
+        _;
     }
 
     function activate() public onlyOwner{
@@ -62,7 +62,7 @@ contract SwapToken{
     function depositPotatoToken(address forWhom, uint256 amount) external payable ifActive{
         address sender = msg.sender;
         uint cost = amount/1e18*FEE;
-        require(msg.value == cost && amount<=MAX_SWAP*1e18 && amount==(amount/1e18)*1e18/*only send flat amounts*/ && POTATO.transferFrom(sender, THIS, amount));
+        require(msg.value == cost && amount<=MAX_SWAP*1e18 && amount==(amount/1e18)*1e18 && POTATO.transferFrom(sender, THIS, amount));
         collections += cost;
         emit DepositPotatoToken(sender, forWhom, amount);
     }
