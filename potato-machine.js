@@ -205,7 +205,7 @@ function run_wheelSpin(event){
 							return potatoTokenContract.methods.transfer(spinner, chosenPrize.count)
 						},()=>{
 							console.log("Successfully sent BSC potato Tokens to the player")
-							sendNotification(`{"prize":${chosenPrize.count},"type":'ERC20'}`,inResponseToTx)
+							sendNotification(`{"prize":${chosenPrize.count},"type":"ERC20"}`,inResponseToTx)
 						})
 					})
 				}else{
@@ -213,7 +213,7 @@ function run_wheelSpin(event){
 						return potatoTokenContract.methods.transfer(env.swapToken, chosenPrize.count)
 					},()=>{
 						console.log("Successfully sent BSC potato Tokens to the bridge")
-						sendNotification(`{"prize":${chosenPrize.count},"type":'NFT'}`,inResponseToTx)
+						sendNotification(`{"prize":${chosenPrize.count},"type":"NFT"}`,inResponseToTx)
 					})
 				}
 
@@ -221,7 +221,7 @@ function run_wheelSpin(event){
 		})
 	}else{
 		console.log("Loss winspin")
-		sendNotification(`{"prize":0,"type":'nothing'}`,inResponseToTx)
+		sendNotification(`{"prize":0,"type":"nothing"}`,inResponseToTx)
 	}
 	/*if(chosenPrize.type=='NFT'){}
 	if(chosenPrize.type=='ERC20'){}*/
