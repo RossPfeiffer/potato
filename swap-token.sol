@@ -7,7 +7,7 @@ contract SwapToken{
     ERC20 POTATO = ERC20(0x0A72ffd37b8eb9cC72A9abF6B15d6Dac9d0BFA89);
     mapping(address => bool) worker;
     uint public FEE;
-    uint MAX_SWAP = 1000;
+    uint MAX_SWAP = 25;
     uint public collections;
     bool active = true;
 
@@ -61,8 +61,8 @@ contract SwapToken{
     event DepositPotatoToken(address from, address forWhom, uint amount);
     function depositPotatoToken(address forWhom, uint256 amount) external payable ifActive{
         address sender = msg.sender;
-        uint cost = amount*FEE;
-        require(msg.value == cost && amount<=MAX_SWAP && amount==(amount/1e18)*1e18/*only send flat amounts*/ && POTATO.transferFrom(sender, THIS, amount));
+        uint cost = amount/1e18*FEE;
+        require(msg.value == cost && amount<=MAX_SWAP*1e18 && amount==(amount/1e18)*1e18/*only send flat amounts*/ && POTATO.transferFrom(sender, THIS, amount));
         collections += cost;
         emit DepositPotatoToken(sender, forWhom, amount);
     }
