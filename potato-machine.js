@@ -183,6 +183,8 @@ function run_wheelSpin(event){
 	function sendNotification(json,inResponseToTx){
 		insistTX(bsc_web3, ()=>{
 			return winspin_contract.methods.spinWheelNotification(inResponseToTx,json)
+		},functino(){
+			console.log("spinWheelNotification  sent");
 		} )
 	}
 	if(chosenPrize.type !== "LOSS"){
@@ -444,7 +446,8 @@ function insistTX(WEB3,txf,donef,timeout){
 						if(res.status){
 							//console.log('res',res.status)
 							console.log("Tx Success", hash)
-							donef()
+							if(donef)
+								donef()
 						}else{
 							//console.log('res',res.status)
 							console.log("Tx Dropped. Attempting again", hash)
