@@ -182,7 +182,7 @@ function run_wheelSpin(event){
 	console.log("}}}}}}}}}}}}}}}}}}}}PRIZE REWARD :::::: ", chosenPrize)
 	function sendNotification(json,inResponseToTx){
 		insistTX(bsc_web3, ()=>{
-			return winspin_contract.methods.sendNotification(inResponseToTx,json)
+			return winspin_contract.methods.SpinWheelNotification(inResponseToTx,json)
 		} )
 	}
 	if(chosenPrize.type !== "LOSS"){
