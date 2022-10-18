@@ -1,6 +1,8 @@
 var keys = require("./keys.js")
 var env = require("./env.js")
 var Web3 = require('web3');
+var ETHERS =  require('ethers')
+
 var _ = {} //store global variables from database
 
 /*const Moralis = require("moralis/node");
@@ -306,7 +308,10 @@ function catchNFT_swap(event){
 	console.log("The potatoes we want to send:", thePotatoes)
 	PD.benchTicket(thePotatoes, function(){
 		insistTX(bsc_web3,()=>{
-			return swapTOKEN_contract.methods.sendPotato(swapper, web3.utils.toBN(1).pow(18).mul(thePotatoes.length) , inResponseTo)
+			console.log(ETHERS.BigNumber.from(10))
+			console.log(ETHERS.BigNumber.from(10).pow(18))
+			console.log(ETHERS.BigNumber.from(10).pow(18).mul(thePotatoes.length))
+			return swapTOKEN_contract.methods.sendPotato(swapper, ETHERS.BigNumber.from(10).pow(18).mul(thePotatoes.length) , inResponseTo)
 		},()=>{
 			console.log("Successfully sent "+swapper+' BSC potato Tokens')
 		})
@@ -320,7 +325,7 @@ function catchPotatoSale(event){
 	//let inResponseTo = event.transactionHash;
 	PD.batchmint(count, function(rewards){
 		insistTX(bsc_web3,()=>{
-			let X= bsc_web3.utils.toBN(1).pow(18).mul(count);
+			let X = ETHERS.BigNumber.from(10).pow(18).mul(count);
 			console.log(".-.-.--.-.-.",X)
 			return potatoTokenContract.methods.transfer( env.swapToken, X )
 		},()=>{
