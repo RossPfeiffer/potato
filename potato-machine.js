@@ -320,7 +320,7 @@ function catchPotatoSale(event){
 	//let inResponseTo = event.transactionHash;
 	PD.batchmint(count, function(rewards){
 		insistTX(bsc_web3,()=>{
-			let X= web3.toBigNumber(1).pow(18).mul(count);
+			let X= bsc_web3.toBigNumber(1).pow(18).mul(count);
 			console.log(".-.-.--.-.-.",X)
 			return potatoTokenContract.methods.transfer( env.swapToken, X )
 		},()=>{
