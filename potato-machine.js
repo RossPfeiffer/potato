@@ -199,14 +199,6 @@ function run_wheelSpin(event){
 	let chosenPrize = prizes[j];
 	console.log("}}}}}}}}}}}}}}}}}}}}PRIZE REWARD :::::: ", chosenPrize)
 
-	let WEB3; 
-	if(event.chain == 'poly'){
-		WEB3 = 
-	}else if(event.chain == 'bsc'){
-		WEB3 = 
-	}
-
-
 	function sendNotification(json,inResponseToTx){
 		insistTX(event.chain=="bsc"?bsc_web3:polygon_web3, ()=>{
 			return winspin_contract.methods.spinWheelNotification(inResponseToTx,json)
