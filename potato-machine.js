@@ -44,6 +44,10 @@ var potatoDuel_contract = new polygon_web3.eth.Contract(potatoDuel_ABI, env.pota
 var potatoBuy_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"destination","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Batchmint","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"paid","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"BuyPotato","type":"event"},{"inputs":[],"name":"FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"activate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"destination","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"batchmint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"beneficiary","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"buyPotato","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"newBeneficiary","type":"address"}],"name":"changeBeneficiary","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"collections","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"contractOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"deactivate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 var potatoBuy_contract = new polygon_web3.eth.Contract(potatoBuy_ABI, env.buyContract)
 
+var winspinPoly_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"spinner","type":"address"}],"name":"SpinWheel","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"inResponseTo","type":"string"},{"indexed":false,"internalType":"string","name":"notification","type":"string"}],"name":"SpinWheelNotification","type":"event"},{"inputs":[],"name":"FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"activate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"beneficiary","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newBeneficiary","type":"address"}],"name":"changeBeneficiary","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"collections","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"deactivate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"spinWheel","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"string","name":"inResponseTo","type":"string"},{"internalType":"string","name":"notification","type":"string"}],"name":"spinWheelNotification","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+var winspinPoly_contract = new polygon_web3.eth.Contract(winspinPoly_ABI, env.winspin_poly)
+
+
 //Binance Contracts
 var potatoTokenABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"delegate","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"delegate","type":"address"},{"internalType":"uint256","name":"numTokens","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"receiver","type":"address"},{"internalType":"uint256","name":"numTokens","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"buyer","type":"address"},{"internalType":"uint256","name":"numTokens","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}];
 var potatoTokenContract = new bsc_web3.eth.Contract(potatoTokenABI, env.potatoToken)
@@ -54,6 +58,8 @@ var swapTOKEN_contract = new bsc_web3.eth.Contract(swapTOKEN_ABI, env.swapToken)
 var winspin_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"spinner","type":"address"}],"name":"SpinWheel","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"inResponseTo","type":"string"},{"indexed":false,"internalType":"string","name":"notification","type":"string"}],"name":"SpinWheelNotification","type":"event"},{"inputs":[],"name":"FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"activate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"beneficiary","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newBeneficiary","type":"address"}],"name":"changeBeneficiary","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"collections","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"deactivate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"spinWheel","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"inResponseTo","type":"string"},{"internalType":"string","name":"notification","type":"string"}],"name":"spinWheelNotification","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
 var winspin_contract = new bsc_web3.eth.Contract(winspin_ABI, env.winspin)
 
+var potatoBuyBSC_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"uint256","name":"paid","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"BuyPotato","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"string","name":"inResponseTo","type":"string"},{"indexed":false,"internalType":"string","name":"notification","type":"string"}],"name":"MintNotification","type":"event"},{"inputs":[],"name":"FEE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"activate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"beneficiary","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"money","type":"uint256"}],"name":"buyPotato","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"newBeneficiary","type":"address"}],"name":"changeBeneficiary","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newContractOwner","type":"address"}],"name":"changeContractOwner","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"collections","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"contractOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"deactivate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"fireWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"inResponseTo","type":"string"},{"internalType":"string","name":"notification","type":"string"}],"name":"mintNotification","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newFee","type":"uint256"}],"name":"setFee","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"workerAddress","type":"address"}],"name":"setWorker","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+var potatoBuyBSC_contract = new bsc_web3.eth.Contract(potatoBuyBSC_ABI, env.buyContract_bsc)
 
 //THIS IS STARTING THE WHOLE THING
 client.connect(function(err){
@@ -121,13 +127,25 @@ function catch_BSC_events(){
 				if(e) console.error(e)
 				if(x)
 				x.forEach((event)=>{
+					event.chain = "bsc"
 					if(event.event == "SpinWheel"){
 						run_wheelSpin(event)
 					}
 				})
 			})
 			
-			Promise.all([promise1,promise2]).then(()=>{
+			let promise3 = potatoBuyBSC_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned, toBlock:latestBlock},function(e,x){
+				if(e) console.error(e)
+				if(x)
+				x.forEach((event)=>{
+					event.chain = "bsc"
+					if(event.event == "BuyPotato"){
+						catchPotatoSale(event)
+					}
+				})
+			})
+			
+			Promise.all([promise1,promise2,promise3]).then(()=>{
 				console.log('----------checked bsc---------- ',_.latest_bsc_block_scanned+" >>>> "+latestBlock)
 				_.latest_bsc_block_scanned = latestBlock+1
 				client.query("UPDATE globals SET val="+_.latest_bsc_block_scanned+" WHERE name = 'latest_bsc_block_scanned'",function(){
@@ -180,8 +198,17 @@ function run_wheelSpin(event){
 
 	let chosenPrize = prizes[j];
 	console.log("}}}}}}}}}}}}}}}}}}}}PRIZE REWARD :::::: ", chosenPrize)
+
+	let WEB3; 
+	if(event.chain == 'poly'){
+		WEB3 = 
+	}else if(event.chain == 'bsc'){
+		WEB3 = 
+	}
+
+
 	function sendNotification(json,inResponseToTx){
-		insistTX(bsc_web3, ()=>{
+		insistTX(event.chain=="bsc"?bsc_web3:polygon_web3, ()=>{
 			return winspin_contract.methods.spinWheelNotification(inResponseToTx,json)
 		},function(){
 			console.log("spinWheelNotification  sent");
@@ -254,6 +281,7 @@ function catch_polygon_events(){
 				x.forEach((event)=>{
 					switch(event.event){
 						case "BuyPotato":
+							event.chain = "poly"
 							catchPotatoSale(event);
 						break;
 						case "BatchMint":
@@ -284,7 +312,18 @@ function catch_polygon_events(){
 				})
 			})
 
-			Promise.all([promise0,promise1,promise2]).then(()=>{
+			let promise3 = winspinPoly_contract.getPastEvents('allEvents',{fromBlock:_.latest_poly_block_scanned, toBlock:latestBlock},function(e,x){
+				if(e) console.error(e)
+				if(x)
+				x.forEach((event)=>{
+					if(event.event == "SpinWheel"){
+						event.chain = poly
+						catch_duel(event)
+					}
+				})
+			})
+
+			Promise.all([promise0,promise1,promise2,promise3]).then(()=>{
 				console.log('----------checked Poly----------',_.latest_poly_block_scanned+" >>>> "+latestBlock)
 				_.latest_poly_block_scanned = latestBlock+1
 				client.query("UPDATE globals SET val="+_.latest_poly_block_scanned+" WHERE name = 'latest_poly_block_scanned'",function(){
@@ -338,6 +377,16 @@ function catchPotatoSale(event){
 				return potatoNFT_Contract.methods.mintPotatoHeads(sender, rewards.params)
 			},()=>{
 				console.log("Successfully purchased and minted by "+sender.substr(0,8)+' these Potato NFTs:', rewards.IDs)
+				
+				if(event.chain=='bsc'){
+					insistTX(bsc_web3,()=>{
+						return potatoBuyBSC_contract.methods.sendNotification(event.inResponseTo, '{"done":1}')
+					},()=>{
+						console.log("Successfully sent notification across BSC chain: "+sender.substr(0,8))
+					})
+				}
+				
+
 			})
 		})
 	});

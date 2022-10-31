@@ -1,33 +1,31 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.14;
-contract WinSpin{
+contract PotatoBuy{
     address THIS = address(this);
-    address contractOwner;
+    address public contractOwner;
     address public beneficiary;
-    ERC20 BUSD = ERC20(0x0A72ffd37b8eb9cC72A9abF6B15d6Dac9d0BFA89);
     mapping(address => bool) worker;
+    ERC20 BUSD = ERC20(0x0A72ffd37b8eb9cC72A9abF6B15d6Dac9d0BFA89);
     uint public FEE;
     uint public collections;
-    bool active;
-
+    bool active = true;
+    
     constructor(){
         contractOwner = msg.sender;
     }
 
     modifier onlyOwner {
-      require(msg.sender == contractOwner || worker[msg.sender]);
+      require(msg.sender == contractOwner || worker[msg.sender]) ;
       _;
-   }
+    }
 
     modifier ifActive {
       require(active);
       _;
     }
-
     function activate() public onlyOwner{
         active = true;
     }
-    
     function deactivate() public onlyOwner{
         active = false;
     }
@@ -35,7 +33,6 @@ contract WinSpin{
     function changeContractOwner(address newContractOwner) public onlyOwner{
         contractOwner = newContractOwner;
     }
-
     function changeBeneficiary(address newBeneficiary) public onlyOwner{
         beneficiary = newBeneficiary;
     }
@@ -45,30 +42,31 @@ contract WinSpin{
     }
 
     function withdraw() public {
-        require(msg.sender == beneficiary );
-        BUSD.transfer( beneficiary, collections);
+        require(msg.sender == beneficiary);
+        (bool success, ) = msg.sender.call{value:collections}("");
+        require(success, "Transfer failed.");
         collections = 0;
     }
 
-    function setWorker(address workerAddress) public  onlyOwner{
+
+    function setWorker(address workerAddress) public onlyOwner{
         worker[workerAddress] = true;
     }
 
-    function fireWorker(address workerAddress) public  onlyOwner{
+    function fireWorker(address workerAddress) public onlyOwner{
         worker[workerAddress] = false;
     }
 
-    event SpinWheel(address spinner);
-    function spinWheel() external ifActive{
-        address sender = msg.sender;
-        require( BUSD.transferFrom(sender, THIS, FEE) );
-        collections += FEE;
-        emit SpinWheel(sender);
+    event BuyPotato(address sender, uint paid, uint amount);
+    function buyPotato(uint money) external payable{
+        require( money>0 && money==(money/FEE)*FEE/*only send flat amounts*/ && active && BUSD.transferFrom(msg.sender, THIS, money));
+        collections += money;
+        emit BuyPotato(msg.sender, money, money/FEE);
     }
 
-    event SpinWheelNotification(string inResponseTo, string notification);
-    function spinWheelNotification(string memory inResponseTo, string memory notification) external onlyOwner{
-        emit SpinWheelNotification(inResponseTo, notification);
+    event MintNotification(string inResponseTo, string notification);
+    function mintNotification(string memory inResponseTo, string memory notification) external onlyOwner{
+        emit MintNotification(inResponseTo, notification);
     }
 }
 

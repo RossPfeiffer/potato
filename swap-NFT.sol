@@ -66,8 +66,9 @@ contract SwapPotato{
 
     event PotatoReceived(address from, uint[] tokenIds, address for);
     function onPotatoReceived(address from, uint[] memory tokenIds,bytes32 data) external payable returns(bytes32){
-        require(msg.value == FEE && msg.sender == potatoAddress && active);
-        collections += FEE;
+        uint cost = FEE * tokenIds.length;
+        require(msg.value == cost && msg.sender == potatoAddress && active);
+        collections += cost;
         emit PotatoReceived(from,tokenIds,address(data) );
     }
 }
