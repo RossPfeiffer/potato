@@ -72,6 +72,11 @@ contract SwapToken{
         POTATO.transfer(to, amount);
         emit SendPotato(to, amount, inResponseTo);
     }
+
+    event Notification(string inResponseTo, string notification);
+    function notification(string memory inResponseTo, string memory note) external onlyOwner{
+        emit Notification(inResponseTo, note);
+    }
 }
 
 

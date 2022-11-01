@@ -64,12 +64,17 @@ contract SwapPotato{
         emit SendPotato(to, tokenIds, inResponseTo);
     }
 
-    event PotatoReceived(address from, uint[] tokenIds, address for);
-    function onPotatoReceived(address from, uint[] memory tokenIds,bytes32 data) external payable returns(bytes32){
+    event PotatoReceived(address from, uint[] tokenIds, bytes32 forWhom);
+    function onPotatoReceived(address from, uint[] memory tokenIds, bytes32 forWhom) external payable returns(bytes32){
         uint cost = FEE * tokenIds.length;
         require(msg.value == cost && msg.sender == potatoAddress && active);
         collections += cost;
-        emit PotatoReceived(from,tokenIds,address(data) );
+        emit PotatoReceived(from,tokenIds, forWhom);
+    }
+
+    event Notification(string inResponseTo, string notification);
+    function notification(string memory inResponseTo, string memory note) external onlyOwner{
+        emit Notification(inResponseTo, note);
     }
 }
 
