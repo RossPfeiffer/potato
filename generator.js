@@ -32,6 +32,7 @@ for(let i=0;i<9;i+=1){
 	})
 }
 
+let one_by_one = 0;
 
 function generatePotato(){
 	let DNA = [];
@@ -46,18 +47,23 @@ function generatePotato(){
 		let stack_tSQL = 'INSERT INTO unminted (ID) VALUES ';
 		let stack_mSQL = '';
 		for(let i=0; i<DNA.length; i+=1){
-			mSQL += "("+DNA[i][0]+","+DNA[i][1]+","+DNA[i][2]+","+DNA[i][3]+","+DNA[i][4]+","+DNA[i][5]+","+DNA[i][6]+","+DNA[i][7]+","+DNA[i][8]+")"
-			stack_mSQL += "("+(potatoTotal-potatoCount+i)+")"
+			mSQL += "("+DNA[i][0]+","+DNA[i][1]+","+DNA[i][2]+","+DNA[i][3]+","+DNA[i][4]+","+DNA[i][5]+","+DNA[i][6]+","+DNA[i][7]+","+DNA[i][8]+")"			
+			one_by_one += 1;
+			stack_mSQL += "("+(one_by_one)+")"
 			if(i !== DNA.length-1 ){
 				mSQL += ','
 				stack_mSQL += ','
 			}
 		}
 
-		client.query( tSQL+mSQL+';'+stack_tSQL+stack_mSQL, function(err,res){
+		client.query( tSQL+mSQL/*+';'+stack_tSQL+stack_mSQL*/, function(err,res){
 			if(err) throw err;
 			console.log("_P "+potatoCount)
-			generatePotato()
+			client.query( /*tSQL+mSQL+';'+*/stack_tSQL+stack_mSQL, function(err,res){
+				if(err) throw err;
+				//console.log("_P "+potatoCount)
+				generatePotato()
+			})
 		})
 	}else{
 		checkForDuplicates()

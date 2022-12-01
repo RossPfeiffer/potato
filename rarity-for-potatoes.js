@@ -20,8 +20,7 @@ client.connect((e)=>{
 
 function updateNextBatch(){
 	client.query("SELECT * FROM potatoes ORDER BY ID ASC LIMIT "+(batch*batchSize)+","+batchSize,(err,res,fields)=>{
-		//console.log(res)
-		//
+		
 		if(res.length==0){
 			return;
 		}

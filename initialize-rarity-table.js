@@ -3,6 +3,7 @@ const parser = require('simple-excel-to-json')
 var doc = (parser.parseXls2Json('./parts-list.xlsx'))[0];
 let sum =0
 let sql = 'INSERT INTO part_usage (parttype) VALUES'
+
 doc.forEach( (x,i) => {
 	let PartType = x.PartType
 	if(PartType!==''){
