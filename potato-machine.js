@@ -157,7 +157,7 @@ function catch_BSC_events(){
 			setTimeout(catch_BSC_events,3000)
 		}
 	}).catch(err=>{
-		console.log(err.substring(100))
+		console.log(err.substr(100))
 		console.log("\n=========\n=========\n Gonna try continuing catching tokens events on BSC")
 		//catch_BSC_events()
 		setTimeout(catch_BSC_events,1000)
