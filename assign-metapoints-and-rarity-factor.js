@@ -21,8 +21,10 @@ client.connect((err)=>{
 		})
 		
 		res.forEach(function(row,i){
-			console.log(i,row.ID,"used: "+row.used)
+			console.log(i,row.ID,"---- Used: "+row.used," ---- META: "+row.meta)
+			//console.log(i,row.ID)
 			let rarityFactor = collectionSize / row.used
+			
 			client.query("UPDATE part_usage SET metapoints="+(row.meta)+",rarity_factor="+rarityFactor+"  WHERE(ID="+row.ID+")",function(){
 				promise_all+=1;
 				if(promise_all==728){

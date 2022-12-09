@@ -11,7 +11,7 @@ var MUMBAI = false
 		ethProviders:[/*'https://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/eth/ropsten',*/ 'https://goerli.infura.io/v3/'+keys.infura],
 		polyProviders:['https://polygon-mumbai.g.alchemy.com/v2/'+keys.alchemy,/*'wss://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/polygon/mumbai/ws'*/],
 		bscProviders:['https://white-rough-hill.bsc-testnet.discover.quiknode.pro/ef21661be620381d975f5ac963a976cef880cbd2/','wss://ws-nd-907-484-822.p2pify.com/'+keys.chainstack,/*'wss://speedy-nodes-nyc.moralis.io/'+keys.moralis+'/bsc/testnet/ws'*/]
-	}//https://thrumming-hidden-paper.bsc-testnet.discover.quiknode.pro/b5ca8ac7b92f0165072a51f9e2f663ec0f48accd/
+	}
 
 	env.network = MUMBAI;
 	//POLY
