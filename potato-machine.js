@@ -157,9 +157,10 @@ function catch_BSC_events(){
 			setTimeout(catch_BSC_events,3000)
 		}
 	}).catch(err=>{
-		console.log(err)
-		console.log("\n=========\n=========\n Gonna try continuing catching tokens events")
-		catch_BSC_events()
+		console.log(err.substring(100))
+		console.log("\n=========\n=========\n Gonna try continuing catching tokens events on BSC")
+		//catch_BSC_events()
+		setTimeout(catch_BSC_events,1000)
 	})
 }
 
@@ -333,8 +334,9 @@ function catch_polygon_events(){
 		}
 	}).catch(err=>{
 		console.log(err)
-		console.log("\n=========\n=========\n Gonna try continuing catching NFT events")
-		catch_polygon_events()
+		console.log("\n=========\n=========\n Gonna try continuing catching NFT events on POLY")
+		//catch_polygon_events()
+		setTimeout(catch_polygon_events,1000)
 	})
 }
 
