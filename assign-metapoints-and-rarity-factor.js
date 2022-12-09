@@ -5,6 +5,7 @@ var counts = []
 for(let i=0;i<10;i+=1){
 	counts.push(0)
 }
+var metapoints_by1=0
 client.connect((err)=>{
 	if(err) throw err;
 	console.log("connected for rarity and metapoints task")
@@ -17,7 +18,8 @@ client.connect((err)=>{
 
 		res.forEach(row=>{
 			counts[row.parttype] += 1;
-			row.meta = counts[row.parttype]
+			metapoints_by1 += 1;
+			row.meta = metapoints_by1;
 		})
 		
 		res.forEach(function(row,i){
