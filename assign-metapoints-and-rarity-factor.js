@@ -6,6 +6,7 @@ for(let i=0;i<10;i+=1){
 	counts.push(0)
 }
 var metapoints_by1=0
+let queries = []
 client.connect((err)=>{
 	if(err) throw err;
 	console.log("connected for rarity and metapoints task")
@@ -29,16 +30,33 @@ client.connect((err)=>{
 			let rID = row.ID
 			let rM = row.meta
 			
-			client.query("UPDATE part_usage SET metapoints="+(rM)+",rarity_factor="+rarityFactor+"  WHERE(ID="+rID+")",function(){
-				//promise_all+=1;
-				/*if(promise_all==728){
+			queries.push("UPDATE part_usage SET metapoints="+(rM)+",rarity_factor="+rarityFactor+"  WHERE(ID="+rID+")")
+			/*client.query("UPDATE part_usage SET metapoints="+(rM)+",rarity_factor="+rarityFactor+"  WHERE(ID="+rID+")",function(){
+				promise_all+=1;
+				if(promise_all==728){
 					client.end();
-				}*/
-			})
+				}
+			})*/
 		})
+
+		runQueries()
+
 		
 	})
 })
+
+let Q = 0;
+function runQueries(){
+	client.query(queries[Q],function(){
+		Q+=1
+		if(Q==728){
+			client.end();
+		}else{
+			runQueries();
+		}
+	})
+}
+
 /*
 SET @rownumber = 0;    
 update potatoes set rarity_rank = (@rownumber:=@rownumber+1)
