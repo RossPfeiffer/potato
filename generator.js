@@ -6,7 +6,7 @@ var doc = (parser.parseXls2Json('./parts-list.xlsx'))[0];
 
 let potatoCount = 8888888
 let potatoTotal = potatoCount;
-let batchSize = 10000;
+let batchSize = 10;
 var weightedBuckets = [];
 let runningScores = [];
 runningScores.push(0)

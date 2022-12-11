@@ -1,6 +1,6 @@
 const client = require('./connection.js');
 let batch = 0;
-let batchSize = 10;
+let batchSize = 10000;
 let p2p = [];
 let m2p = [];
 client.connect((e)=>{
