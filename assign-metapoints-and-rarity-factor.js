@@ -30,10 +30,10 @@ client.connect((err)=>{
 			let rM = row.meta
 			
 			client.query("UPDATE part_usage SET metapoints="+(rM)+",rarity_factor="+rarityFactor+"  WHERE(ID="+rID+")",function(){
-				promise_all+=1;
-				if(promise_all==728){
+				//promise_all+=1;
+				/*if(promise_all==728){
 					client.end();
-				}
+				}*/
 			})
 		})
 		
