@@ -39,3 +39,8 @@ client.connect((err)=>{
 		
 	})
 })
+/*
+SET @rownumber = 0;    
+update potatoes set rarity_rank = (@rownumber:=@rownumber+1)
+order by rarity asc
+*/

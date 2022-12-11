@@ -31,11 +31,11 @@ function updateNextBatch(){
 		let _pSQL = ' ELSE rarity END, metascore = CASE ID';
 		let _mSQL = ' ELSE metascore END WHERE (ID>'+(batch*batchSize)+' AND ID<='+((batch+1)*batchSize)+')'
 		res.forEach((p)=>{
-			let score = p2p[p.nose]/10 * p2p[p.mouth]/10 * p2p[p.hat]/10 * p2p[p.eyes]/10 * p2p[p.ears]/10 * p2p[p.shoes]/10 * p2p[p.background]/10 * p2p[p.leftarm]/10 * p2p[p.rightarm]/10;
-			let metascore = m2p[p.nose] + m2p[p.mouth] + m2p[p.hat] + m2p[p.eyes] + m2p[p.ears] + m2p[p.shoes] + m2p[p.background] + m2p[p.leftarm] + m2p[p.rightarm]; 
+			let score = p2p[p.nose]/2 * p2p[p.mouth]/2 * p2p[p.hat]/2 * p2p[p.eyes]/2 * p2p[p.ears]/2 * p2p[p.shoes]/2 * p2p[p.background]/2 * p2p[p.leftarm]/2 * p2p[p.rightarm]/2;
+			let metascore = m2p[p.nose] + m2p[p.mouth] + m2p[p.hat] + m2p[p.eyes] + m2p[p.ears] + m2p[p.shoes] + m2p[p.background] + m2p[p.leftarm] + m2p[p.rightarm];
 
 			pSQL += ' WHEN '+p.ID+' THEN '+score
-			let rare = p.rarity_rank;
+			/*let rare = p.rarity_rank;
 			let gb = 0;
 			if (rare<8888888/20){
 				gb = 40
@@ -45,8 +45,8 @@ function updateNextBatch(){
 				gb = 20
 			}else{
 				gb = 10
-			}
-			mSQL += ' WHEN '+p.ID+' THEN '+(metascore+gb)
+			}*/
+			mSQL += ' WHEN '+p.ID+' THEN '+(metascore)
 			
 		});
 		console.log("::::: Updating "+batch+':::::');
