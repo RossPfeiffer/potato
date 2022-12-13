@@ -14,7 +14,7 @@ client.connect((err)=>{
 	client.query("SELECT * FROM part_usage",function(err,res,fields){
 		
 		res.sort(function(a,b){
-			return a.used - b.used
+			return b.used - a.used
 		})
 
 		res.forEach(row=>{

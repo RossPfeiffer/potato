@@ -207,27 +207,43 @@ PotatoDealer.prototype.next = function(){
 						*/
 					_this.client.query('SELECT * FROM potatoes WHERE '+IDs_of_the_potato_we_need_data_for,function(err,res,fields){
 						//
-							if (err) throw err;
-							//let params = []
-							//let wildPotato;
-							let params = []
-							let pIDs = []
-							res.forEach((p)=>{
-								params.push(p.ID)
-								pIDs.push(p.ID)
-								params.push(p.background-1)
-								params.push(p.leftarm-1)
-								params.push(p.rightarm-1)
-								params.push(p.hat-1)
-								params.push(p.ears-1)
-								params.push(p.eyes-1)
-								params.push(p.nose-1)
-								params.push(p.mouth-1)
-								params.push(p.shoes-1)
-								params.push(p.rarity_rank)
-								params.push(0) //gradeBonuses
-							})
+						if (err) throw err;
+						//let params = []
+						//let wildPotato;
+						let params = []
+						let pIDs = []
+						res.forEach((p)=>{
+							params.push(p.ID)
+							pIDs.push(p.ID)
+							params.push(p.background-1)
+							params.push(p.leftarm-1)
+							params.push(p.rightarm-1)
+							params.push(p.hat-1)
+							params.push(p.ears-1)
+							params.push(p.eyes-1)
+							params.push(p.nose-1)
+							params.push(p.mouth-1)
+							params.push(p.shoes-1)
+							params.push(p.rarity_rank)
+							params.push(0) //gradeBonuses
+							console.log("------==== Mint Params ====------\n",
+								p.background,"\n",
+								p.leftarm,"\n",
+								p.rightarm,"\n",
+								p.hat,"\n",
+								p.ears,"\n",
+								p.eyes,"\n",
+								p.nose,"\n",
+								p.mouth,"\n",
+								p.shoes,"\n",
+								p.rarity_rank,"\n"
+							)
 						
+						})
+						/*let L = params.length/12
+						for(let i = 0;i<L;i++){
+							//
+						}*/
 						_this.client.query('DELETE FROM unminted WHERE '+IDs_of_the_potato_we_need_data_for,function(err,res,fields){
 							//
 								if (err) throw err;
