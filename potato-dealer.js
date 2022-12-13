@@ -226,17 +226,19 @@ PotatoDealer.prototype.next = function(){
 							params.push(p.shoes-1)
 							params.push(p.rarity_rank)
 							params.push(0) //gradeBonuses
+
 							console.log("------==== Mint Params ====------\n",
-								p.background,"\n",
-								p.leftarm,"\n",
-								p.rightarm,"\n",
-								p.hat,"\n",
-								p.ears,"\n",
-								p.eyes,"\n",
-								p.nose,"\n",
-								p.mouth,"\n",
-								p.shoes,"\n",
-								p.rarity_rank,"\n"
+								"ID: ",p.ID,"\n",
+								"BG: ",p.background,"\n",
+								"Left: ",p.leftarm,"\n",
+								"Right: ",p.rightarm,"\n",
+								"Hat: ",p.hat,"\n",
+								"ears: ",p.ears,"\n",
+								"eyes: ",p.eyes,"\n",
+								"nose: ",p.nose,"\n",
+								"mouth: ",p.mouth,"\n",
+								"shoes: ",p.shoes,"\n",
+								"rr: ",p.rarity_rank,"\n"
 							)
 						
 						})
