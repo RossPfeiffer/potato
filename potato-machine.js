@@ -112,7 +112,7 @@ function listenToEvents(){
 
 function catch_BSC_events(){
 	bsc_web3.eth.getBlockNumber().then(function(latestBlock){
-		console.log('can we even get BSC block number?')
+		//console.log('can we even get BSC block number?')
 		if(latestBlock > _.latest_bsc_block_scanned){
 			console.log({fromBlock:_.latest_bsc_block_scanned, toBlock:latestBlock})
 			let promise1 = swapTOKEN_contract.getPastEvents('allEvents',{fromBlock:_.latest_bsc_block_scanned, toBlock:latestBlock},function(e,x){
